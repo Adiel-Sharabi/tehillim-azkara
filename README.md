@@ -34,7 +34,7 @@ Nothing is marked `PROOFREAD` without an actual human proofread.
 
 | text | source | status |
 |---|---|---|
-| Psalms 16, 17, 33, 72, 91, 104, 119, 130 (303 verses) | MAM, git blob `a5e2296`, CC BY-SA 4.0 | `STRUCTURE_VALIDATED` |
+| Psalms 16, 17, 33, 72, 91, 104, 119, 130 (303 verses) | MAM, git blob `a5e2296`, CC BY-SA 4.0 | `STRUCTURE_VALIDATED`; machine-collated against UXLC 2.5: 11 differences awaiting a human decision ([COLLATION.md](sources/wlc/COLLATION.md)) |
 
 ## Licensing
 
