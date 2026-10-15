@@ -19,6 +19,7 @@ import { createHash } from 'node:crypto';
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { EXPECTED_VERSES } from './psalms-chapters.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const RAW_PATH = join(ROOT, 'sources', 'wlc', 'raw', 'Psalms.xml');
@@ -40,8 +41,8 @@ export const LICENSE = {
   notice: 'The text presented at this site is not the Westminster Leningrad Codex (WLC); please do not represent it as such.',
 };
 
-// Chapters the site uses, with their verse counts. A mismatch aborts the import.
-export const EXPECTED_VERSES = { 16: 11, 17: 15, 33: 22, 72: 20, 91: 16, 104: 35, 119: 176, 130: 8 };
+// Chapters and verse counts: scripts/psalms-chapters.mjs (shared with the other Psalms importer).
+export { EXPECTED_VERSES };
 
 // ---------------------------------------------------------------------------------------------
 // Minimal XML parser (built-ins only). Handles the constructs the UXLC files use; anything

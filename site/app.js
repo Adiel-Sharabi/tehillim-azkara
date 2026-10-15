@@ -47,7 +47,10 @@ function applyPrefs() {
 
 // ---- text lookup ----
 function has(s) {
-  if (s.kind === 'psalm') return !!state.psalms.chapters[String(s.chapter)];
+  if (s.kind === 'psalm') {
+    const ch = state.psalms.chapters[String(s.chapter)];
+    return !!ch && (s.to ?? 0) <= ch.length;
+  }
   if (s.kind === 'psalm119') return !!state.psalms.chapters['119'];
   if (s.kind === 'mishnah') {
     const ch = state.library.mishnah[s.ref];
@@ -67,7 +70,7 @@ function verses(chapter, from, to) {
 }
 
 const RENDER = {
-  psalm: (s) => [verses(String(s.chapter), 1, state.psalms.chapters[String(s.chapter)].length)],
+  psalm: (s) => [verses(String(s.chapter), s.from ?? 1, s.to ?? state.psalms.chapters[String(s.chapter)].length)],
   psalm119: (s) => s.groups.map((g) => el('div', { className: 'letter-group' },
     el('div', { className: 'letter-head' },
       el('span', { className: 'letter-big', ariaHidden: 'true' }, g.letter),

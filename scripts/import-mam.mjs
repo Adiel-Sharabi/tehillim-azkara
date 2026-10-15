@@ -12,6 +12,7 @@ import { createHash } from 'node:crypto';
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { EXPECTED_VERSES } from './psalms-chapters.mjs';
 import { stripCantillation, stripNikkud, PASEQ, MAQAF } from '../lib/hebrew.js';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -36,8 +37,8 @@ export const EDITION = {
   attributionUrl: 'https://he.wikisource.org/wiki/מקרא_על_פי_המסורה',
 };
 
-// Chapters the site uses, with their verse counts. A mismatch aborts the import.
-export const EXPECTED_VERSES = { 16: 11, 17: 15, 33: 22, 72: 20, 91: 16, 104: 35, 119: 176, 130: 8 };
+// Chapters and verse counts: scripts/psalms-chapters.mjs (shared with the other Psalms importer).
+export { EXPECTED_VERSES };
 
 export function gitBlobSha1(buf) {
   return createHash('sha1').update(`blob ${buf.length}\0`).update(buf).digest('hex');
@@ -79,6 +80,11 @@ function versePieces(verse) {
         ketiv.push({ ketiv: k.text, qere: q.text });
         break;
       }
+      case 'kq-trivial': // MAM's "trivial" ketiv/qere (90:8): one pointed word, read as written
+        if (typeof node.text !== 'string' || 'contents' in node) throw new Error(`${verse.osisID}: unsupported kq-trivial shape ${JSON.stringify(node)}`);
+        pieces.push({ kind: 'text', text: node.text });
+        ketiv.push({ trivial: node.text });
+        break;
       default:
         throw new Error(`${verse.osisID}: unhandled MAM element "${node.type}"`);
     }

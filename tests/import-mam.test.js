@@ -25,8 +25,10 @@ test('git blob sha matches `git hash-object`', () => {
   assert.equal(gitBlobSha1(Buffer.from('hello\n')), 'ce013625030ba8dba906f756967f9e9ca394464a');
 });
 
-test('committed data: 303 verses in the 8 chapters, locked source recorded', () => {
-  assert.equal(data.stats.verses, 303);
+const TOTAL = Object.values(EXPECTED_VERSES).reduce((a, b) => a + b, 0);
+
+test('committed data: every verse of every chapter the site reads, locked source recorded', () => {
+  assert.equal(data.stats.verses, TOTAL);
   for (const [ch, n] of Object.entries(EXPECTED_VERSES)) assert.equal(data.chapters[ch].length, n, `Ps.${ch}`);
   assert.equal(data.edition.source.gitBlobSha1, LOCK.gitBlobSha1);
   assert.equal(data.edition.license, 'CC BY-SA 4.0');
@@ -43,7 +45,16 @@ test('ketiv/qere: qere is read, ketiv kept (Ps 17:11)', () => {
   const v = data.chapters['17'][10];
   assert.match(v.withNikkud, /סְבָבוּנוּ/);
   assert.equal(v.ketivQere[0].ketiv, 'סבבוני');
-  assert.equal(data.stats.ketivQere, 6);
+  assert.equal(data.stats.ketivQere, 7);
+});
+
+test('a trivial ketiv/qere (Ps 90:8) is read as MAM points it and recorded', () => {
+  const v = data.chapters['90'][7];
+  // MAM keeps its own mark order, so compare in NFC rather than against typed literals.
+  const nfc = (x) => x.normalize('NFC');
+  assert.equal(nfc(v.withNikkud.split(' ')[0]), nfc('שַׁתָּ'));
+  assert.equal(v.ketivQere.length, 1);
+  assert.equal(nfc(v.ketivQere[0].trivial), nfc('שַׁתָּ֣'));
 });
 
 test('legarmeh is a cantillation mark: shown with te\'amim, gone without; paseq stays', () => {
@@ -75,5 +86,5 @@ test('verse count mismatch fails closed', () => {
 });
 
 test('synthetic well-formed source imports', () => {
-  assert.equal(buildPsalms(synthetic(), 'x').stats.verses, 303);
+  assert.equal(buildPsalms(synthetic(), 'x').stats.verses, TOTAL);
 });

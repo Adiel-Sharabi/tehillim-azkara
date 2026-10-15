@@ -9,6 +9,7 @@
     "17",
     "33",
     "72",
+    "90",
     "91",
     "104",
     "119",
@@ -16,9 +17,9 @@
    ],
    "layers": "letters and vowels; cantillation marks were not compared",
    "witnesses": [
-    "UXLC 2.5 (Leningrad Codex), all 303 verses",
+    "UXLC 2.5 (Leningrad Codex), all 320 verses",
     "MAM-parsed/plus D1-Psalms.json (git blob acba1c374cfa6dac85c7fee1136ccb9de616a788), \"נוסח\" note",
-    "Breuer text as published by Mechon Mamre (comparison only), the 11 differing words"
+    "Breuer text as published by Mechon Mamre (comparison only), the 12 differing words"
    ]
   }
  },
@@ -47,6 +48,18 @@
     "Breuer text as published by Mechon Mamre (comparison only): בְּאוֹצָרוֹת"
    ],
    "reason": "Aleppo-based texts agree on the plene spelling; Leningrad alone is defective."
+  },
+  {
+   "ref": "90:8",
+   "kind": "consonants",
+   "mam": "שת עונתינו לנגדך עלמנו למאור פניך׃",
+   "uxlc": "שתהעונתינולנגדךעלמנולמאורפניך",
+   "verdict": "keep-mam",
+   "witnesses": [
+    "MAM-parsed/plus D1-Psalms.json (git blob acba1c374cfa6dac85c7fee1136ccb9de616a788), \"נוסח\" note, template מ:קו״כ-אם-2: ketiv שת, qere שַׁתָּה (Aleppo and Leningrad qere, the printed editions, Breuer); MAM displays the ketiv letters with the qere pointing, \"as Koren\"",
+    "UXLC 2.5 (Leningrad): qere שתה in the running text"
+   ],
+   "reason": "A ketiv/qere that differs only by a final mater lectionis (ה): שַׁתָּ and שַׁתָּה are read the same. MAM shows the written letters with the qere vowels, as Koren does; no correction."
   },
   {
    "ref": "104:9",

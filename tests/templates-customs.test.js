@@ -74,3 +74,13 @@ test('Morocco reads Psalm 119 by קרע שטן and the long Hashkava; Sefard use
   const s = buildOrder('sefard_base', { name: 'דוד', hasMinyan: false });
   assert.ok(s.sections.filter((x) => x.text?.startsWith('kaddish')).every((x) => x.text.endsWith('-sefard') && x.note));
 });
+
+test('Morocco opens with ויהי נועם: one verse of Psalm 90, carried in the link as p90.17.17', () => {
+  const m = buildOrder('morocco_base', { name: 'דוד' });
+  assert.deepEqual({ key: m.sections[0].key, chapter: m.sections[0].chapter, from: m.sections[0].from, to: m.sections[0].to }, { key: 'p90.17.17', chapter: 90, from: 17, to: 17 });
+  assert.ok(psalms.chapters['90'][16], 'Psalm 90:17 is in the data');
+  // The key form works from any template, so an edited link can carry it.
+  const a = buildOrder('ashkenaz_base', { name: 'דוד', order: ['p90.17.17', 'p91'] });
+  assert.deepEqual(a.sections.map((s) => [s.chapter, s.from ?? null]), [[90, 17], [91, null]]);
+  assert.deepEqual(buildOrder('ashkenaz_base', { name: 'דוד', order: ['p90.18.17', 'p151.1.1'] }).unknownKeys, ['p90.18.17', 'p151.1.1']);
+});
