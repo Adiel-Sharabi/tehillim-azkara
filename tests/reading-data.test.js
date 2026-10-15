@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { buildLibrary } from '../scripts/build-reading.mjs';
+import { buildLibrary, PRAYER_SOURCES } from '../scripts/build-reading.mjs';
 import { READING_EDITIONS } from '../lib/editions.js';
 import { consonantsOf } from '../lib/hebrew.js';
 
@@ -9,7 +9,7 @@ const read = (p) => JSON.parse(readFileSync(new URL(`../${p}`, import.meta.url),
 const lib = read('data/reading/library.json');
 
 test('data/reading/library.json is current: rebuilding from sources gives the same file', () => {
-  assert.deepEqual(buildLibrary(read('sources/mishnah/mishnah.json'), read('sources/prayers/prayers.json')), lib);
+  assert.deepEqual(buildLibrary(read('sources/mishnah/mishnah.json'), ...PRAYER_SOURCES.map(read)), lib);
 });
 
 test('reading texts come only from the editions named in lib/editions.js', () => {
