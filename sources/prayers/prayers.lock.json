@@ -1,0 +1,11 @@
+{
+  "note": "sha256 of each upstream payload (Sefaria: JSON.stringify(version.text); Wikisource: parse HTML of the pinned revid). A mismatch aborts the import unless --relock.",
+  "payloads": {
+    "sefaria-daat-siddur-ashkenaz-kaddish-yatom.json": "be826a2bb5b3d60da189e463da6752d3b0a4b6abd74be62f13eb6e0c19e4938a",
+    "sefaria-daat-siddur-ashkenaz-kaddish-derabbanan.json": "94d4cf1ac58b0ed74481a5997d832db102a87e66e293773dd7683bf5c2c2496d",
+    "sefaria-metsudah-siddur-1981-kaddish-yatom.json": "5bae78593793b062bae26e4c7358d000c2256fd65fc67a7e98aeff8ff199c09a",
+    "sefaria-metsudah-siddur-1981-kaddish-derabbanan.json": "8f89fb13871e7ee135222be6b65907db330c737640011f6208079d0576e3d587",
+    "sefaria-metsudah-machzor-yk-ashkenaz-linear-memorial-services.json": "779ae7ac7e9d6fc3864f245378ea220c52ef71c03ccf2c1970ea57f5fc075b57",
+    "wikisource-el-male-rachamim.parse.json": "cfb1b73a71d8a1a45fab32dccc0a3960fbe69947341ae724e2543230bda8e877"
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "method": "word-level LCS on consonant skeletons (marks U+0591-U+05C7 stripped, maqaf -> space, punctuation dropped); instruction and name-slot segments excluded; the word אמן ignored (layout, not text)",
+  "comparisons": [
+    {
+      "text": "kaddish-yatom",
+      "a": "sefaria-daat-siddur-ashkenaz",
+      "b": "sefaria-metsudah-siddur-1981",
+      "wordsA": 73,
+      "wordsB": 71,
+      "identicalConsonants": false,
+      "changes": [
+        {
+          "a": "דקדשא בריך הוא",
+          "b": "דקודשא",
+          "at": "ויתעלה ויתהלל שמה"
+        }
+      ]
+    },
+    {
+      "text": "kaddish-derabbanan",
+      "a": "sefaria-daat-siddur-ashkenaz",
+      "b": "sefaria-metsudah-siddur-1981",
+      "wordsA": 122,
+      "wordsB": 112,
+      "identicalConsonants": false,
+      "changes": [
+        {
+          "a": "יהא שמה רבא מברך לעלם ולעלמי עלמיא",
+          "b": "",
+          "at": "לעלם ולעלמי עלמיא"
+        },
+        {
+          "a": "דקדשא בריך הוא",
+          "b": "דקודשא",
+          "at": "ויתעלה ויתהלל שמה"
+        },
+        {
+          "a": "קדישא",
+          "b": "",
+          "at": "באוריתא די באתרא"
+        },
+        {
+          "a": "ומזוני",
+          "b": "ומזונא",
+          "at": "ורחמין וחיין אריכין"
+        },
+        {
+          "a": "ופרקנא",
+          "b": "ופורקנא",
+          "at": "אריכין ומזוני רויחי"
+        }
+      ]
+    },
+    {
+      "text": "el-male-rachamim",
+      "a": "sefaria-metsudah-machzor-yk-ashkenaz-linear",
+      "b": "wikisource-he-el-male-rachamim",
+      "wordsA": 51,
+      "wordsB": 51,
+      "identicalConsonants": false,
+      "changes": [
+        {
+          "a": "ויצרור",
+          "b": "ויצרר",
+          "at": "בסתר כנפיו לעולמים"
+        },
+        {
+          "a": "יהוה",
+          "b": "יי",
+          "at": "החיים את נשמתו"
+        },
+        {
+          "a": "",
+          "b": "בשלום",
+          "at": "הוא נחלתו וינוח"
+        },
+        {
+          "a": "בשלום",
+          "b": "",
+          "at": "וינוח על משכבו"
+        }
+      ]
+    },
+    {
+      "text": "el-male-rachamim-female",
+      "a": "sefaria-metsudah-machzor-yk-ashkenaz-linear",
+      "b": "wikisource-he-el-male-rachamim",
+      "wordsA": 51,
+      "wordsB": 51,
+      "identicalConsonants": false,
+      "changes": [
+        {
+          "a": "כזהר",
+          "b": "כזוהר",
+          "at": "במעלות קדושים וטהורים"
+        },
+        {
+          "a": "ויצרור",
+          "b": "ויצרר",
+          "at": "בסתר כנפיו לעולמים"
+        },
+        {
+          "a": "יהוה",
+          "b": "יי",
+          "at": "החיים את נשמתה"
+        },
+        {
+          "a": "",
+          "b": "בשלום",
+          "at": "הוא נחלתה ותנוח"
+        },
+        {
+          "a": "בשלום",
+          "b": "",
+          "at": "ותנוח על משכבה"
+        }
+      ]
+    }
+  ]
+}

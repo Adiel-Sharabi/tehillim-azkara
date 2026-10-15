@@ -1,0 +1,850 @@
+{
+  "editions": {
+    "sefaria-daat-siddur-ashkenaz": {
+      "source": {
+        "site": "sefaria.org",
+        "ref": "Siddur Ashkenaz",
+        "refs": {
+          "kaddish-yatom": "Siddur Ashkenaz, Kaddish, Mourner's Kaddish",
+          "kaddish-derabbanan": "Siddur Ashkenaz, Kaddish, Kaddish d'Rabbanan"
+        },
+        "versionTitle": "Daat Siddur Ashkenaz",
+        "license": "Public Domain",
+        "licenseUrl": "https://en.wikipedia.org/wiki/Public_domain",
+        "upstreamSource": "http://www.daat.ac.il/daat/sidurim/tohen3.htm",
+        "url": "https://www.sefaria.org/Siddur_Ashkenaz%2C_Kaddish%2C_Mourner's_Kaddish?lang=he&ven=hebrew%7CDaat_Siddur_Ashkenaz",
+        "viewUrls": {
+          "kaddish-yatom": "https://www.sefaria.org/Siddur_Ashkenaz%2C_Kaddish%2C_Mourner's_Kaddish?lang=he&ven=hebrew%7CDaat_Siddur_Ashkenaz",
+          "kaddish-derabbanan": "https://www.sefaria.org/Siddur_Ashkenaz%2C_Kaddish%2C_Kaddish_d'Rabbanan?lang=he&ven=hebrew%7CDaat_Siddur_Ashkenaz"
+        },
+        "apiUrls": {
+          "kaddish-yatom": "https://www.sefaria.org/api/v3/texts/Siddur%20Ashkenaz%2C%20Kaddish%2C%20Mourner's%20Kaddish?version=hebrew%7CDaat%20Siddur%20Ashkenaz",
+          "kaddish-derabbanan": "https://www.sefaria.org/api/v3/texts/Siddur%20Ashkenaz%2C%20Kaddish%2C%20Kaddish%20d'Rabbanan?version=hebrew%7CDaat%20Siddur%20Ashkenaz"
+        },
+        "payloadSha256": {
+          "kaddish-yatom": "be826a2bb5b3d60da189e463da6752d3b0a4b6abd74be62f13eb6e0c19e4938a",
+          "kaddish-derabbanan": "94d4cf1ac58b0ed74481a5997d832db102a87e66e293773dd7683bf5c2c2496d"
+        },
+        "retrievedAt": "2026-10-15T05:31:05.958Z"
+      },
+      "nusach": "ashkenaz",
+      "reviewStatus": "IMPORTED",
+      "texts": {
+        "kaddish-yatom": [
+          {
+            "role": "leader",
+            "text": "יִתְגַּדַּל וְיִתְקַדַּשׁ שְׁמֵהּ רַבָּא."
+          },
+          {
+            "role": "congregation",
+            "text": "אמן"
+          },
+          {
+            "role": "leader",
+            "text": "בְּעָלְמָא דִּי בְרָא כִרְעוּתֵהּ וְיַמְלִיךְ מַלְכוּתֵהּ בְּחַיֵּיכון וּבְיומֵיכון וּבְחַיֵּי דְכָל בֵּית יִשרָאֵל בַּעֲגָלָא וּבִזְמַן קָרִיב, וְאִמְרוּ אָמֵן:"
+          },
+          {
+            "role": "congregation",
+            "text": "אמן"
+          },
+          {
+            "role": "congregation",
+            "text": "יְהֵא שְׁמֵהּ רַבָּא מְבָרַךְ לְעָלַם וּלְעָלְמֵי עָלְמַיָּא:",
+            "together": true
+          },
+          {
+            "role": "leader",
+            "text": "יִתְבָּרַךְ וְיִשְׁתַּבַּח וְיִתְפָּאַר וְיִתְרומַם וְיִתְנַשּא וְיִתְהַדָּר וְיִתְעַלֶּה וְיִתְהַלָּל שְׁמֵהּ דְּקֻדְשָׁא. בְּרִיךְ הוּא."
+          },
+          {
+            "role": "congregation",
+            "text": "בריך הוא:"
+          },
+          {
+            "role": "leader",
+            "text": "לְעֵלָּא מִן כָּל בִּרְכָתָא"
+          },
+          {
+            "role": "instruction",
+            "text": "בעשי”ת: לְעֵלָּא לְעֵלָּא מִכָּל"
+          },
+          {
+            "role": "leader",
+            "text": "וְשִׁירָתָא תֻּשְׁבְּחָתָא וְנֶחֱמָתָא דַּאֲמִירָן בְּעָלְמָא. וְאִמְרוּ אָמֵן:"
+          },
+          {
+            "role": "congregation",
+            "text": "אמן"
+          },
+          {
+            "role": "leader",
+            "text": "יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא וְחַיִּים עָלֵינוּ וְעַל כָּל יִשרָאֵל. וְאִמְרוּ אָמֵן:"
+          },
+          {
+            "role": "congregation",
+            "text": "אמן"
+          },
+          {
+            "role": "leader",
+            "text": "עוֹשה שָׁלוֹם"
+          },
+          {
+            "role": "instruction",
+            "text": "בעשי”ת: הַשָּׁלום"
+          },
+          {
+            "role": "leader",
+            "text": "בִּמְרומָיו הוּא יַעֲשה שָׁלום עָלֵינוּ וְעַל כָּל יִשרָאֵל וְאִמְרוּ אָמֵן:"
+          },
+          {
+            "role": "congregation",
+            "text": "אמן"
+          }
+        ],
+        "kaddish-derabbanan": [
+          {
+            "role": "leader",
+            "text": "יִתְגַּדַּל וְיִתְקַדַּשׁ שְׁמֵהּ רַבָּא."
+          },
+          {
+            "role": "congregation",
+            "text": "אמן"
+          },
+          {
+            "role": "leader",
+            "text": "בְּעָלְמָא דִּי בְרָא כִרְעוּתֵהּ וְיַמְלִיךְ מַלְכוּתֵהּ בְּחַיֵּיכוֹן וּבְיוֹמֵיכוֹן וּבְחַיֵּי דְכָל בֵּית יִשְׂרָאֵל בַּעֲגָלָא וּבִזְמַן קָרִיב, וְאִמְרוּ אָמֵן."
+          },
+          {
+            "role": "congregation",
+            "text": "אמן, יְהֵא שְׁמֵהּ רַבָּא מְבָרַךְ לְעָלַם וּלְעָלְמֵי עָלְמַיָּא"
+          },
+          {
+            "role": "leader",
+            "text": "יְהֵא שְׁמֵהּ רַבָּא מְבָרַךְ לְעָלַם וּלְעָלְמֵי עָלְמַיָּא: יִתְבָּרַךְ וְיִשְׁתַּבַּח וְיִתְפָּאַר וְיִתְרוֹמַם וְיִתְנַשֵּׂא וְיִתְהַדָּר וְיִתְעַלֶּה וְיִתְהַלָּל שְׁמֵהּ דְּקֻדְשָׁא. בְּרִיךְ הוּא. בריך הוא."
+          },
+          {
+            "role": "congregation",
+            "text": "אמן"
+          },
+          {
+            "role": "leader",
+            "text": "לְעֵלָּא מִן כָּל בִּרְכָתָא וְשִׁירָתָא תֻּשְׁבְּחָתָא וְנֶחֱמָתָא דַּאֲמִירָן בְּעָלְמָא. וְאִמְרוּ אָמֵן."
+          },
+          {
+            "role": "congregation",
+            "text": "אמן"
+          },
+          {
+            "role": "leader",
+            "text": "עַל יִשְׂרָאֵל וְעַל רַבָּנָן. וְעַל תַּלְמִידֵיהוֹן וְעַל כָּל תַּלְמִידֵי תַלְמִידֵיהוֹן. וְעַל כָּל מַאן דְּעָסְקִין בְּאוֹרַיְתָא. דִּי בְאַתְרָא קַדִּישָׁא הָדֵין וְדִי בְכָל אֲתַר וַאֲתַר. יְהֵא לְהוֹן וּלְכוֹן שְׁלָמָא רַבָּא חִנָּא וְחִסְדָּא וְרַחֲמִין וְחַיִּין אֲרִיכִין וּמְזוֹנֵי רְוִיחֵי וּפֻרְקָנָא מִן קֳדָם אֲבוּהוֹן דְּבִשְׁמַיָּא וְאַרְעָא וְאִמְרוּ אָמֵן."
+          },
+          {
+            "role": "congregation",
+            "text": "אמן"
+          },
+          {
+            "role": "leader",
+            "text": "יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא וְחַיִּים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל. וְאִמְרוּ אָמֵן."
+          },
+          {
+            "role": "congregation",
+            "text": "אמן"
+          },
+          {
+            "role": "leader",
+            "text": "עוֹשֶׂה שָׁלוֹם בִּמְרוֹמָיו הוּא יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן."
+          },
+          {
+            "role": "congregation",
+            "text": "אמן"
+          }
+        ]
+      },
+      "notes": [
+        "Hebrew text of the Ashkenaz siddur as digitised from daat.ac.il (Sefaria versionSource).",
+        "Congregation responses are marked by the source itself: a bracketed [..] group, and in the Mourner's Kaddish also an explicit label (קהל:, קהל ואבל:, אבל:). Unmarked text is the reader (leader/mourner)."
+      ],
+      "validation": {
+        "kaddish-yatom": {
+          "segments": 17,
+          "congregationSegments": 7,
+          "words": 82,
+          "wordsWithoutNikkud": 7,
+          "unvowelledWords": [
+            "אמן",
+            "בריך",
+            "הוא:"
+          ],
+          "shinWithoutDot": 6,
+          "cantillationAndMetegMarks": {},
+          "pointedTetragrammatonWords": 0,
+          "yiAbbreviationWords": 0
+        },
+        "kaddish-derabbanan": {
+          "segments": 14,
+          "congregationSegments": 7,
+          "words": 134,
+          "wordsWithoutNikkud": 9,
+          "unvowelledWords": [
+            "אמן",
+            "אמן,",
+            "בריך",
+            "הוא."
+          ],
+          "shinWithoutDot": 0,
+          "cantillationAndMetegMarks": {},
+          "pointedTetragrammatonWords": 0,
+          "yiAbbreviationWords": 0
+        }
+      }
+    },
+    "sefaria-metsudah-siddur-1981": {
+      "source": {
+        "site": "sefaria.org",
+        "ref": "Siddur Ashkenaz",
+        "refs": {
+          "kaddish-yatom": "Siddur Ashkenaz, Weekday, Shacharit, Concluding Prayers, Mourner's Kaddish",
+          "kaddish-derabbanan": "Siddur Ashkenaz, Weekday, Shacharit, Preparatory Prayers, Korbanot, Kaddish DeRabbanan"
+        },
+        "versionTitle": "The Metsudah siddur, 1981",
+        "license": "CC-BY",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+        "upstreamSource": "https://www.nli.org.il/he/books/NNL_ALEPH002211687",
+        "url": "https://www.sefaria.org/Siddur_Ashkenaz%2C_Weekday%2C_Shacharit%2C_Concluding_Prayers%2C_Mourner's_Kaddish?lang=he&ven=hebrew%7CThe_Metsudah_siddur%2C_1981",
+        "viewUrls": {
+          "kaddish-yatom": "https://www.sefaria.org/Siddur_Ashkenaz%2C_Weekday%2C_Shacharit%2C_Concluding_Prayers%2C_Mourner's_Kaddish?lang=he&ven=hebrew%7CThe_Metsudah_siddur%2C_1981",
+          "kaddish-derabbanan": "https://www.sefaria.org/Siddur_Ashkenaz%2C_Weekday%2C_Shacharit%2C_Preparatory_Prayers%2C_Korbanot%2C_Kaddish_DeRabbanan?lang=he&ven=hebrew%7CThe_Metsudah_siddur%2C_1981"
+        },
+        "apiUrls": {
+          "kaddish-yatom": "https://www.sefaria.org/api/v3/texts/Siddur%20Ashkenaz%2C%20Weekday%2C%20Shacharit%2C%20Concluding%20Prayers%2C%20Mourner's%20Kaddish?version=hebrew%7CThe%20Metsudah%20siddur%2C%201981",
+          "kaddish-derabbanan": "https://www.sefaria.org/api/v3/texts/Siddur%20Ashkenaz%2C%20Weekday%2C%20Shacharit%2C%20Preparatory%20Prayers%2C%20Korbanot%2C%20Kaddish%20DeRabbanan?version=hebrew%7CThe%20Metsudah%20siddur%2C%201981"
+        },
+        "payloadSha256": {
+          "kaddish-yatom": "5bae78593793b062bae26e4c7358d000c2256fd65fc67a7e98aeff8ff199c09a",
+          "kaddish-derabbanan": "8f89fb13871e7ee135222be6b65907db330c737640011f6208079d0576e3d587"
+        },
+        "retrievedAt": "2026-10-15T05:31:08.658Z"
+      },
+      "nusach": "ashkenaz",
+      "reviewStatus": "IMPORTED",
+      "texts": {
+        "kaddish-yatom": [
+          {
+            "role": "leader",
+            "text": "יִתְגַּדַּל וְיִתְקַדַּשׁ שְׁמֵהּ רַבָּא"
+          },
+          {
+            "role": "congregation",
+            "text": "אָמֵן"
+          },
+          {
+            "role": "leader",
+            "text": "בְּעָלְ֒מָֽא דִּי־בְרָא כִרְעוּתֵהּ וְיַמְלִיךְ מַלְכוּתֵהּ בְּחַיֵּיכוֹן וּבְיוֹמֵיכוֹן וּבְחַיֵּי דְכָל־בֵּית יִשְׂרָאֵל בַּעֲגָלָא וּבִזְמַן קָרִיב וְאִמְרוּ"
+          },
+          {
+            "role": "congregation",
+            "text": "אָמֵן:"
+          },
+          {
+            "role": "congregation",
+            "text": "יְהֵא שְׁמֵהּ רַבָּא מְבָרַךְ לְעָלַם וּלְעָלְ֒מֵי עָלְ֒מַיָּא"
+          },
+          {
+            "role": "leader",
+            "text": "יִתְבָּרַךְ וְיִשְׁתַּבַּח וְיִתְפָּאַר וְיִתְרוֹמַם וְיִתְנַשֵּׂא וְיִתְהַדָּר וְיִתְעַלֶּה וְיִתְהַלָּל שְׁמֵהּ דְקוּדְשָׁא"
+          },
+          {
+            "role": "congregation",
+            "text": "בְּרִיךְ הוּא"
+          },
+          {
+            "role": "leader",
+            "text": "לְעֵֽלָּא מִן־כָּל־"
+          },
+          {
+            "role": "instruction",
+            "text": "(בעשי\"ת לְעֵֽלָּא לְעֵֽלָּא מִכָּל)"
+          },
+          {
+            "role": "leader",
+            "text": "בִּרְכָתָֽא וְשִׁירָתָֽא תֻּשְׁבְּ֒חָתָֽא וְנֶחָמָתָֽא דַּאֲמִירָן בְּעָלְ֒מָֽא וְאִמְרוּ"
+          },
+          {
+            "role": "congregation",
+            "text": "אָמֵן:"
+          },
+          {
+            "role": "leader",
+            "text": "יְהֵא שְׁלָמָֽא רַבָּֽא מִן־שְׁמַיָּֽא וְחַיִּים עָלֵֽינוּ וְעַל־כָּל־יִשְׂרָאֵל וְאִמְרוּ"
+          },
+          {
+            "role": "congregation",
+            "text": "אָמֵן:"
+          },
+          {
+            "role": "leader",
+            "text": "עוֹשֶׂה שָׁלוֹם"
+          },
+          {
+            "role": "instruction",
+            "text": "(בעשי\"ת הַשָּׁלוֹם)"
+          },
+          {
+            "role": "leader",
+            "text": "בִּמְרוֹמָיו הוּא יַעֲשֶׂה שָׁלוֹם עָלֵֽינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ"
+          },
+          {
+            "role": "congregation",
+            "text": "אָמֵן:"
+          }
+        ],
+        "kaddish-derabbanan": [
+          {
+            "role": "instruction",
+            "text": "מה שאנו אומרין הקדיש בלשון תרגום, יש אומרים מפני המלאכים שלא יתקנאו בנו שאנו משבחים שבח נאה כזה ואם יבינו המלאכים זה יקטרגו עלינו, על כן אומרים אותו בלשון שלא יבינו, שאינן מכירין ארמית. ויש מפרשים הטעם לפי שהיו רגילין לומר אותו אחר הדרשה והיו שם עמי הארץ שאינן מכירין אלא ארמית שהוא לשונם לכן נהגו לאומרו בלשון שהכל מבינין בו (ע\"פ טור או\"ח נו)"
+          },
+          {
+            "role": "leader",
+            "text": "יִתְגַּדַּל וְיִתְקַדַּשׁ שְׁמֵהּ רַבָּא"
+          },
+          {
+            "role": "congregation",
+            "text": "אָמֵן"
+          },
+          {
+            "role": "leader",
+            "text": "בְּעָלְ֒מָֽא דִּי־בְרָא כִרְעוּתֵהּ וְיַמְלִיךְ מַלְכוּתֵהּ בְּחַיֵּיכוֹן וּבְיוֹמֵיכוֹן וּבְחַיֵּי דְכָל־בֵּית יִשְׂרָאֵל בַּעֲגָלָא וּבִזְמַן קָרִיב וְאִמְרוּ"
+          },
+          {
+            "role": "congregation",
+            "text": "אָמֵן:"
+          },
+          {
+            "role": "congregation",
+            "text": "יְהֵא שְׁמֵהּ רַבָּא מְבָרַךְ לְעָלַם וּלְעָלְ֒מֵי עָלְ֒מַיָּא"
+          },
+          {
+            "role": "leader",
+            "text": "יִתְבָּרַךְ וְיִשְׁתַּבַּח וְיִתְפָּאַר וְיִתְרוֹמַם וְיִתְנַשֵּׂא וְיִתְהַדָּר וְיִתְעַלֶּה וְיִתְהַלָּל שְׁמֵהּ דְקוּדְשָׁא"
+          },
+          {
+            "role": "congregation",
+            "text": "בְּרִיךְ הוּא"
+          },
+          {
+            "role": "leader",
+            "text": "לְעֵֽלָּא מִן־כָּל־"
+          },
+          {
+            "role": "instruction",
+            "text": "(בעשי\"ת לְעֵֽלָּא לְעֵֽלָּא מִכָּל)"
+          },
+          {
+            "role": "leader",
+            "text": "בִּרְכָתָֽא וְשִׁירָתָֽא תֻּשְׁבְּ֒חָתָֽא וְנֶחָמָתָֽא דַּאֲמִירָן בְּעָלְ֒מָֽא וְאִמְרוּ"
+          },
+          {
+            "role": "congregation",
+            "text": "אָמֵן:"
+          },
+          {
+            "role": "leader",
+            "text": "עַל יִשְׂרָאֵל וְעַל רַבָּנָן וְעַל תַלְמִידֵיהוֹן וְעַל כָּל תַּלְמִידֵי תַלְמִידֵיהוֹן. וְעַל כָּל מָאן דְּעָסְ֒קִין בְּאוֹרַיְתָא. דִּי בְאַתְרָא הָדֵין וְדִי בְכָל אֲתַר וַאֲתַר. יְהֵא לְהוֹן וּלְכוֹן שְׁלָמָא רַבָּא חִנָּא וְחִסְדָּא וְרַחֲמִין וְחַיִּין אֲרִיכִין וּמְזוֹנָא רְוִיחֵי וּפוּרְקָנָא מִן קֳדָם אֲבוּהוֹן דְבִשְׁמַיָּא (וְאַרְעָא) וְאִמְרוּ"
+          },
+          {
+            "role": "congregation",
+            "text": "אָמֵן:"
+          },
+          {
+            "role": "leader",
+            "text": "יְהֵא שְׁלָמָֽא רַבָּֽא מִן־שְׁמַיָּֽא וְחַיִּים עָלֵֽינוּ וְעַל־כָּל־יִשְׂרָאֵל וְאִמְרוּ"
+          },
+          {
+            "role": "congregation",
+            "text": "אָמֵן:"
+          },
+          {
+            "role": "leader",
+            "text": "עוֹשֶׂה שָׁלוֹם"
+          },
+          {
+            "role": "instruction",
+            "text": "(בעשי\"ת הַשָּׁלוֹם)"
+          },
+          {
+            "role": "leader",
+            "text": "בִּמְרוֹמָיו הוּא יַעֲשֶׂה שָׁלוֹם עָלֵֽינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ"
+          },
+          {
+            "role": "congregation",
+            "text": "אָמֵן:"
+          }
+        ]
+      },
+      "notes": [
+        "Metsudah linear siddur (Avrohom Davis, 1981), Hebrew column only. Sefaria carries it under the weekday/Shabbat refs, not under the stand-alone \"Kaddish\" section.",
+        "Congregation responses are bold in the source (אָמֵן, בְּרִיךְ הוּא, יְהֵא שְׁמֵהּ רַבָּא...); the first Amen of each paragraph is also in parentheses. Sefaria gives no legend for the bold, so the convention is inferred from use: every bold run in these two prayers other than the opening word is a congregational response.",
+        "The opening word יִתְגַּדַּל is bold too, but it is an incipit marker (the same bolding opens אַב הָרַחֲמִים and אַשְׁרֵי elsewhere in the Metsudah machzor), not a response; it stays with the reader.",
+        "Aseret Yemei Teshuva alternates are parenthesised in the source and are emitted as role \"instruction\" segments, e.g. (בעשי\"ת ...). The optional \"(וְאַרְעָא)\" is kept inside the reader text as printed.",
+        "Contains non-standard marks: U+0592 (a sheva-na marker, e.g. בְּעָלְ֒מָֽא) and U+05BD meteg. They are kept as the source has them; a display layer may want to strip U+0592."
+      ],
+      "validation": {
+        "kaddish-yatom": {
+          "segments": 17,
+          "congregationSegments": 7,
+          "words": 76,
+          "wordsWithoutNikkud": 0,
+          "unvowelledWords": [],
+          "shinWithoutDot": 0,
+          "cantillationAndMetegMarks": {
+            "U+0592": 5,
+            "U+05BD": 12
+          },
+          "pointedTetragrammatonWords": 0,
+          "yiAbbreviationWords": 0
+        },
+        "kaddish-derabbanan": {
+          "segments": 20,
+          "congregationSegments": 8,
+          "words": 118,
+          "wordsWithoutNikkud": 0,
+          "unvowelledWords": [],
+          "shinWithoutDot": 0,
+          "cantillationAndMetegMarks": {
+            "U+0592": 6,
+            "U+05BD": 12
+          },
+          "pointedTetragrammatonWords": 0,
+          "yiAbbreviationWords": 0
+        }
+      }
+    },
+    "sefaria-metsudah-machzor-yk-ashkenaz-linear": {
+      "source": {
+        "site": "sefaria.org",
+        "ref": "Machzor Yom Kippur Ashkenaz Linear",
+        "refs": {
+          "el-male-rachamim": "Machzor Yom Kippur Ashkenaz Linear, Memorial Services 72-93",
+          "el-male-rachamim-female": "Machzor Yom Kippur Ashkenaz Linear, Memorial Services 95-117"
+        },
+        "versionTitle": "The Metsudah Machzor. Metsudah Publications, New York",
+        "license": "CC-BY",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+        "upstreamSource": "https://www.nli.org.il/he/books/NNL_ALEPH000996925",
+        "url": "https://www.sefaria.org/Machzor_Yom_Kippur_Ashkenaz_Linear%2C_Memorial_Services?lang=he&ven=hebrew%7CThe_Metsudah_Machzor._Metsudah_Publications%2C_New_York",
+        "apiUrls": {
+          "memorial-services (whole section)": "https://www.sefaria.org/api/v3/texts/Machzor%20Yom%20Kippur%20Ashkenaz%20Linear%2C%20Memorial%20Services?version=hebrew%7CThe%20Metsudah%20Machzor.%20Metsudah%20Publications%2C%20New%20York"
+        },
+        "payloadSha256": {
+          "memorial-services (whole section)": "779ae7ac7e9d6fc3864f245378ea220c52ef71c03ccf2c1970ea57f5fc075b57"
+        },
+        "retrievedAt": "2026-10-15T05:31:09.056Z"
+      },
+      "nusach": "ashkenaz",
+      "reviewStatus": "IMPORTED",
+      "texts": {
+        "el-male-rachamim": [
+          {
+            "role": "leader",
+            "text": "אֵל מָלֵא רַחֲמִים"
+          },
+          {
+            "role": "leader",
+            "text": "שׁוֹכֵן בַּמְּרוֹמִים"
+          },
+          {
+            "role": "leader",
+            "text": "הַמְצֵא מְנוּחָה נְכוֹנָה"
+          },
+          {
+            "role": "leader",
+            "text": "עַל כַּנְפֵי הַשְּׁכִינָה"
+          },
+          {
+            "role": "leader",
+            "text": "בְּמַעֲלוֹת קְדוֹשִׁים וּטְהוֹרִים"
+          },
+          {
+            "role": "leader",
+            "text": "כְּזֹֽהַר הָרָקִֽיעַ מַזְהִירִים"
+          },
+          {
+            "role": "leader",
+            "text": "אֶת נִשְׁמַת"
+          },
+          {
+            "role": "leader",
+            "text": "(פב\"פ)",
+            "slot": "name"
+          },
+          {
+            "role": "leader",
+            "text": "שֶׁהָלַךְ לְעוֹלָמוֹ"
+          },
+          {
+            "role": "leader",
+            "text": "בַּעֲבוּר שֶׁנָּדְבוּ צְדָקָה"
+          },
+          {
+            "role": "leader",
+            "text": "בְּעַד הַזְכָּרַת נִשְׁמָתוֹ"
+          },
+          {
+            "role": "leader",
+            "text": "בְּגַן עֵֽדֶן"
+          },
+          {
+            "role": "leader",
+            "text": "תְּהֵא מְנוּחָתוֹ"
+          },
+          {
+            "role": "leader",
+            "text": "לָכֵן בַּֽעַל הָרַחֲמִים"
+          },
+          {
+            "role": "leader",
+            "text": "יַסְתִּירֵֽהוּ"
+          },
+          {
+            "role": "leader",
+            "text": "בְּסֵֽתֶר כְּנָפָיו לְעוֹלָמִים"
+          },
+          {
+            "role": "leader",
+            "text": "וְיִצְרוֹר"
+          },
+          {
+            "role": "leader",
+            "text": "בִּצְרוֹר הַחַיִּים אֶת נִשְׁמָתוֹ"
+          },
+          {
+            "role": "leader",
+            "text": "יְהֹוָה הוּא נַחֲלָתוֹ"
+          },
+          {
+            "role": "leader",
+            "text": "וְיָנֽוּחַ עַל מִשְׁכָּבוֹ בְּשָׁלוֹם"
+          },
+          {
+            "role": "leader",
+            "text": "וְנֹאמַר אָמֵן:"
+          }
+        ],
+        "el-male-rachamim-female": [
+          {
+            "role": "leader",
+            "text": "אֵל מָלֵא רַחֲמִים"
+          },
+          {
+            "role": "leader",
+            "text": "שׁוֹכֵן בַּמְּרוֹמִים"
+          },
+          {
+            "role": "leader",
+            "text": "הַמְצֵא מְנוּחָה נְכוֹנָה"
+          },
+          {
+            "role": "leader",
+            "text": "עַל כַּנְפֵי הַשְּׁכִינָה"
+          },
+          {
+            "role": "leader",
+            "text": "בְּמַעֲלוֹת"
+          },
+          {
+            "role": "leader",
+            "text": "קְדוֹשִׁים וּטְהוֹרִים"
+          },
+          {
+            "role": "leader",
+            "text": "כְּזֹֽהַר הָרָקִֽיעַ מַזְהִירִים"
+          },
+          {
+            "role": "leader",
+            "text": "אֶת נִשְׁמַת"
+          },
+          {
+            "role": "leader",
+            "text": "(פב\"פ)",
+            "slot": "name"
+          },
+          {
+            "role": "leader",
+            "text": "שֶׁהָלְכָה לְעוֹלָמָהּ"
+          },
+          {
+            "role": "leader",
+            "text": "בַּעֲבוּר שֶׁנָּדְבוּ צְדָקָה"
+          },
+          {
+            "role": "leader",
+            "text": "בְּעַד הַזְכָּרַת נִשְׁמָתָהּ"
+          },
+          {
+            "role": "leader",
+            "text": "בְּגַן עֵֽדֶן"
+          },
+          {
+            "role": "leader",
+            "text": "תְּהֵא מְנוּחָתָהּ"
+          },
+          {
+            "role": "leader",
+            "text": "לָכֵן בַּֽעַל הָרַחֲמִים"
+          },
+          {
+            "role": "leader",
+            "text": "יַסְתִּירֶֽהָ"
+          },
+          {
+            "role": "leader",
+            "text": "בְּסֵֽתֶר כְּנָפָיו לְעוֹלָמִים"
+          },
+          {
+            "role": "leader",
+            "text": "וְיִצְרוֹר"
+          },
+          {
+            "role": "leader",
+            "text": "בִּצְרוֹר הַחַיִּים אֶת נִשְׁמָתָהּ"
+          },
+          {
+            "role": "leader",
+            "text": "יְהֹוָה הוּא נַחֲלָתָהּ"
+          },
+          {
+            "role": "leader",
+            "text": "וְתָנֽוּחַ עַל מִשְׁכָּבָהּ בְּשָׁלוֹם"
+          },
+          {
+            "role": "leader",
+            "text": "וְנֹאמַר אָמֵן:"
+          }
+        ]
+      },
+      "notes": [
+        "El Male Rachamim as printed in the Metsudah Yom Kippur Machzor (Ashkenaz), Hebrew column. Two paragraphs: for a man (שֶׁהָלַךְ לְעוֹלָמוֹ ...) and for a woman (שֶׁהָלְכָה לְעוֹלָמָהּ ...). Key \"el-male-rachamim\" = man, \"el-male-rachamim-female\" = woman.",
+        "Name slot: its own line (פב\"פ) between \"אֶת נִשְׁמַת\" and the relative clause; flagged slot:\"name\". It abbreviates פלוני בן פלוני; the source prints the same abbreviation for the woman's form (no separate בת/אמה wording).",
+        "The Tetragrammaton is printed fully pointed (יְהֹוָה). That is how the source has it; the display layer must decide how to render the Name. It is NOT altered here.",
+        "The source is line-per-phrase; each source line is one segment. Nothing in this prayer is marked as a congregation response in the source, so every segment is \"leader\" (the person reciting).",
+        "Same Yom Kippur Memorial Services section also holds the Yizkor paragraphs and Av HaRachamim; they are not imported."
+      ],
+      "validation": {
+        "el-male-rachamim": {
+          "segments": 21,
+          "congregationSegments": 0,
+          "words": 52,
+          "wordsWithoutNikkud": 0,
+          "unvowelledWords": [],
+          "shinWithoutDot": 0,
+          "cantillationAndMetegMarks": {
+            "U+05BD": 7
+          },
+          "pointedTetragrammatonWords": 1,
+          "yiAbbreviationWords": 0
+        },
+        "el-male-rachamim-female": {
+          "segments": 22,
+          "congregationSegments": 0,
+          "words": 52,
+          "wordsWithoutNikkud": 0,
+          "unvowelledWords": [],
+          "shinWithoutDot": 0,
+          "cantillationAndMetegMarks": {
+            "U+05BD": 7
+          },
+          "pointedTetragrammatonWords": 1,
+          "yiAbbreviationWords": 0
+        }
+      }
+    },
+    "wikisource-he-el-male-rachamim": {
+      "source": {
+        "site": "he.wikisource.org",
+        "ref": "אל מלא רחמים",
+        "refs": {
+          "el-male-rachamim": "אל מלא רחמים#לנפטר",
+          "el-male-rachamim-female": "אל מלא רחמים#לנפטרת"
+        },
+        "versionTitle": "אל מלא רחמים (revision 3007226, 2026-04-21T09:43:14Z)",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "revid": 3007226,
+        "revisionTimestamp": "2026-04-21T09:43:14Z",
+        "url": "https://he.wikisource.org/wiki/%D7%90%D7%9C_%D7%9E%D7%9C%D7%90_%D7%A8%D7%97%D7%9E%D7%99%D7%9D?oldid=3007226",
+        "apiUrls": {
+          "parse": "https://he.wikisource.org/w/api.php?format=json&formatversion=2&action=parse&oldid=3007226&prop=text%7Crevid%7Cdisplaytitle%7Cwikitext"
+        },
+        "payloadSha256": {
+          "parse": "cfb1b73a71d8a1a45fab32dccc0a3960fbe69947341ae724e2543230bda8e877"
+        },
+        "historyUrl": "https://he.wikisource.org/w/index.php?title=%D7%90%D7%9C_%D7%9E%D7%9C%D7%90_%D7%A8%D7%97%D7%9E%D7%99%D7%9D&action=history",
+        "contributors": [
+          "Erel Segal",
+          "Guycn2",
+          "Kurpaph",
+          "Nahum",
+          "Roxette5",
+          "Tytyty1",
+          "Yuval CT",
+          "מו יו הו",
+          "נדב ס"
+        ],
+        "anonymousContributorCount": 11,
+        "newerRevisionExistsAtRetrieval": false,
+        "latestRevidAtRetrieval": 3007226,
+        "retrievedAt": "2026-10-15T05:31:11.453Z"
+      },
+      "nusach": "ashkenaz",
+      "reviewStatus": "IMPORTED",
+      "texts": {
+        "el-male-rachamim": [
+          {
+            "role": "leader",
+            "text": "אֵל מָלֵא רַחֲמִים, שׁוֹכֵן בַּמְּרוֹמִים,"
+          },
+          {
+            "role": "leader",
+            "text": "הַמְצֵא מְנוּחָה נְכוֹנָה, עַל כַּנְפֵי הַשְּׁכִינָה,"
+          },
+          {
+            "role": "leader",
+            "text": "בְּמַעֲלוֹת קְדוֹשִׁים וּטְהוֹרִים, כְּזֹֽהַר הָרָקִֽיעַ מַזְהִירִים,"
+          },
+          {
+            "role": "leader",
+            "text": "אֶת נִשְׁמַת"
+          },
+          {
+            "role": "leader",
+            "text": "שם בֶּן שם האב",
+            "slot": "name"
+          },
+          {
+            "role": "leader",
+            "text": "שֶׁהָלַךְ לְעוֹלָמוֹ, בַּעֲבוּר שֶׁנָּדְבוּ צְדָקָה בְּעַד הַזְכָּרַת נִשְׁמָתוֹ,"
+          },
+          {
+            "role": "leader",
+            "text": "בְּגַן עֵֽדֶן תְּהֵא מְנוּחָתוֹ"
+          },
+          {
+            "role": "leader",
+            "text": "לָכֵן בַּֽעַל הָרַחֲמִים יַסְתִּירֵֽהוּ בְּסֵֽתֶר כְּנָפָיו לְעוֹלָמִים,"
+          },
+          {
+            "role": "leader",
+            "text": "וְיִצְרֹר בִּצְרוֹר הַחַיִּים אֶת נִשְׁמָתוֹ."
+          },
+          {
+            "role": "leader",
+            "text": "יְיָ הוּא נַחֲלָתוֹ,"
+          },
+          {
+            "role": "leader",
+            "text": "וְיָנֽוּחַ בְּשָׁלוֹם עַל מִשְׁכָּבוֹ,"
+          },
+          {
+            "role": "leader",
+            "text": "וְנֹאמַר אָמֵן."
+          }
+        ],
+        "el-male-rachamim-female": [
+          {
+            "role": "leader",
+            "text": "אֵל מָלֵא רַחֲמִים, שׁוֹכֵן בַּמְּרוֹמִים,"
+          },
+          {
+            "role": "leader",
+            "text": "הַמְצֵא מְנוּחָה נְכוֹנָה, עַל כַּנְפֵי הַשְּׁכִינָה,"
+          },
+          {
+            "role": "leader",
+            "text": "בְּמַעֲלוֹת קְדוֹשִׁים וּטְהוֹרִים, כְּזֽוֹהַר הָרָקִֽיעַ מַזְהִירִים,"
+          },
+          {
+            "role": "leader",
+            "text": "אֶת נִשְׁמַת"
+          },
+          {
+            "role": "leader",
+            "text": "שם בַּת שם האב",
+            "slot": "name"
+          },
+          {
+            "role": "leader",
+            "text": "שֶׁהָלְכָה לְעוֹלָמָהּ, בַּעֲבוּר שֶׁנָדְבוּ צְדָקָה בְּעַד הַזְכָּרַת נִשְׁמָתָהּ,"
+          },
+          {
+            "role": "leader",
+            "text": "בְּגַן עֵֽדֶן תְּהֵא מְנוּחָתָהּ"
+          },
+          {
+            "role": "leader",
+            "text": "לָכֵן בַּֽעַל הָרַחֲמִים יַסְתִּירֶֽהָ"
+          },
+          {
+            "role": "instruction",
+            "text": "(נ״א: יַסְתִּירָהּ)"
+          },
+          {
+            "role": "leader",
+            "text": "בְּסֵֽתֶר כְּנָפָיו לְעוֹלָמִים,"
+          },
+          {
+            "role": "leader",
+            "text": "וְיִצְרֹר בִּצְרוֹר הַחַיִּים אֶת נִשְׁמָתָהּ."
+          },
+          {
+            "role": "leader",
+            "text": "יְיָ הוּא נַחֲלָתָהּ,"
+          },
+          {
+            "role": "leader",
+            "text": "וְתָנֽוּחַ בְּשָׁלוֹם עַל מִשְׁכָּבָהּ,"
+          },
+          {
+            "role": "leader",
+            "text": "וְנֹאמַר אָמֵן."
+          }
+        ]
+      },
+      "notes": [
+        "FALLBACK edition (not Sefaria). Hebrew Wikisource page \"אל מלא רחמים\", sections לנפטר (man) and לנפטרת (woman); the other sections of the page (IDF fallen, Shoah victims) are not imported.",
+        "Name slot: rendered by the wiki template {{פבפ}} as \"שם בֶּן שם האב\" (man) / \"שם בַּת שם האב\" (woman); emitted as one segment flagged slot:\"name\". The grey sub-scripts are the placeholders.",
+        "The page does not state a nusach. The wording is Ashkenaz (על כנפי, שנדבו צדקה, יסתירהו בסתר כנפיו) and agrees with the Metsudah text apart from the differences listed in diff-report.json.",
+        "The Name is written יְיָ (as in most Ashkenaz printings), unlike Metsudah's pointed Tetragrammaton.",
+        "The woman's form carries an alternative reading in parentheses, (נ״א: יַסְתִּירָהּ), emitted as role \"instruction\".",
+        "CC BY-SA 4.0 requires attribution (page title + revision link + source.historyUrl; registered contributors are in source.contributors, anonymous ones are only counted) and share-alike for adaptations of the text."
+      ],
+      "validation": {
+        "el-male-rachamim": {
+          "segments": 12,
+          "congregationSegments": 0,
+          "words": 52,
+          "wordsWithoutNikkud": 0,
+          "unvowelledWords": [],
+          "shinWithoutDot": 0,
+          "cantillationAndMetegMarks": {
+            "U+05BD": 7
+          },
+          "pointedTetragrammatonWords": 0,
+          "yiAbbreviationWords": 1
+        },
+        "el-male-rachamim-female": {
+          "segments": 14,
+          "congregationSegments": 0,
+          "words": 52,
+          "wordsWithoutNikkud": 0,
+          "unvowelledWords": [],
+          "shinWithoutDot": 0,
+          "cantillationAndMetegMarks": {
+            "U+05BD": 7
+          },
+          "pointedTetragrammatonWords": 0,
+          "yiAbbreviationWords": 1
+        }
+      }
+    }
+  }
+}
