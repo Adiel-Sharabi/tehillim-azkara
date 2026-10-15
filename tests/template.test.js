@@ -10,7 +10,7 @@ const prayer = (o, text) => o.sections.find((s) => s.text?.startsWith(text));
 const params = (s) => new URLSearchParams(s);
 
 test('ashkenaz_base: 7 psalms, 119 by name, 119 נשמה, mishnayot נשמה, Kaddish Yatom, El Male', () => {
-  const o = buildOrder('ashkenaz_base', { name: 'משה', gender: 'male', hasMinyan: true });
+  const o = buildOrder('ashkenaz_base', { name: 'משה', gender: 'male' });
   assert.equal(kinds(o), 'psalm,psalm,psalm,psalm,psalm,psalm,psalm,psalm119,psalm119,mishnah,prayer,prayer');
   assert.deepEqual(o.sections.filter((s) => s.kind === 'psalm').map((s) => s.chapter), [33, 16, 17, 72, 91, 104, 130]);
   assert.equal(o.sections[0].title, 'תהילים ל״ג');
@@ -34,11 +34,14 @@ test('El Male follows the gender and carries the name (with the parent, when giv
   assert.equal(fullName({ name: 'משה', parent: ' אברהם ' }), 'משה בן אברהם');
 });
 
-test('Kaddish is always present; without a minyan it carries the minyan note (decision ה5)', () => {
-  assert.equal(prayer(buildOrder('ashkenaz_base', { name: 'משה', hasMinyan: true }), 'kaddish').note, undefined);
-  const k = prayer(buildOrder('ashkenaz_base', { name: 'משה', hasMinyan: false }), 'kaddish');
-  assert.equal(k.text, 'kaddish-yatom');
-  assert.equal(k.note, MINYAN_NOTE);
+test('every Kaddish always carries the small "נאמר במניין" note; the page never asks about a minyan (decision ה5)', () => {
+  assert.equal(MINYAN_NOTE, 'נאמר במניין');
+  for (const id of Object.keys(TEMPLATES)) {
+    const kaddish = buildOrder(id, { name: 'משה' }).sections.filter((s) => s.text?.includes('kaddish'));
+    assert.ok(kaddish.length > 0, id);
+    for (const k of kaddish) assert.equal(k.note, MINYAN_NOTE, `${id} ${k.text}`);
+  }
+  assert.equal(prayer(buildOrder('ashkenaz_base', { name: 'משה' }), 'el-male').note, undefined, 'only Kaddish carries it');
 });
 
 test('a name with no Hebrew letters drops only the by-name section and reports what was ignored', () => {
@@ -49,10 +52,10 @@ test('a name with no Hebrew letters drops only the by-name section and reports w
 
 test('an edited order: removed, added and moved sections, unknown keys skipped and reported', () => {
   const order = ['r.el-male-rachamim', 'p91', 'r.kaddish-derabbanan', 'p23', 'x.future-thing', 'm.Mikvaot.7.1.7'];
-  const o = buildOrder('ashkenaz_base', { name: 'משה', hasMinyan: false, order });
+  const o = buildOrder('ashkenaz_base', { name: 'משה', order });
   assert.deepEqual(o.sections.map((s) => s.key), ['r.el-male-rachamim', 'p91', 'r.kaddish-derabbanan', 'p23', 'm.Mikvaot.7.1.7']);
   assert.deepEqual(o.unknownKeys, ['x.future-thing']);
-  assert.equal(o.sections[2].note, MINYAN_NOTE, 'Kaddish DeRabbanan keeps its minyan rule when added');
+  assert.equal(o.sections[2].note, MINYAN_NOTE, 'Kaddish DeRabbanan keeps its minyan note when added');
   assert.equal(o.sections[3].title, 'תהילים כ״ג', 'any psalm can be keyed, even one no template lists');
   assert.equal(o.sections[0].name, 'משה', 'El Male keeps its name slot when moved');
 });
@@ -66,22 +69,38 @@ test('the edit panel can offer the extras and the template sections', () => {
 });
 
 test('link v1 round-trips every input', () => {
-  const inputs = { template: 'ashkenaz_base', name: 'שרה', gender: 'female', hasMinyan: false, parent: 'רבקה', order: ['p91', 'n', 'r.el-male-rachamim'] };
+  const inputs = { template: 'ashkenaz_base', name: 'שרה', gender: 'female', parent: 'רבקה', order: ['p91', 'n', 'r.el-male-rachamim'] };
   const back = inputsFromParams(paramsFromInputs(inputs));
   assert.deepEqual({ ...back, unknownTemplate: undefined }, { ...inputs, unknownTemplate: undefined });
   assert.equal(paramsFromInputs(inputs).get('v'), '1');
 });
 
 test('an unedited order is not written into the link, so the link follows fixes to its template', () => {
-  const p = paramsFromInputs({ name: 'משה', gender: 'male', hasMinyan: true, order: defaultKeys(DEFAULT_TEMPLATE) });
+  const p = paramsFromInputs({ name: 'משה', gender: 'male', order: defaultKeys(DEFAULT_TEMPLATE) });
   assert.equal(p.get('o'), null);
   assert.equal(p.get('p'), null);
 });
 
 test('links made before v1 still open the same order (back-compat for printed QR codes)', () => {
   const old = inputsFromParams(params('n=משה&g=f&minyan=0'));
-  assert.deepEqual(old, { template: DEFAULT_TEMPLATE, unknownTemplate: null, name: 'משה', gender: 'female', hasMinyan: false, parent: '', order: null });
-  assert.deepEqual(inputsFromParams(params('n=משה')), { template: DEFAULT_TEMPLATE, unknownTemplate: null, name: 'משה', gender: 'male', hasMinyan: true, parent: '', order: null });
+  assert.deepEqual(old, { template: DEFAULT_TEMPLATE, unknownTemplate: null, name: 'משה', gender: 'female', parent: '', order: null });
+  assert.deepEqual(inputsFromParams(params('n=משה')), { template: DEFAULT_TEMPLATE, unknownTemplate: null, name: 'משה', gender: 'male', parent: '', order: null });
+});
+
+test('links that still carry minyan=0/1 open the same order: the param is ignored and no longer written', () => {
+  for (const q of ['v=1&t=sefard_base&n=דוד&g=m&minyan=0', 'v=1&t=sefard_base&n=דוד&g=m&minyan=1', 'v=1&t=sefard_base&n=דוד&g=m']) {
+    const i = inputsFromParams(params(q));
+    assert.equal('hasMinyan' in i, false, q);
+    assert.deepEqual(buildOrder(i.template, i).sections.map((s) => [s.key, s.note ?? null]),
+      buildOrder('sefard_base', { name: 'דוד' }).sections.map((s) => [s.key, s.note ?? null]), q);
+  }
+  assert.equal(paramsFromInputs({ name: 'דוד', gender: 'male' }).has('minyan'), false);
+});
+
+test('a verse-range key is understood from its own form, even when no template lists it', () => {
+  const o = buildOrder('ashkenaz_base', { name: 'דוד', order: ['p23.1.3'] });
+  assert.deepEqual(o.unknownKeys, []);
+  assert.deepEqual([o.sections[0].chapter, o.sections[0].from, o.sections[0].to], [23, 1, 3]);
 });
 
 test('unknown params are ignored; an unknown template falls back to the default and is reported', () => {
@@ -92,7 +111,7 @@ test('unknown params are ignored; an unknown template falls back to the default 
 });
 
 test('order keys need no escaping in a query string (short QR codes)', () => {
-  const p = paramsFromInputs({ name: 'a', gender: 'male', hasMinyan: true, order: ['p91', 'r.kaddish-yatom', 'm.Mikvaot.7.4.7'] });
+  const p = paramsFromInputs({ name: 'a', gender: 'male', order: ['p91', 'r.kaddish-yatom', 'm.Mikvaot.7.4.7'] });
   assert.match(p.toString(), /o=p91_r\.kaddish-yatom_m\.Mikvaot\.7\.4\.7/);
 });
 
@@ -119,7 +138,7 @@ test('links for every custom resolve: template, parent and an edited order survi
   // Psalm 119 by the name reads the mother's name too in this custom (withParent).
   assert.equal(o.sections[0].groups.map((g) => g.letter).join(''), 'יוספבנרחל');
   for (const id of Object.keys(TEMPLATES)) {
-    const back = inputsFromParams(paramsFromInputs({ template: id, name: 'שרה', gender: 'female', hasMinyan: false, parent: 'לאה' }));
+    const back = inputsFromParams(paramsFromInputs({ template: id, name: 'שרה', gender: 'female', parent: 'לאה' }));
     assert.equal(back.template, id);
     assert.equal(back.parent, 'לאה');
   }

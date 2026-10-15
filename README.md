@@ -25,6 +25,8 @@ npm run build:site       # assemble _site/ as GitHub Pages publishes it
 | `lib/` | pure modules shared by site, scripts and tests (`hebrew.js` marks, `psalm119.js` letters) |
 | `data/` | generated, committed text data the site reads |
 | `scripts/` | importers (one per source) and the dev server |
+| `site/about.html` | "אודות ומקורות": every text source with its license (the attribution the licenses require), fonts, build label |
+| `firestore.rules`, `firebase.json`, `site/feedback-config.js` | in-app feedback: reports go to a create-only Firestore collection (`lib/feedback.js` defines the fields). Feedback buttons stay hidden while `feedback-config.js` exports `null`; deploy the rules with `firebase deploy --only firestore:rules` |
 | `sources/<source>/` | provenance notes per source; `raw/` downloads are gitignored and re-fetchable |
 | `tests/` | `node:test` suites |
 
@@ -49,6 +51,8 @@ Every template in `lib/templates/` is a candidate custom, not yet confirmed with
 Edition choices and the other open decisions are recorded in the master doc, "החלטות ביצוע — 15.10.2026".
 
 ## Licensing
+
+Attribution for every text is on the site's `about.html`; printed copies point there.
 
 Biblical text: *Miqra according to the Masorah*, Hebrew Wikisource, CC BY-SA 4.0
 (see `sources/mam/LICENSE.md`). The importer is our own code; MAM-basics' GPL code is not used.

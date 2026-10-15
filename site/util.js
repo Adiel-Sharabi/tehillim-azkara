@@ -1,7 +1,18 @@
-// Small DOM helper and site constants shared by the page modules.
+// Small helpers shared by the page modules.
 
-// Where error reports go: a prefilled "new issue" on the public repository. No personal contact.
-export const REPO = 'Adiel-Sharabi/tehillim-azkara';
+// The build label: "<sha7> · <date>" from build.json (written at deploy; served live in development),
+// or "dev". Every page shows it, so a reader can tell the site actually refreshed.
+export async function buildLabel() {
+  try {
+    const r = await fetch('./build.json', { cache: 'no-store' });
+    if (!r.ok) return 'dev';
+    const b = await r.json();
+    const when = new Date(b.builtAt).toLocaleString('he-IL', { dateStyle: 'short', timeStyle: 'short' });
+    return `${b.sha.slice(0, 7)} · ${when}${b.dev ? ' · פיתוח' : ''}`;
+  } catch {
+    return 'dev';
+  }
+}
 
 // el('a', { href, className, ariaLabel }, ...children). aria*/data*/style become attributes;
 // everything else is set as a property.

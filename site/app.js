@@ -7,9 +7,10 @@ import {
   inputsFromParams, paramsFromInputs,
 } from './lib/template.js';
 import { hebrewNumeral, MAQAF } from './lib/hebrew.js';
-import { el, REPO } from './util.js';
+import { el, buildLabel } from './util.js';
 import { openShare, qrSvg } from './share.js';
 import { printSheet, printBooklet, setPageRule } from './print.js';
+import { feedbackEnabled, openFeedback, wireFeedback } from './feedback.js';
 
 const $ = (id) => document.getElementById(id);
 const PREFS_KEY = 'tehillim-view';
@@ -105,25 +106,18 @@ const RENDER = {
   },
 };
 
-function reportUrl(sectionTitle) {
-  const t = TEMPLATES[state.inputs.template]?.title ?? '';
-  const title = sectionTitle ? `טעות בנוסח: ${sectionTitle} (${t})` : `הערה על סדר האזכרה (${t})`;
-  const body = [
-    sectionTitle ? `קטע: ${sectionTitle}` : '',
-    `קישור לסדר: ${location.href}`,
-    `גרסת האתר: ${state.build}`,
-    `תצוגה: ${prefs.marks}`,
-    '',
-    'מה הטעות? (פסוק או מילה, ומה צריך להיות כתוב)',
-    '',
-  ].filter((l, i) => l || i > 2).join('\n');
-  return `https://github.com/${REPO}/issues/new?${new URLSearchParams({ title, body })}`;
+// What a feedback report says about where it came from (lib/feedback.js lists the fields).
+function feedbackContext(sectionTitle = '') {
+  return { section: sectionTitle, template: state.inputs?.template ?? '', link: location.href, build: state.build };
 }
 
 function section(s, i, prevKind) {
-  const head = el('div', { className: 'block-head' },
-    el('h2', { id: `h-${i}` }, s.title),
-    el('a', { className: 'report', href: reportUrl(s.title), target: '_blank', rel: 'noopener' }, 'דיווח על טעות'));
+  const head = el('div', { className: 'block-head' }, el('h2', { id: `h-${i}` }, s.title));
+  if (feedbackEnabled) {
+    const report = el('button', { type: 'button', className: 'report linklike' }, 'דיווח על טעות');
+    report.addEventListener('click', () => openFeedback(feedbackContext(s.title)));
+    head.append(report);
+  }
   const groupStart = prevKind && KIND_GROUP[prevKind] !== KIND_GROUP[s.kind];
   const wrap = el('section', { className: `block ${s.kind}${groupStart ? ' group-start' : ''}`, id: `s-${i}`, ariaLabelledby: `h-${i}` }, head);
   if (s.note) wrap.append(el('p', { className: 'note' }, s.note));
@@ -145,7 +139,6 @@ function render() {
   $('order').hidden = !showing;
   $('open-share').hidden = !showing;
   fillStartForm(inputs);
-  $('report-footer').href = reportUrl();
   if (!showing) {
     document.title = 'סדר אזכרה';
     state.order = null;
@@ -158,7 +151,7 @@ function render() {
   document.title = `לעילוי נשמת ${name} · סדר אזכרה`;
   $('order-name').textContent = name;
   const tmpl = TEMPLATES[inputs.template];
-  $('order-meta').textContent = `נוסח ${tmpl.title} · ${order.sections.length} קטעים${inputs.hasMinyan ? '' : ' · בלי מניין'}`;
+  $('order-meta').textContent = `נוסח ${tmpl.title} · ${order.sections.length} קטעים`;
 
   const warnings = [];
   if (inputs.unknownTemplate) warnings.push(`הנוסח שבקישור אינו מוכר כאן, ולכן מוצג נוסח ${tmpl.title}.`);
@@ -171,7 +164,6 @@ function render() {
   main.replaceChildren(...order.sections.map((s, i) => section(s, i, order.sections[i - 1]?.kind)));
   $('toc').replaceChildren(...order.sections.map((s, i) => el('li', {}, el('a', { href: `#s-${i}` }, s.title))));
   $('toc-details').open = matchMedia('(min-width: 1100px)').matches;
-  $('report-top').href = reportUrl();
   fillPrintEnd();
   observeToc();
 }
@@ -180,22 +172,19 @@ function fillStartForm(inputs) {
   $('name').value = inputs.name;
   $('parent').value = inputs.parent;
   $(inputs.gender === 'female' ? 'g-f' : 'g-m').checked = true;
-  $('minyan').checked = inputs.hasMinyan;
   for (const r of document.querySelectorAll('input[name="template"]')) r.checked = r.value === inputs.template;
-  if (inputs.parent || inputs.gender === 'female' || !inputs.hasMinyan) $('more').open = true;
+  if (inputs.parent || inputs.gender === 'female') $('more').open = true;
   labelParent('parent', inputs.template);
 }
 
-// Every template is a candidate until a community confirms it (lib/templates/index.js); the badge says
-// so, and how well its order is sourced.
-const CONFIDENCE = { medium: 'סדר מבוסס מקורות', low: 'סדר כללי, לאימות' };
+// The picker shows only what the reader chooses by. How well each order is sourced stays in the
+// template data and the master doc, not on the page.
 function renderTemplateChoices() {
   const entries = Object.entries(TEMPLATES);
-  $('templates').replaceChildren(...entries.map(([id, t], i) => el('label', { className: 'choice', title: t.status ?? '' },
+  $('templates').replaceChildren(...entries.map(([id, t], i) => el('label', { className: 'choice' },
     el('input', { type: 'radio', name: 'template', value: id, checked: i === 0 }),
     el('strong', {}, t.title),
-    el('span', {}, t.description ?? summaryOf(id)),
-    el('small', { className: `badge ${t.confidence ?? ''}` }, `מועמד · ${CONFIDENCE[t.confidence] ?? ''}`))));
+    el('span', {}, t.description ?? summaryOf(id)))));
   $('e-template').replaceChildren(...entries.map(([id, t]) => el('option', { value: id }, t.title)));
 }
 
@@ -239,29 +228,14 @@ function observeToc() {
   document.querySelectorAll('.reading .block').forEach((b) => tocObserver.observe(b));
 }
 
-// ---- attribution (licenses require it, on screen and on paper) ----
-function attributionParts() {
-  const e = state.psalms.edition;
-  const { mishnah, kaddish, elMale } = state.library.editions;
-  const link = (href, text) => (href ? el('a', { href, target: '_blank', rel: 'noopener' }, text) : text);
-  return [
-    ['תהילים: ', link(e.attributionUrl, 'מקרא על פי המסורה'), ', ויקיטקסט העברי, ברישיון ', link(e.licenseUrl, e.license), '.'],
-    ['משנה: ', link(mishnah.url, mishnah.title), ' (נחלת הכלל), דרך ספריא.'],
-    ['קדיש: ', link(kaddish.url, kaddish.title), `; א${MAQAF}ל מלא רחמים: `, link(elMale.url, elMale.title),
-      '; דרך ספריא, ברישיון ', link(kaddish.licenseUrl, 'CC BY 3.0'), '. שינויים: הוסרו הוראות והערות, ושם ה׳ נכתב בשני יודי״ן.'],
-  ];
-}
-function attributionText() {
-  return attributionParts().map((parts) => parts.map((p) => (typeof p === 'string' ? p : p.textContent)).join('')).join(' ');
-}
-function renderAttribution() {
-  $('attribution').replaceChildren(...attributionParts().map((parts) => el('p', {}, ...parts)));
-}
+// Licenses ask for attribution "in a reasonable manner": all of it is on about.html, and every printed
+// copy carries one line pointing there.
+const sourcesUrl = () => new URL('about.html', location.href).href;
 
 function fillPrintEnd() {
   $('print-qr').innerHTML = qrSvg(location.href);
   $('print-url').textContent = location.href;
-  document.querySelector('.print-attr').textContent = attributionText();
+  $('print-src').textContent = `מקורות הטקסט: ${sourcesUrl()}`;
 }
 
 // ---- display dialog ----
@@ -319,7 +293,6 @@ function editInputs() {
     name: $('e-name').value.trim(),
     parent: $('e-parent').value.trim(),
     gender: $('eg-f').checked ? 'female' : 'male',
-    hasMinyan: $('e-minyan').checked,
   };
 }
 function openEdit() {
@@ -327,7 +300,6 @@ function openEdit() {
   $('e-name').value = i.name;
   $('e-parent').value = i.parent;
   $(i.gender === 'female' ? 'eg-f' : 'eg-m').checked = true;
-  $('e-minyan').checked = i.hasMinyan;
   $('e-template').value = i.template;
   labelParent('e-parent', i.template);
   fillEditRows(i, i.order ?? defaultKeys(i.template));
@@ -360,7 +332,6 @@ function wire() {
       name,
       parent: $('parent').value.trim(),
       gender: $('g-f').checked ? 'female' : 'male',
-      hasMinyan: $('minyan').checked,
       order: null,
     });
   });
@@ -400,8 +371,7 @@ function wire() {
     name: fullName(state.inputs),
     templateTitle: TEMPLATES[state.inputs.template].title,
     kinds: summaryOf(state.inputs.template),
-    attribution: attributionText(),
-    build: state.build,
+    sourcesUrl: sourcesUrl(),
   });
   $('print-sheet').addEventListener('click', () => { $('dlg-print').close(); printSheet(); });
   $('print-booklet').addEventListener('click', async () => {
@@ -425,6 +395,11 @@ function wire() {
     go({ ...base, order });
   });
 
+  // feedback
+  wireFeedback();
+  $('feedback-general').hidden = !feedbackEnabled;
+  $('feedback-general').addEventListener('click', () => openFeedback(feedbackContext()));
+
   // close any dialog by tapping its backdrop
   for (const d of document.querySelectorAll('dialog')) {
     d.addEventListener('click', (ev) => { if (ev.target === d) d.close(); });
@@ -432,14 +407,8 @@ function wire() {
 }
 
 async function loadBuild() {
-  try {
-    const r = await fetch('./build.json', { cache: 'no-store' });
-    if (!r.ok) return;
-    const b = await r.json();
-    const when = new Date(b.builtAt).toLocaleString('he-IL', { dateStyle: 'short', timeStyle: 'short' });
-    state.build = `${b.sha.slice(0, 7)} · ${when}${b.dev ? ' · פיתוח' : ''}`;
-    $('build').textContent = `גרסה: ${state.build}`;
-  } catch { /* development: stays "dev" */ }
+  state.build = await buildLabel();
+  $('build').textContent = `גרסה: ${state.build}`;
 }
 
 renderTemplateChoices();
@@ -450,7 +419,6 @@ const [psalms, library] = await Promise.all(
   ['./data/psalms/psalms_mam.json', './data/reading/library.json'].map(async (u) => (await fetch(u)).json()),
 );
 Object.assign(state, { psalms, library });
-renderAttribution();
 renderFontOptions();
 applyPrefs();
 await loadBuild();

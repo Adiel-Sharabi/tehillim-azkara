@@ -174,7 +174,7 @@ function backCover(ctx) {
     qr,
     el('p', {}, 'לסדר בטלפון, לשיתוף ולהדפסה: סרקו את הקוד'),
     el('p', { className: 'bk-url' }, ctx.url),
-    el('p', { className: 'bk-fine' }, `הנוסח טרם הוגה. ${ctx.attribution} גרסה: ${ctx.build}.`),
+    el('p', { className: 'bk-fine' }, `מקורות הטקסט: ${ctx.sourcesUrl}`),
   );
   return page;
 }

@@ -69,7 +69,6 @@
               <input id="parent" autocomplete="off" placeholder="למשל: אברהם">
               <p class="hint" id="parent-hint">יופיע בא־ל מלא רחמים: ״משה בן אברהם״.</p>
             </div>
-            <label class="check"><input type="checkbox" id="minyan" checked><span>יש מניין <span class="hint-inline">(קדיש נאמר במניין בלבד)</span></span></label>
           </div>
         </details>
         <div class="step submit-row">
@@ -93,7 +92,6 @@
         </div>
       </header>
 
-      <p class="notice"><strong>טרם הוגה.</strong> הטקסטים נלקחו ממהדורות מזוהות והושוו מכנית, אך עדיין לא עברו הגהה אנושית. מצאתם טעות? <a id="report-top" target="_blank" rel="noopener">דווחו לנו</a>.</p>
       <p id="warnings" class="warn" role="status" hidden></p>
 
       <div class="layout">
@@ -112,23 +110,18 @@
         <div>
           <p>לסדר המלא, לשיתוף ולהדפסה: סרקו את הקוד.</p>
           <p class="print-url" id="print-url"></p>
-          <p class="print-fine">הנוסח טרם הוגה. <span class="print-attr"></span></p>
+          <p class="print-src" id="print-src"></p>
         </div>
       </section>
     </article>
   </main>
 
   <footer class="site-footer">
-    <div class="footer-inner">
-      <div id="attribution" class="attribution"></div>
-      <p class="footer-row">
-        <a id="report-footer" target="_blank" rel="noopener">דיווח על טעות או הערה</a>
-        <span aria-hidden="true">·</span>
-        <a href="fonts/README.txt" target="_blank" rel="noopener">גופנים ורישיונות</a>
-        <span aria-hidden="true">·</span>
-        <span id="build" class="build">גרסה: dev</span>
-      </p>
-    </div>
+    <p class="footer-inner footer-row">
+      <button type="button" class="linklike" id="feedback-general" hidden>שליחת משוב</button>
+      <a href="about.html">אודות ומקורות</a>
+      <span id="build" class="build">גרסה: dev</span>
+    </p>
   </footer>
 
   <!-- Display: private to this device. -->
@@ -228,7 +221,6 @@
           <label class="pill-option"><input type="radio" name="eg" id="eg-m" value="m"><span>נפטר</span></label>
           <label class="pill-option"><input type="radio" name="eg" id="eg-f" value="f"><span>נפטרת</span></label>
         </fieldset>
-        <label class="check"><input type="checkbox" id="e-minyan"><span>יש מניין</span></label>
         <div class="field"><label for="e-template">נוסח</label><select id="e-template"></select><p class="hint">החלפת נוסח מחזירה את רשימת הקטעים לברירת המחדל שלו.</p></div>
       </div>
       <h3 class="list-title">קטעים</h3>
@@ -237,6 +229,29 @@
       <div class="sheet-actions">
         <button type="button" id="edit-reset" class="secondary">חזרה לסדר של הנוסח</button>
         <button type="button" id="edit-save" class="primary">שמירה</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Feedback: sent to the site's own store (lib/feedback.js); shown only when site/feedback-config.js is set. -->
+  <dialog id="dlg-feedback" class="sheet" aria-labelledby="dlg-feedback-title">
+    <form class="sheet-body" id="feedback-form" novalidate>
+      <header class="sheet-head"><h2 id="dlg-feedback-title">משוב ודיווח על טעות</h2><button type="button" class="close" id="feedback-close" aria-label="סגירה">×</button></header>
+      <p class="sheet-note" id="fb-about"></p>
+      <div class="field">
+        <label for="fb-message">מה כדאי לתקן או לשפר?</label>
+        <textarea id="fb-message" rows="5" maxlength="2000" placeholder="למשל: בפסוק ג׳ חסר ניקוד במילה…"></textarea>
+      </div>
+      <div class="field">
+        <label for="fb-contact">איך לחזור אליך <span class="optional">(לא חובה)</span></label>
+        <input id="fb-contact" maxlength="200" autocomplete="off" placeholder="טלפון או אימייל">
+      </div>
+      <!-- People never see this field; form-filling bots do. -->
+      <div class="hp" aria-hidden="true"><label for="fb-website">אתר</label><input id="fb-website" tabindex="-1" autocomplete="off"></div>
+      <p id="fb-status" class="status" role="status"></p>
+      <div class="sheet-actions">
+        <button type="button" class="secondary" id="feedback-cancel">ביטול</button>
+        <button type="submit" class="primary" id="feedback-send">שליחה</button>
       </div>
     </form>
   </dialog>

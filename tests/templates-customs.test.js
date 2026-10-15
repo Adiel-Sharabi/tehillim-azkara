@@ -8,8 +8,8 @@ const lib = read('data/reading/library.json');
 const psalms = read('data/psalms/psalms_mam.json');
 
 const INPUTS = [
-  { name: 'משה', gender: 'male', hasMinyan: true, parent: 'רחל' },
-  { name: 'שרה', gender: 'female', hasMinyan: false, parent: '' },
+  { name: 'משה', gender: 'male', parent: 'רחל' },
+  { name: 'שרה', gender: 'female', parent: '' },
 ];
 
 // Every block a template can produce, default or optional, must name text the reading library has.
@@ -22,7 +22,7 @@ function checkSection(id, s) {
   if (s.kind === 'prayer') assert.ok(lib.prayers[s.text], `${id}: prayer ${s.text} not in the reading library`);
 }
 
-test('every template builds for both genders, with and without a minyan, and names only texts the library has', () => {
+test('every template builds for both genders, and names only texts the library has', () => {
   for (const [id, t] of Object.entries(TEMPLATES)) {
     for (const inputs of INPUTS) {
       const o = buildOrder(id, inputs);
@@ -71,7 +71,7 @@ test('Morocco reads Psalm 119 by קרע שטן and the long Hashkava; Sefard use
   assert.ok(m.sections.some((s) => s.kind === 'psalm119' && s.groups.map((g) => g.letter).join('') === 'קרעשטנ'));
   assert.ok(m.sections.some((s) => s.text === 'hashkava-long'));
   assert.ok(m.sections.some((s) => s.text === 'kol-yisrael'));
-  const s = buildOrder('sefard_base', { name: 'דוד', hasMinyan: false });
+  const s = buildOrder('sefard_base', { name: 'דוד' });
   assert.ok(s.sections.filter((x) => x.text?.startsWith('kaddish')).every((x) => x.text.endsWith('-sefard') && x.note));
 });
 

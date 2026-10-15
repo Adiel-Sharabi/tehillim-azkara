@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>אודות ומקורות · סדר אזכרה</title>
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f4f5f7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0e1217" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <script>
+    // Same theme as the reading page, before first paint.
+    try { const t = JSON.parse(localStorage.getItem('tehillim-view') || '{}').theme; if (t) document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script type="module" src="about.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="./"><span class="brand-mark" aria-hidden="true"></span>סדר אזכרה</a>
+      <a class="tool" href="./" id="back">חזרה</a>
+    </div>
+  </header>
+
+  <main class="about">
+    <h1>אודות ומקורות</h1>
+
+    <section>
+      <p>האתר בונה סדר לימוד ותפילה מנוקד לעילוי נשמת: תהילים לפי אותיות השם, משניות, קדיש, א־ל מלא רחמים והשכבה, לפי מנהגי העדות. אין צורך בהרשמה, והסדר כולו נשמר בקישור עצמו.</p>
+      <p>הטקסטים שמורים באתר עצמו. בזמן הקריאה לא נשלח מידע לשום שירות חיצוני; משוב נשלח רק כשכותבים אותו ולוחצים ״שליחה״.</p>
+    </section>
+
+    <section>
+      <h2>מקורות הטקסט</h2>
+      <ul class="sources" id="sources"><li>טוען…</li></ul>
+      <p class="fine">שינויים שנעשו בטקסטים: הוסרו הוראות והערות הסבר; שם ה׳ בתפילות נכתב בשני יודי״ן; תוקנו טעויות בודדות והושלם ניקוד חסר, על פי השוואה למהדורות נוספות. כל שינוי מתועד ב<a href="https://github.com/Adiel-Sharabi/tehillim-azkara" target="_blank" rel="noopener">קוד המקור של האתר</a>.</p>
+    </section>
+
+    <section>
+      <h2>גופנים ותוכנה</h2>
+      <p>גופני הקריאה פרנק־ריהל, כתר ונחליאלי מפרויקט Culmus, ברישיון GNU GPL v2 עם חריגת גופנים. גופן הממשק Assistant, ברישיון SIL Open Font License 1.1. הגופנים צומצמו לאותיות עבריות, ניקוד וטעמים. פרטים ורישיונות: <a href="fonts/README.txt" target="_blank" rel="noopener">fonts/README.txt</a>.</p>
+      <p>קודי ה־QR נוצרים בעזרת qrcode-generator מאת Kazuhiko Arase, ברישיון MIT (<a href="vendor/LICENSE-qrcode.txt" target="_blank" rel="noopener">רישיון</a>).</p>
+    </section>
+
+    <p class="fine build" id="build">גרסת האתר: dev</p>
+  </main>
+</body>
+</html>

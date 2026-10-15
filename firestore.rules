@@ -1,0 +1,33 @@
+rules_version = '2';
+
+// Feedback from the reading site (lib/feedback.js defines the fields and their limits; a test checks
+// that this file matches it). Anyone may add a report; no one may read, change or delete one from the
+// web. Reports are read in the Firebase console.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /feedback/{id} {
+      allow create: if isReport(request.resource.data);
+      allow read, update, delete: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isReport(d) {
+      return d.keys().hasOnly(['message', 'contact', 'template', 'section', 'link', 'build', 'clientTime'])
+        && d.keys().hasAll(['message', 'contact', 'template', 'section', 'link', 'build', 'clientTime'])
+        && text(d.message, 2000) && d.message.size() > 0
+        && text(d.contact, 200)
+        && text(d.template, 60)
+        && text(d.section, 200)
+        && text(d.link, 2000)
+        && text(d.build, 100)
+        && text(d.clientTime, 40);
+    }
+
+    function text(v, max) {
+      return v is string && v.size() <= max;
+    }
+  }
+}
