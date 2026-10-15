@@ -8,6 +8,7 @@
     "import:mishnah": "node scripts/import-mishnah.mjs --download",
     "test": "node --test",
     "serve": "node scripts/serve.mjs",
+    "build:site": "node scripts/assemble-site.mjs _site",
     "build:reading": "node scripts/build-reading.mjs"
   }
 }

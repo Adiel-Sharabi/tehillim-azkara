@@ -1,49 +1,80 @@
-// Reading page: name + gender + minyan -> the ashkenaz_base order (lib/template.js), rendered from
-// the local data files. Nothing is fetched from outside services.
+// The reading page. The link holds the shared order (lib/template.js owns its format); display choices
+// are private to this device (localStorage). Every text comes from the local data files; nothing is
+// fetched from any other service.
 
-import { buildOrder, inputsFromParams, paramsFromInputs } from '../lib/template.js';
-import { hebrewNumeral } from '../lib/hebrew.js';
+import {
+  TEMPLATES, DEFAULT_TEMPLATE, buildOrder, defaultKeys, addableKeys, fullName,
+  inputsFromParams, paramsFromInputs,
+} from './lib/template.js';
+import { hebrewNumeral, MAQAF } from './lib/hebrew.js';
+import { el, REPO } from './util.js';
+import { openShare, qrSvg } from './share.js';
+import { printSheet, printBooklet, setPageRule } from './print.js';
 
-const TEMPLATE = 'ashkenaz_base';
-const PREFS_KEY = 'tehillim-view';
 const $ = (id) => document.getElementById(id);
+const PREFS_KEY = 'tehillim-view';
+const FONTS = [
+  { id: 'frank', name: `פרנק${MAQAF}ריהל`, note: 'כמו בסידור' },
+  { id: 'keter', name: 'כתר', note: 'בסגנון כתר ירושלים' },
+  { id: 'nachlieli', name: 'נחליאלי', note: 'פשוט, בלי תגים' },
+];
+// Each must draw cantillation, not only vowels (Hadasim and Simple CLM were tried and drop the marks).
+const FONT_FAMILY = { frank: 'Frank Ruehl CLM', keter: 'Keter YG', nachlieli: 'Nachlieli CLM' };
+const KIND_GROUP = { psalm: 'psalms', psalm119: 'psalm119', mishnah: 'mishnah', prayer: 'prayer' };
 
-const prefs = { marks: 'withNikkud', scale: 1, theme: null, ...loadPrefs() };
-let psalms;
-let library;
+const prefs = { marks: 'withNikkud', scale: 1, font: 'frank', theme: 'system', ...loadPrefs() };
+const state = { inputs: null, order: null, psalms: null, library: null, build: 'dev' };
 
+// ---- preferences (this device only) ----
 function loadPrefs() {
   try { return JSON.parse(localStorage.getItem(PREFS_KEY)) ?? {}; } catch { return {}; }
 }
 function savePrefs() {
-  try { localStorage.setItem(PREFS_KEY, JSON.stringify(prefs)); } catch { /* private mode: prefs just don't persist */ }
+  try { localStorage.setItem(PREFS_KEY, JSON.stringify(prefs)); } catch { /* private mode: not kept */ }
 }
-
 function applyPrefs() {
-  document.documentElement.style.setProperty('--scale', prefs.scale);
-  if (prefs.theme) document.documentElement.dataset.theme = prefs.theme;
-  else delete document.documentElement.dataset.theme;
-  $('marks').value = prefs.marks;
+  const root = document.documentElement;
+  root.style.setProperty('--scale', prefs.scale);
+  if (prefs.theme === 'light' || prefs.theme === 'dark') root.dataset.theme = prefs.theme;
+  else delete root.dataset.theme;
+  if (prefs.font && prefs.font !== 'frank') root.dataset.font = prefs.font;
+  else delete root.dataset.font;
+  $('size-out').value = `${Math.round(prefs.scale * 100)}%`;
+  for (const r of document.querySelectorAll('input[name="marks"]')) r.checked = r.value === prefs.marks;
+  for (const r of document.querySelectorAll('input[name="theme"]')) r.checked = r.value === (prefs.theme ?? 'system');
+  for (const r of document.querySelectorAll('input[name="font"]')) r.checked = r.value === prefs.font;
 }
 
-function el(tag, attrs = {}, ...children) {
-  const node = document.createElement(tag);
-  Object.assign(node, attrs);
-  node.append(...children);
-  return node;
+// ---- text lookup ----
+function has(s) {
+  if (s.kind === 'psalm') return !!state.psalms.chapters[String(s.chapter)];
+  if (s.kind === 'psalm119') return !!state.psalms.chapters['119'];
+  if (s.kind === 'mishnah') {
+    const ch = state.library.mishnah[s.ref];
+    if (!ch) return false;
+    for (let n = s.from; n <= s.to; n++) if (!ch[n]) return false;
+    return true;
+  }
+  return !!state.library.prayers[s.text];
 }
 
 function verses(chapter, from, to) {
   const p = el('p', { className: 'scripture' });
-  for (const v of psalms.chapters[chapter].slice(from - 1, to)) p.append(el('span', { className: 'verse' }, v[prefs.marks]), ' ');
+  for (const v of state.psalms.chapters[chapter].slice(from - 1, to)) {
+    p.append(el('span', { className: 'verse' }, el('span', { className: 'vn' }, hebrewNumeral(v.v)), v[prefs.marks]), ' ');
+  }
   return p;
 }
 
 const RENDER = {
-  psalm: (s) => [verses(String(s.chapter), 1, psalms.chapters[String(s.chapter)].length)],
-  psalm119: (s) => s.groups.map((g) => el('div', { className: 'letter-group' }, el('h3', {}, `אות ${g.letter}`), verses('119', g.from, g.to))),
+  psalm: (s) => [verses(String(s.chapter), 1, state.psalms.chapters[String(s.chapter)].length)],
+  psalm119: (s) => s.groups.map((g) => el('div', { className: 'letter-group' },
+    el('div', { className: 'letter-head' },
+      el('span', { className: 'letter-big', ariaHidden: 'true' }, g.letter),
+      el('h3', { className: 'letter-sub' }, `אות ${g.letter} · פסוקים ${hebrewNumeral(g.from)}–${hebrewNumeral(g.to)}`)),
+    verses('119', g.from, g.to))),
   mishnah: (s) => {
-    const chapter = library.mishnah[s.ref];
+    const chapter = state.library.mishnah[s.ref];
     const out = [];
     for (let n = s.from; n <= s.to; n++) {
       out.push(el('p', { className: 'scripture mishnah' }, el('span', { className: 'num' }, `${hebrewNumeral(n)} `), chapter[n][prefs.marks]));
@@ -51,81 +82,343 @@ const RENDER = {
     return out;
   },
   prayer: (s) => {
+    const segs = state.library.prayers[s.text];
     const p = el('p', { className: 'scripture prayer' });
-    for (const seg of library.prayers[s.text]) {
+    let prev = '';
+    for (const seg of segs) {
       const text = seg.slot === 'name' ? s.name : seg[prefs.marks];
-      const span = el('span', { className: seg.slot ? 'slot' : seg.role }, text);
-      if (seg.role === 'congregation') span.title = 'הקהל עונה';
-      p.append(span, ' ');
+      // Segments are joined with a space, except after a maqaf, which binds to the next word.
+      if (prev && !prev.endsWith(MAQAF)) p.append(' ');
+      p.append(el('span', { className: seg.slot ? 'slot' : seg.role }, text));
+      prev = text;
     }
-    return [p];
+    const out = [p];
+    if (segs.some((g) => g.role === 'congregation')) out.unshift(el('p', { className: 'legend' }, 'בצבע ', el('b', {}, 'מודגש'), ': מה שהקהל עונה.'));
+    return out;
   },
 };
 
-function section(s) {
-  const wrap = el('section', { className: `block ${s.kind}` }, el('h2', {}, s.title));
+function reportUrl(sectionTitle) {
+  const t = TEMPLATES[state.inputs.template]?.title ?? '';
+  const title = sectionTitle ? `טעות בנוסח: ${sectionTitle} (${t})` : `הערה על סדר האזכרה (${t})`;
+  const body = [
+    sectionTitle ? `קטע: ${sectionTitle}` : '',
+    `קישור לסדר: ${location.href}`,
+    `גרסת האתר: ${state.build}`,
+    `תצוגה: ${prefs.marks}`,
+    '',
+    'מה הטעות? (פסוק או מילה, ומה צריך להיות כתוב)',
+    '',
+  ].filter((l, i) => l || i > 2).join('\n');
+  return `https://github.com/${REPO}/issues/new?${new URLSearchParams({ title, body })}`;
+}
+
+function section(s, i, prevKind) {
+  const head = el('div', { className: 'block-head' },
+    el('h2', { id: `h-${i}` }, s.title),
+    el('a', { className: 'report', href: reportUrl(s.title), target: '_blank', rel: 'noopener' }, 'דיווח על טעות'));
+  const groupStart = prevKind && KIND_GROUP[prevKind] !== KIND_GROUP[s.kind];
+  const wrap = el('section', { className: `block ${s.kind}${groupStart ? ' group-start' : ''}`, id: `s-${i}`, ariaLabelledby: `h-${i}` }, head);
   if (s.note) wrap.append(el('p', { className: 'note' }, s.note));
-  wrap.append(...RENDER[s.kind](s));
+  if (has(s)) wrap.append(...RENDER[s.kind](s));
+  else wrap.append(el('p', { className: 'missing' }, 'הטקסט של קטע זה עדיין אינו במאגר.'));
   return wrap;
 }
 
+// ---- views ----
+function currentInputs() {
+  return inputsFromParams(new URLSearchParams(location.search));
+}
+
 function render() {
-  const inputs = inputsFromParams(new URLSearchParams(location.search));
+  const inputs = currentInputs();
+  state.inputs = inputs;
+  const showing = !!inputs.name;
+  $('start').hidden = showing;
+  $('order').hidden = !showing;
+  $('open-share').hidden = !showing;
+  fillStartForm(inputs);
+  $('report-footer').href = reportUrl();
+  if (!showing) {
+    document.title = 'סדר אזכרה';
+    state.order = null;
+    return;
+  }
+
+  const order = buildOrder(inputs.template, inputs);
+  state.order = order;
+  const name = fullName(inputs);
+  document.title = `לעילוי נשמת ${name} · סדר אזכרה`;
+  $('order-name').textContent = name;
+  const tmpl = TEMPLATES[inputs.template];
+  $('order-meta').textContent = `נוסח ${tmpl.title} · ${order.sections.length} קטעים${inputs.hasMinyan ? '' : ' · בלי מניין'}`;
+
+  const warnings = [];
+  if (inputs.unknownTemplate) warnings.push(`הנוסח שבקישור אינו מוכר כאן, ולכן מוצג נוסח ${tmpl.title}.`);
+  if (order.ignored.length) warnings.push(`התווים הבאים בשם אינם אותיות עבריות ולא נכללו בתהילים קי״ט: ${order.ignored.join(' ')}`);
+  if (order.unknownKeys.length) warnings.push('חלק מהקטעים שבקישור אינם מוכרים בגרסה זו של האתר ולא הוצגו.');
+  $('warnings').textContent = warnings.join(' ');
+  $('warnings').hidden = !warnings.length;
+
   const main = $('reading');
-  main.replaceChildren();
-  $('ignored').hidden = true;
+  main.replaceChildren(...order.sections.map((s, i) => section(s, i, order.sections[i - 1]?.kind)));
+  $('toc').replaceChildren(...order.sections.map((s, i) => el('li', {}, el('a', { href: `#s-${i}` }, s.title))));
+  $('toc-details').open = matchMedia('(min-width: 1100px)').matches;
+  $('report-top').href = reportUrl();
+  fillPrintEnd();
+  observeToc();
+}
+
+function fillStartForm(inputs) {
   $('name').value = inputs.name;
+  $('parent').value = inputs.parent;
   $(inputs.gender === 'female' ? 'g-f' : 'g-m').checked = true;
   $('minyan').checked = inputs.hasMinyan;
-  if (!inputs.name) return;
-
-  const order = buildOrder(TEMPLATE, inputs);
-  if (order.ignored.length) {
-    $('ignored').textContent = `התווים הבאים אינם אותיות עבריות ולא נכללו: ${order.ignored.join(' ')}`;
-    $('ignored').hidden = false;
-  }
-  main.append(...order.sections.map(section));
+  for (const r of document.querySelectorAll('input[name="template"]')) r.checked = r.value === inputs.template;
+  if (inputs.parent || inputs.gender === 'female' || !inputs.hasMinyan) $('more').open = true;
 }
 
-function attribution() {
-  const link = (href, text) => el('a', { href, rel: 'noopener' }, text);
-  const e = psalms.edition;
-  const { mishnah, kaddish, elMale } = library.editions;
-  $('attribution').replaceChildren(
-    el('p', {}, 'נוסח המקרא: ', link(e.attributionUrl, 'מקרא על פי המסורה'), ', ויקיטקסט העברי, ברישיון ', link(e.licenseUrl, e.license), '.'),
-    el('p', {}, 'משנה: ', link(mishnah.url, mishnah.title), ' (נחלת הכלל), דרך ספריא.'),
-    el('p', {}, 'קדיש: ', link(kaddish.url, kaddish.title), '; א־ל מלא רחמים: ', link(elMale.url, elMale.title),
-      '; דרך ספריא, ברישיון ', link(kaddish.licenseUrl, 'CC BY 3.0'),
-      '. שינויים: הוסרו הוראות והערות, ושם ה׳ נכתב יְיָ.'),
-  );
+function renderTemplateChoices() {
+  const entries = Object.entries(TEMPLATES);
+  $('templates').replaceChildren(...entries.map(([id, t], i) => el('label', { className: 'choice' },
+    el('input', { type: 'radio', name: 'template', value: id, checked: i === 0 }),
+    el('strong', {}, t.title),
+    el('span', {}, t.description ?? summaryOf(id)))));
+  $('e-template').replaceChildren(...entries.map(([id, t]) => el('option', { value: id }, t.title)));
 }
 
-$('create').addEventListener('submit', (ev) => {
-  ev.preventDefault();
+function summaryOf(templateId) {
+  const kinds = new Set(buildOrder(templateId, { name: 'א' }).sections.map((s) => s.kind));
+  const parts = [];
+  if (kinds.has('psalm') || kinds.has('psalm119')) parts.push('תהילים');
+  if (kinds.has('mishnah')) parts.push('משניות');
+  if (kinds.has('prayer')) parts.push('קדיש ותפילה');
+  return parts.join(' · ');
+}
+
+let tocObserver;
+function observeToc() {
+  tocObserver?.disconnect();
+  if (!('IntersectionObserver' in window)) return;
+  const links = [...document.querySelectorAll('#toc a')];
+  tocObserver = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (!e.isIntersecting) continue;
+      const id = e.target.id;
+      for (const a of links) a.classList.toggle('current', a.getAttribute('href') === `#${id}`);
+    }
+  }, { rootMargin: '-80px 0px -70% 0px' });
+  document.querySelectorAll('.reading .block').forEach((b) => tocObserver.observe(b));
+}
+
+// ---- attribution (licenses require it, on screen and on paper) ----
+function attributionParts() {
+  const e = state.psalms.edition;
+  const { mishnah, kaddish, elMale } = state.library.editions;
+  const link = (href, text) => (href ? el('a', { href, target: '_blank', rel: 'noopener' }, text) : text);
+  return [
+    ['תהילים: ', link(e.attributionUrl, 'מקרא על פי המסורה'), ', ויקיטקסט העברי, ברישיון ', link(e.licenseUrl, e.license), '.'],
+    ['משנה: ', link(mishnah.url, mishnah.title), ' (נחלת הכלל), דרך ספריא.'],
+    ['קדיש: ', link(kaddish.url, kaddish.title), `; א${MAQAF}ל מלא רחמים: `, link(elMale.url, elMale.title),
+      '; דרך ספריא, ברישיון ', link(kaddish.licenseUrl, 'CC BY 3.0'), '. שינויים: הוסרו הוראות והערות, ושם ה׳ נכתב בשני יודי״ן.'],
+  ];
+}
+function attributionText() {
+  return attributionParts().map((parts) => parts.map((p) => (typeof p === 'string' ? p : p.textContent)).join('')).join(' ');
+}
+function renderAttribution() {
+  $('attribution').replaceChildren(...attributionParts().map((parts) => el('p', {}, ...parts)));
+}
+
+function fillPrintEnd() {
+  $('print-qr').innerHTML = qrSvg(location.href);
+  $('print-url').textContent = location.href;
+  document.querySelector('.print-attr').textContent = attributionText();
+}
+
+// ---- display dialog ----
+function renderFontOptions() {
+  const sample = state.psalms.chapters['16'][0].withNikkud.split(' ').slice(0, 2).join(' ');
+  $('font-options').replaceChildren(...FONTS.map((f) => el('label', {},
+    el('input', { type: 'radio', name: 'font', value: f.id }),
+    el('span', {}, el('span', {}, el('strong', {}, f.name), ' ', el('small', {}, f.note)),
+      el('em', { style: `font-family: '${FONT_FAMILY[f.id]}'` }, sample)))));
+  updateSample();
+}
+function updateSample() {
+  $('display-sample').textContent = state.psalms.chapters['16'][0][prefs.marks];
+}
+
+// ---- edit dialog ----
+function titleFor(key, inputs) {
+  const s = buildOrder(inputs.template, { ...inputs, name: inputs.name || 'א', order: [key] }).sections[0];
+  if (s?.key === 'n') return 'תהילים קי״ט — אותיות השם';
+  return s?.title ?? key;
+}
+function availableKey(key, inputs) {
+  const s = buildOrder(inputs.template, { ...inputs, name: inputs.name || 'א', order: [key] }).sections[0];
+  return !!s && has(s);
+}
+function editRow(key, on, inputs) {
+  const li = el('li', { className: on ? '' : 'off' });
+  li.dataset.key = key;
+  const box = el('input', { type: 'checkbox', checked: on });
+  box.addEventListener('change', () => li.classList.toggle('off', !box.checked));
+  const up = el('button', { type: 'button', className: 'move', ariaLabel: 'למעלה' }, '↑');
+  const down = el('button', { type: 'button', className: 'move', ariaLabel: 'למטה' }, '↓');
+  up.addEventListener('click', () => { li.previousElementSibling?.before(li); syncMoves(); up.focus(); });
+  down.addEventListener('click', () => { li.nextElementSibling?.after(li); syncMoves(); down.focus(); });
+  li.append(el('label', {}, box, titleFor(key, inputs)), up, down);
+  return li;
+}
+function syncMoves() {
+  const rows = [...$('edit-sections').children];
+  rows.forEach((li, i) => {
+    const [up, down] = li.querySelectorAll('.move');
+    up.disabled = i === 0;
+    down.disabled = i === rows.length - 1;
+  });
+}
+function fillEditRows(inputs, keys) {
+  const extra = addableKeys(inputs.template).map((a) => a.key).filter((k) => !keys.includes(k));
+  const rows = [...keys.map((k) => [k, true]), ...extra.map((k) => [k, false])].filter(([k]) => availableKey(k, inputs));
+  $('edit-sections').replaceChildren(...rows.map(([k, on]) => editRow(k, on, inputs)));
+  syncMoves();
+}
+function editInputs() {
+  return {
+    template: $('e-template').value,
+    name: $('e-name').value.trim(),
+    parent: $('e-parent').value.trim(),
+    gender: $('eg-f').checked ? 'female' : 'male',
+    hasMinyan: $('e-minyan').checked,
+  };
+}
+function openEdit() {
+  const i = state.inputs;
+  $('e-name').value = i.name;
+  $('e-parent').value = i.parent;
+  $(i.gender === 'female' ? 'eg-f' : 'eg-m').checked = true;
+  $('e-minyan').checked = i.hasMinyan;
+  $('e-template').value = i.template;
+  fillEditRows(i, i.order ?? defaultKeys(i.template));
+  $('dlg-edit').showModal();
+}
+
+// ---- navigation ----
+function go(inputs) {
   const url = new URL(location.href);
-  url.search = paramsFromInputs({
-    name: $('name').value.trim(),
-    gender: $('g-f').checked ? 'female' : 'male',
-    hasMinyan: $('minyan').checked,
-  }).toString();
+  url.search = paramsFromInputs(inputs).toString();
+  url.hash = '';
   history.pushState(null, '', url);
   render();
-});
-window.addEventListener('popstate', render);
+  window.scrollTo({ top: 0 });
+}
 
-$('marks').addEventListener('change', () => { prefs.marks = $('marks').value; savePrefs(); render(); });
-$('larger').addEventListener('click', () => { prefs.scale = Math.min(3, +(prefs.scale + 0.15).toFixed(2)); savePrefs(); applyPrefs(); });
-$('smaller').addEventListener('click', () => { prefs.scale = Math.max(0.7, +(prefs.scale - 0.15).toFixed(2)); savePrefs(); applyPrefs(); });
-$('theme').addEventListener('click', () => {
-  const dark = prefs.theme ? prefs.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
-  prefs.theme = dark ? 'light' : 'dark';
-  savePrefs();
-  applyPrefs();
-});
+function wire() {
+  $('create').addEventListener('submit', (ev) => {
+    ev.preventDefault();
+    const name = $('name').value.trim();
+    if (!name) {
+      $('form-error').textContent = 'נא לכתוב את השם.';
+      $('form-error').hidden = false;
+      $('name').focus();
+      return;
+    }
+    $('form-error').hidden = true;
+    go({
+      template: document.querySelector('input[name="template"]:checked')?.value ?? DEFAULT_TEMPLATE,
+      name,
+      parent: $('parent').value.trim(),
+      gender: $('g-f').checked ? 'female' : 'male',
+      hasMinyan: $('minyan').checked,
+      order: null,
+    });
+  });
+  window.addEventListener('popstate', render);
 
+  // display
+  const openDisplay = () => { applyPrefs(); updateSample(); $('dlg-display').showModal(); };
+  $('open-display').addEventListener('click', openDisplay);
+  $('dlg-display').addEventListener('change', (ev) => {
+    const t = ev.target;
+    if (t.name === 'marks') prefs.marks = t.value;
+    if (t.name === 'theme') prefs.theme = t.value;
+    if (t.name === 'font') prefs.font = t.value;
+    savePrefs();
+    applyPrefs();
+    updateSample();
+    if (t.name === 'marks' && state.order) render();
+  });
+  const resize = (d) => {
+    prefs.scale = Math.min(2.4, Math.max(0.8, +(prefs.scale + d).toFixed(2)));
+    savePrefs();
+    applyPrefs();
+  };
+  $('larger').addEventListener('click', () => resize(0.1));
+  $('smaller').addEventListener('click', () => resize(-0.1));
+
+  // share, print, edit
+  const share = () => openShare({ url: location.href, name: fullName(state.inputs) });
+  $('act-share').addEventListener('click', share);
+  $('open-share').addEventListener('click', share);
+  $('act-print').addEventListener('click', () => {
+    $('print-status').textContent = '';
+    $('dlg-print').showModal();
+  });
+  const printCtx = () => ({
+    url: location.href,
+    name: fullName(state.inputs),
+    templateTitle: TEMPLATES[state.inputs.template].title,
+    kinds: summaryOf(state.inputs.template),
+    attribution: attributionText(),
+    build: state.build,
+  });
+  $('print-sheet').addEventListener('click', () => { $('dlg-print').close(); printSheet(); });
+  $('print-booklet').addEventListener('click', async () => {
+    $('print-status').textContent = 'מכין את החוברת…';
+    const info = await printBooklet(printCtx());
+    $('print-status').textContent = `החוברת: ${info.pages} עמודים על ${info.sheets} גיליונות A4.`;
+    $('dlg-print').close();
+  });
+  $('act-edit').addEventListener('click', openEdit);
+  $('e-template').addEventListener('change', () => fillEditRows(editInputs(), defaultKeys($('e-template').value)));
+  $('edit-reset').addEventListener('click', () => fillEditRows(editInputs(), defaultKeys($('e-template').value)));
+  $('edit-save').addEventListener('click', () => {
+    const base = editInputs();
+    if (!base.name) { $('e-name').focus(); return; }
+    const order = [...$('edit-sections').children].filter((li) => li.querySelector('input').checked).map((li) => li.dataset.key);
+    $('dlg-edit').close();
+    go({ ...base, order });
+  });
+
+  // close any dialog by tapping its backdrop
+  for (const d of document.querySelectorAll('dialog')) {
+    d.addEventListener('click', (ev) => { if (ev.target === d) d.close(); });
+  }
+}
+
+async function loadBuild() {
+  try {
+    const r = await fetch('./build.json', { cache: 'no-store' });
+    if (!r.ok) return;
+    const b = await r.json();
+    const when = new Date(b.builtAt).toLocaleString('he-IL', { dateStyle: 'short', timeStyle: 'short' });
+    state.build = `${b.sha.slice(0, 7)} · ${when}${b.dev ? ' · פיתוח' : ''}`;
+    $('build').textContent = `גרסה: ${state.build}`;
+  } catch { /* development: stays "dev" */ }
+}
+
+renderTemplateChoices();
 applyPrefs();
-[psalms, library] = await Promise.all(
-  ['../data/psalms/psalms_mam.json', '../data/reading/library.json'].map(async (u) => (await fetch(u)).json()),
+setPageRule('sheet');
+wire();
+const [psalms, library] = await Promise.all(
+  ['./data/psalms/psalms_mam.json', './data/reading/library.json'].map(async (u) => (await fetch(u)).json()),
 );
-attribution();
+Object.assign(state, { psalms, library });
+renderAttribution();
+renderFontOptions();
+applyPrefs();
+await loadBuild();
 render();

@@ -9,14 +9,15 @@ import { readFileSync, readdirSync } from 'node:fs';
 const ranges = [[0x0300, 0x036f], [0x0591, 0x05c7], [0x200b, 0x200f], [0x00a0, 0x00a0]];
 const isMark = (cp) => ranges.some(([a, b]) => cp >= a && cp <= b);
 
-// Recursive, so code in a subdirectory (lib/templates/) stays under the gate.
-const files = ['lib', 'scripts'].flatMap((dir) =>
+// Recursive, so code in a subdirectory (lib/templates/) stays under the gate. site/ is our page code;
+// site/vendor/ is third-party and left as published.
+const files = ['lib', 'scripts', 'site'].flatMap((dir) =>
   readdirSync(new URL(`../${dir}/`, import.meta.url), { recursive: true })
-    .filter((f) => /\.(m?js)$/.test(f))
+    .filter((f) => /\.(m?js)$/.test(f) && !/^vendor[\\/]/.test(f))
     .map((f) => new URL(`../${dir}/${f.replaceAll('\\', '/')}`, import.meta.url)),
 );
 
-test('no literal combining marks on code lines in lib/ and scripts/', () => {
+test('no literal combining marks on code lines in lib/, scripts/ and site/', () => {
   const offenders = [];
   for (const url of files) {
     readFileSync(url, 'utf8').split('\n').forEach((line, i) => {
