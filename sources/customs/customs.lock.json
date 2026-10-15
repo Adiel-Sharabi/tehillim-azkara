@@ -1,0 +1,23 @@
+{
+ "note": "sha256 of each upstream payload (Sefaria: JSON of the flattened text; Wikisource: wikitext of the pinned revision, or rendered HTML). A mismatch aborts the import unless --relock.",
+ "payloads": {
+  "sefaria-sefaria-metsudah-siddur-sefard-1981-Siddur-Sefard-Weekday-Shacharit-Aleinu.json": "d187f5f3fc659f08ca80016117d8e84112814b6d87d3f23ecb88fe051df8c2f0",
+  "sefaria-sefaria-metsudah-siddur-sefard-1981-Siddur-Sefard-Weekday-Shacharit-B-raita-d-Rabi-Yishmael.json": "45dcaf7fc046edf77a57c779b0e8b53725f3ea781d6bddf68d1a84fd9e80724d",
+  "sefaria-sefaria-shaliehsaboo-edot-Siddur-Edot-HaMizrach-Weekday-Shacharit-Song-of-the-Day.json": "1167a64e35502dd37a29c6c57afa8ab9a19c60696c67b945796b664b00096bc3",
+  "sefaria-sefaria-shaliehsaboo-edot-Siddur-Edot-HaMizrach-Weekday-Shacharit-Kaveh.json": "9ab67320e9dc7ccd632646ed84cbd28a48e2f2c5e0656500e8edc1db51a82212",
+  "sefaria-sefaria-shaliehsaboo-edot-Siddur-Edot-HaMizrach-Fast-Days-and-Mourning-Mourning.json": "1c1811755d1eb300b4f85f23a195ec00e768f413d618f5fc852698873f30b299",
+  "sefaria-sefaria-torat-emet-357-edot-Siddur-Edot-HaMizrach-Weekday-Shacharit-Song-of-the-Day.json": "909892decdd234ed95b7aa8e4c8c61572c396dd00c3fa9cf398b2a5535785b51",
+  "sefaria-sefaria-torat-emet-357-edot-Siddur-Edot-HaMizrach-Weekday-Shacharit-Kaveh.json": "0a725cddc377abb2fdfc8c3e8e4ff6b1c458960dbf520143442b405fe4c5f5fc",
+  "sefaria-sefaria-torat-emet-357-edot-Siddur-Edot-HaMizrach-Fast-Days-and-Mourning-Mourning.json": "7cfdf1e9897df8b61cd86d326d8e047bcfd03380c890d65e79850075284e728d",
+  "sefaria-sefaria-torat-emet-357-sanhedrin-Mishnah-Sanhedrin-10-1.json": "c1007c8b4056761a9e4b79fb9fa564d55229e82236c18a92cef4ad00bada34ef",
+  "sefaria-sefaria-romm-vilna-1913-sanhedrin-Mishnah-Sanhedrin-10-1.json": "46c2066f44c2dc8c119b3f2cbe7baf2ee310505c6535f0ffb35de43a5f3c01b7",
+  "wikisource-wikisource-kaddish-nusachim-kaddish-yatom-sefard.parse.json": "fce8a41a70005ffeac72c0fb7fd981a519821d6ecc8fab1bcb27ed4fd64b8a81",
+  "wikisource-wikisource-kaddish-nusachim-kaddish-derabbanan-sefard.parse.json": "0b004efeb0e5986258c78a2f2f221051e82b9d1c7fb23edabfbf4de3439edded",
+  "wikisource-wikisource-kaddish-nusachim-kaddish-yatom-edot.parse.json": "1bd3505cc2f2b5dd821f86f9d6362bcfa4f4bdeb29fb06b6f1dd9290b4d5c5f7",
+  "wikisource-wikisource-kaddish-nusachim-kaddish-derabbanan-edot.parse.json": "6002cf5a3befdb4004af21052339492b263031186be0a55e2ea52b82eaadae22",
+  "wikisource-wikisource-kaddish-nusachim-kaddish-yatom-baladi.parse.json": "3a51e53d0eae12ee2f22f1d171ab1014f2adc44d5a6b1f63f566450b3b9954ae",
+  "wikisource-wikisource-kaddish-nusachim-kaddish-derabbanan-baladi.parse.json": "4aec340d0b78a7311ef070cc129c4149ac6dbd7a07018341965d73d8df2b8d5a",
+  "wikisource-wikisource-hashkava.wikitext.json": "3156530874908aac20802606c3aba03d0b9e031fb696e118af166e9739ee3c76",
+  "wikisource-wikisource-siddur-baladi.wikitext.json": "d2008dba6b9a03541c75234e853a8c06ea1a7d15d97be400c1460605323be516"
+ }
+}

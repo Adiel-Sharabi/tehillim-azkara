@@ -108,3 +108,19 @@ test('unknown template fails loudly in the builder helpers', () => {
   assert.throws(() => defaultKeys('nope'), /unknown template/);
   assert.throws(() => buildOrder('nope', {}), /unknown template/);
 });
+
+test('links for every custom resolve: template, parent and an edited order survive the round trip', () => {
+  // A link written today for the Edot HaMizrach template, with the mother's name and an edited order.
+  const i = inputsFromParams(params('v=1&t=edot_hamizrach_base&n=יוסף&g=m&minyan=1&p=רחל&o=n_s_r.hashkava'));
+  assert.equal(i.template, 'edot_hamizrach_base');
+  const o = buildOrder(i.template, i);
+  assert.deepEqual(o.sections.map((s) => s.key), ['n', 's', 'r.hashkava']);
+  assert.equal(o.sections[2].name, 'יוסף בן רחל');
+  // Psalm 119 by the name reads the mother's name too in this custom (withParent).
+  assert.equal(o.sections[0].groups.map((g) => g.letter).join(''), 'יוספבנרחל');
+  for (const id of Object.keys(TEMPLATES)) {
+    const back = inputsFromParams(paramsFromInputs({ template: id, name: 'שרה', gender: 'female', hasMinyan: false, parent: 'לאה' }));
+    assert.equal(back.template, id);
+    assert.equal(back.parent, 'לאה');
+  }
+});

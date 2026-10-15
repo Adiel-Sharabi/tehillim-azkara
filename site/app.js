@@ -89,11 +89,15 @@ const RENDER = {
       const text = seg.slot === 'name' ? s.name : seg[prefs.marks];
       // Segments are joined with a space, except after a maqaf, which binds to the next word.
       if (prev && !prev.endsWith(MAQAF)) p.append(' ');
-      p.append(el('span', { className: seg.slot ? 'slot' : seg.role }, text));
+      p.append(el('span', { className: seg.slot ? 'slot' : seg.together ? `${seg.role} together` : seg.role }, text));
       prev = text;
     }
     const out = [p];
-    if (segs.some((g) => g.role === 'congregation')) out.unshift(el('p', { className: 'legend' }, 'בצבע ', el('b', {}, 'מודגש'), ': מה שהקהל עונה.'));
+    if (segs.some((g) => g.role === 'congregation')) {
+      const legend = el('p', { className: 'legend' }, 'בצבע ', el('b', {}, 'מודגש'), ': מה שהקהל עונה.');
+      if (segs.some((g) => g.together)) legend.append(' ', el('b', { className: 'together' }, 'בקו תחתון'), ': אומרים יחד עם הקהל.');
+      out.unshift(legend);
+    }
     return out;
   },
 };
@@ -176,15 +180,28 @@ function fillStartForm(inputs) {
   $('minyan').checked = inputs.hasMinyan;
   for (const r of document.querySelectorAll('input[name="template"]')) r.checked = r.value === inputs.template;
   if (inputs.parent || inputs.gender === 'female' || !inputs.hasMinyan) $('more').open = true;
+  labelParent('parent', inputs.template);
 }
 
+// Every template is a candidate until a community confirms it (lib/templates/index.js); the badge says
+// so, and how well its order is sourced.
+const CONFIDENCE = { medium: 'סדר מבוסס מקורות', low: 'סדר כללי, לאימות' };
 function renderTemplateChoices() {
   const entries = Object.entries(TEMPLATES);
-  $('templates').replaceChildren(...entries.map(([id, t], i) => el('label', { className: 'choice' },
+  $('templates').replaceChildren(...entries.map(([id, t], i) => el('label', { className: 'choice', title: t.status ?? '' },
     el('input', { type: 'radio', name: 'template', value: id, checked: i === 0 }),
     el('strong', {}, t.title),
-    el('span', {}, t.description ?? summaryOf(id)))));
+    el('span', {}, t.description ?? summaryOf(id)),
+    el('small', { className: `badge ${t.confidence ?? ''}` }, `מועמד · ${CONFIDENCE[t.confidence] ?? ''}`))));
   $('e-template').replaceChildren(...entries.map(([id, t]) => el('option', { value: id }, t.title)));
+}
+
+// The parent-name field follows the chosen custom: the father's name or the mother's (template.parent).
+function labelParent(fieldId, templateId) {
+  const mother = TEMPLATES[templateId]?.parent === 'mother';
+  const label = document.querySelector(`label[for="${fieldId}"]`);
+  label.firstChild.textContent = mother ? 'שם האם ' : 'שם האב ';
+  $(fieldId).placeholder = mother ? 'למשל: רחל' : 'למשל: אברהם';
 }
 
 function summaryOf(templateId) {
@@ -301,6 +318,7 @@ function openEdit() {
   $(i.gender === 'female' ? 'eg-f' : 'eg-m').checked = true;
   $('e-minyan').checked = i.hasMinyan;
   $('e-template').value = i.template;
+  labelParent('e-parent', i.template);
   fillEditRows(i, i.order ?? defaultKeys(i.template));
   $('dlg-edit').showModal();
 }
@@ -382,7 +400,11 @@ function wire() {
     $('dlg-print').close();
   });
   $('act-edit').addEventListener('click', openEdit);
-  $('e-template').addEventListener('change', () => fillEditRows(editInputs(), defaultKeys($('e-template').value)));
+  $('e-template').addEventListener('change', () => {
+    labelParent('e-parent', $('e-template').value);
+    fillEditRows(editInputs(), defaultKeys($('e-template').value));
+  });
+  $('templates').addEventListener('change', (ev) => { if (ev.target.name === 'template') labelParent('parent', ev.target.value); });
   $('edit-reset').addEventListener('click', () => fillEditRows(editInputs(), defaultKeys($('e-template').value)));
   $('edit-save').addEventListener('click', () => {
     const base = editInputs();

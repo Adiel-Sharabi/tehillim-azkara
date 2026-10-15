@@ -120,6 +120,8 @@ input:not([type]):focus, select:focus { border-color: var(--accent); }
 .choice input { position: absolute; opacity: 0; }
 .choice strong { font-size: 1.05rem; }
 .choice span { color: var(--muted); font-size: .9rem; }
+.choice .badge { justify-self: start; margin-top: 4px; font-size: .75rem; color: var(--muted); border: 1px solid var(--line); border-radius: 99px; padding: 0 8px; }
+.choice .badge.low { color: var(--response); border-color: currentColor; }
 .choice:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); box-shadow: inset 0 0 0 1px var(--accent); }
 .choice:has(input:focus-visible) { outline: 3px solid var(--focus); outline-offset: 2px; }
 .more { border-top: 1px solid var(--line); padding-top: 14px; margin-inline-start: 44px; }
@@ -206,6 +208,7 @@ input:not([type]):focus, select:focus { border-color: var(--accent); }
 .mishnah { margin-bottom: 14px; }
 .num { color: var(--accent); font-weight: 700; margin-inline-end: .2em; }
 .prayer .congregation { color: var(--response); font-weight: 700; }
+.prayer .together, .legend .together { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .35em; }
 .prayer .slot { font-weight: 700; color: var(--ink); background: var(--accent-soft); padding: 0 .25em; border-radius: 6px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
 .missing { color: var(--muted); font-style: italic; }
 

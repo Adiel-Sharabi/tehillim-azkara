@@ -1,0 +1,611 @@
+{
+ "note": "Consonant-level word comparison of each text across editions (signal for review, not a proofread), and every pointing completion.",
+ "completions": {
+  "sefaria-torat-emet-357-edot/hashkava": [
+   {
+    "from": "הַמּרַחֵם",
+    "to": "הַמְּרַחֵם"
+   },
+   {
+    "from": "והַסְּלִיחוֹת",
+    "to": "וְהַסְּלִיחוֹת"
+   }
+  ],
+  "sefaria-torat-emet-357-edot/hashkava-long": [
+   {
+    "from": "מנוּחָה",
+    "to": "מְנוּחָה"
+   },
+   {
+    "from": "נכוֹנָה",
+    "to": "נְכוֹנָה"
+   },
+   {
+    "from": "מעוֹנָה",
+    "to": "מְעוֹנָה"
+   },
+   {
+    "from": "בּגַן",
+    "to": "בְּגַן"
+   },
+   {
+    "from": "הַמּלָכִים",
+    "to": "הַמְּלָכִים"
+   },
+   {
+    "from": "ויִצְרוֹר",
+    "to": "וְיִצְרוֹר"
+   },
+   {
+    "from": "והַסְּלִיחוֹת",
+    "to": "וְהַסְּלִיחוֹת"
+   }
+  ],
+  "sefaria-torat-emet-357-edot/hashkava-long-female": [
+   {
+    "from": "יְהוָה",
+    "to": "יְהוָֹה"
+   },
+   {
+    "from": "דּאִתְפְּטָרַת",
+    "to": "דְּאִתְפְּטָרַת"
+   },
+   {
+    "from": "והַסְּלִיחוֹת",
+    "to": "וְהַסְּלִיחוֹת"
+   }
+  ]
+ },
+ "comparisons": {
+  "hashkava": [
+   {
+    "a": "sefaria-shaliehsaboo-edot",
+    "b": "sefaria-torat-emet-357-edot",
+    "wordsA": 18,
+    "wordsB": 36,
+    "identicalConsonants": false,
+    "changes": [
+     {
+      "reading": "",
+      "witness": "הנפטר בשם טוב מן העולם",
+      "after": "רוח ונשמה של"
+     },
+     {
+      "reading": "",
+      "witness": "הוא וכל בני ישראל השוכבים עמו בכלל הרחמים והסליחות וכן יהי רצון ונאמר",
+      "after": "תניחנו בגן עדן"
+     }
+    ]
+   },
+   {
+    "a": "sefaria-shaliehsaboo-edot",
+    "b": "wikisource-hashkava",
+    "wordsA": 18,
+    "wordsB": 33,
+    "identicalConsonants": false,
+    "changes": [
+     {
+      "reading": "",
+      "witness": "השם הטוב",
+      "after": "רוח ונשמה של"
+     },
+     {
+      "reading": "",
+      "witness": "הוא וכל בני ישראל השוכבים עמו בכלל הרחמים והסליחות וכן יהי רצון ונאמר",
+      "after": "תניחנו בגן עדן"
+     }
+    ]
+   },
+   {
+    "a": "sefaria-torat-emet-357-edot",
+    "b": "wikisource-hashkava",
+    "wordsA": 36,
+    "wordsB": 33,
+    "identicalConsonants": false,
+    "changes": [
+     {
+      "reading": "הנפטר בשם טוב מן העולם",
+      "witness": "השם הטוב",
+      "after": "רוח ונשמה של"
+     }
+    ]
+   }
+  ],
+  "hashkava-baladi": [],
+  "hashkava-baladi-female": [],
+  "hashkava-female": [
+   {
+    "a": "sefaria-shaliehsaboo-edot",
+    "b": "sefaria-torat-emet-357-edot",
+    "wordsA": 18,
+    "wordsB": 59,
+    "identicalConsonants": false,
+    "changes": [
+     {
+      "reading": "",
+      "witness": "אשת חיל מי ימצא ורחוק מפנינים מכרה שקר החן והבל היופי אשה יראת יהוה היא תתהלל תנו לה מפרי ידיה ויהללוה בשערים מעשיה",
+      "after": ""
+     },
+     {
+      "reading": "",
+      "witness": "הנפטרת בשם טוב מן העולם",
+      "after": "רוח ונשמה של"
+     },
+     {
+      "reading": "",
+      "witness": "היא וכל בנות ישראל השוכבות עמה בכלל הרחמים והסליחות וכן יהי רצון ונאמר",
+      "after": "תניחנה בגן עדן"
+     }
+    ]
+   },
+   {
+    "a": "sefaria-shaliehsaboo-edot",
+    "b": "wikisource-hashkava",
+    "wordsA": 18,
+    "wordsB": 31,
+    "identicalConsonants": false,
+    "changes": [
+     {
+      "reading": "",
+      "witness": "היא וכל בני ישראל השוכבים עמו בכלל הרחמים והסליחות וכן יהי רצון ונאמר",
+      "after": "תניחנה בגן עדן"
+     }
+    ]
+   },
+   {
+    "a": "sefaria-torat-emet-357-edot",
+    "b": "wikisource-hashkava",
+    "wordsA": 59,
+    "wordsB": 31,
+    "identicalConsonants": false,
+    "changes": [
+     {
+      "reading": "אשת חיל מי ימצא ורחוק מפנינים מכרה שקר החן והבל היופי אשה יראת יהוה היא תתהלל תנו לה מפרי ידיה ויהללוה בשערים מעשיה",
+      "witness": "",
+      "after": ""
+     },
+     {
+      "reading": "הנפטרת בשם טוב מן העולם",
+      "witness": "",
+      "after": "רוח ונשמה של"
+     },
+     {
+      "reading": "בנות",
+      "witness": "בני",
+      "after": "עדן היא וכל"
+     },
+     {
+      "reading": "השוכבות עמה",
+      "witness": "השוכבים עמו",
+      "after": "וכל בנות ישראל"
+     }
+    ]
+   }
+  ],
+  "hashkava-long": [
+   {
+    "a": "sefaria-torat-emet-357-edot",
+    "b": "wikisource-hashkava",
+    "wordsA": 188,
+    "wordsB": 109,
+    "identicalConsonants": false,
+    "changes": [
+     {
+      "reading": "והחכמה מאין תמצא ואי זה מקום בינה אשרי אדם מצא חכמה ואדם יפיק תבונה מה רב טובך אשר צפנת ליראיך פעלת לחוסים בך נגד בני אדם מה יקר חסדך אלהים ובני אדם בצל כנפיך יחסיון ירוין מדשן ביתך ונחל עדניך תשקם טוב שם משמן טוב ויום המות מיום הולדו סוף דבר הכל נשמע את האלהים ירא ואת מצותיו שמור כי זה כל האדם יעלזו חסידים בכבוד ירננו על משכבותם",
+      "witness": "",
+      "after": ""
+     },
+     {
+      "reading": "כזוהר",
+      "witness": "כזהר",
+      "after": "במעלת קדושים וטהורים"
+     },
+     {
+      "reading": "המרוחם",
+      "witness": "",
+      "after": "נפש השם הטוב"
+     },
+     {
+      "reading": "יהוה",
+      "witness": "יי",
+      "after": "הטוב המרוחם רוח"
+     },
+     {
+      "reading": "כרעות",
+      "witness": "ברעות",
+      "after": "מן עלמא הדין"
+     },
+     {
+      "reading": "מארי",
+      "witness": "מרא",
+      "after": "הדין כרעות אלהא"
+     },
+     {
+      "reading": "עליו",
+      "witness": "",
+      "after": "עליו ויחוס ויחמול"
+     },
+     {
+      "reading": "ברחמיו",
+      "witness": "",
+      "after": "מלך מלכי המלכים"
+     },
+     {
+      "reading": "בנועם",
+      "witness": "בנעם",
+      "after": "ובסתר אהלו לחזות"
+     },
+     {
+      "reading": "יבוא שלום ינוחו על משכבותם הלך נכחו",
+      "witness": "",
+      "after": "יהיה שלום כדכתיב"
+     }
+    ]
+   }
+  ],
+  "hashkava-long-female": [
+   {
+    "a": "sefaria-torat-emet-357-edot",
+    "b": "wikisource-hashkava",
+    "wordsA": 101,
+    "wordsB": 70,
+    "identicalConsonants": false,
+    "changes": [
+     {
+      "reading": "אשת חיל מי ימצא ורחק מפנינים מכרה שקר החן והבל היפי אשה יראת יהוה היא תתהלל תנו לה מפרי ידיה ויהללוה בשערים מעשיה",
+      "witness": "",
+      "after": ""
+     },
+     {
+      "reading": "ליה",
+      "witness": "לה",
+      "after": "רחמנא דרחמנותא די"
+     },
+     {
+      "reading": "ובמימריה",
+      "witness": "ובמימרה",
+      "after": "די ליה היא"
+     },
+     {
+      "reading": "ביה",
+      "witness": "בה",
+      "after": "ועלמא דאתי וגנז"
+     },
+     {
+      "reading": "רעותיה ובמימריה וביקריה ובתוקפיה",
+      "witness": "רעותה ובמימרה ובתקפה",
+      "after": "צדקניות וחסדניות דעבדן"
+     },
+     {
+      "reading": "דוכרן",
+      "witness": "דכרן",
+      "after": "יאמר למיעל קדמוהי"
+     },
+     {
+      "reading": "הכבדה",
+      "witness": "הכבודה",
+      "after": "דוכרן נפש האשה"
+     },
+     {
+      "reading": "מארי",
+      "witness": "מרא",
+      "after": "הדין כרעות אלהא"
+     },
+     {
+      "reading": "יבוא שלום ינוחו על משכבותם הלך נכחו",
+      "witness": "",
+      "after": "יהיה שלום כדכתיב"
+     }
+    ]
+   }
+  ],
+  "kaddish-derabbanan-baladi": [],
+  "kaddish-derabbanan-edot": [
+   {
+    "a": "sefaria-shaliehsaboo-edot",
+    "b": "sefaria-torat-emet-357-edot",
+    "wordsA": 120,
+    "wordsB": 120,
+    "identicalConsonants": false,
+    "changes": [
+     {
+      "reading": "וגאולה",
+      "witness": "וגאלה",
+      "after": "ונחמה ושיזבא ורפואה"
+     },
+     {
+      "reading": "ורוח",
+      "witness": "וריוח",
+      "after": "וגאולה וסליחה וכפרה"
+     }
+    ]
+   },
+   {
+    "a": "sefaria-shaliehsaboo-edot",
+    "b": "wikisource-kaddish-nusachim",
+    "wordsA": 120,
+    "wordsB": 119,
+    "identicalConsonants": false,
+    "changes": [
+     {
+      "reading": "פרקנה",
+      "witness": "פורקנה",
+      "after": "וימליך מלכותה ויצמח"
+     },
+     {
+      "reading": "שמיה",
+      "witness": "שמה",
+      "after": "קריב ואמרו יהא"
+     },
+     {
+      "reading": "דקדשא",
+      "witness": "דקודשא",
+      "after": "ויתעלה ויתהלל שמה"
+     },
+     {
+      "reading": "לעלא",
+      "witness": "לעילא",
+      "after": "דקדשא בריך הוא"
+     },
+     {
+      "reading": "מארי",
+      "witness": "אלהא מארה",
+      "after": "ורחמי מן קדם"
+     },
+     {
+      "reading": "וגאולה",
+      "witness": "",
+      "after": "ונחמה ושיזבא ורפואה"
+     },
+     {
+      "reading": "עמו",
+      "witness": "",
+      "after": "והצלה לנו ולכל"
+     }
+    ]
+   },
+   {
+    "a": "sefaria-torat-emet-357-edot",
+    "b": "wikisource-kaddish-nusachim",
+    "wordsA": 120,
+    "wordsB": 119,
+    "identicalConsonants": false,
+    "changes": [
+     {
+      "reading": "פרקנה",
+      "witness": "פורקנה",
+      "after": "וימליך מלכותה ויצמח"
+     },
+     {
+      "reading": "שמיה",
+      "witness": "שמה",
+      "after": "קריב ואמרו יהא"
+     },
+     {
+      "reading": "דקדשא",
+      "witness": "דקודשא",
+      "after": "ויתעלה ויתהלל שמה"
+     },
+     {
+      "reading": "לעלא",
+      "witness": "לעילא",
+      "after": "דקדשא בריך הוא"
+     },
+     {
+      "reading": "מארי",
+      "witness": "אלהא מארה",
+      "after": "ורחמי מן קדם"
+     },
+     {
+      "reading": "וגאלה",
+      "witness": "",
+      "after": "ונחמה ושיזבא ורפואה"
+     },
+     {
+      "reading": "וריוח",
+      "witness": "ורוח",
+      "after": "וגאלה וסליחה וכפרה"
+     },
+     {
+      "reading": "עמו",
+      "witness": "",
+      "after": "והצלה לנו ולכל"
+     }
+    ]
+   }
+  ],
+  "kaddish-derabbanan-sefard": [
+   {
+    "a": "sefaria-metsudah-siddur-sefard-1981",
+    "b": "wikisource-kaddish-nusachim",
+    "wordsA": 119,
+    "wordsB": 118,
+    "identicalConsonants": false,
+    "changes": [
+     {
+      "reading": "קץ",
+      "witness": "",
+      "after": "ויצמח פורקנה ויקרב"
+     },
+     {
+      "reading": "לעלא",
+      "witness": "לעילא",
+      "after": "דקודשא בריך הוא"
+     },
+     {
+      "reading": "ורחמין וחיין אריכין ומזונא",
+      "witness": "ורחמי וחיי אריכי ומזוני",
+      "after": "רבא חנא וחסדא"
+     },
+     {
+      "reading": "ופורקנא",
+      "witness": "ופרקנא",
+      "after": "אריכין ומזונא רויחי"
+     },
+     {
+      "reading": "דבשמיא",
+      "witness": "די בשמיא",
+      "after": "מן קדם אבוהון"
+     },
+     {
+      "reading": "ברחמיו",
+      "witness": "",
+      "after": "שלום במרומיו הוא"
+     }
+    ]
+   }
+  ],
+  "kaddish-yatom-baladi": [],
+  "kaddish-yatom-edot": [
+   {
+    "a": "sefaria-shaliehsaboo-edot",
+    "b": "sefaria-torat-emet-357-edot",
+    "wordsA": 87,
+    "wordsB": 87,
+    "identicalConsonants": false,
+    "changes": [
+     {
+      "reading": "וגאולה",
+      "witness": "וגאלה",
+      "after": "ונחמה ושיזבא ורפואה"
+     },
+     {
+      "reading": "ורוח",
+      "witness": "וריוח",
+      "after": "וגאולה וסליחה וכפרה"
+     }
+    ]
+   },
+   {
+    "a": "sefaria-shaliehsaboo-edot",
+    "b": "wikisource-kaddish-nusachim",
+    "wordsA": 87,
+    "wordsB": 85,
+    "identicalConsonants": false,
+    "changes": [
+     {
+      "reading": "פרקנה",
+      "witness": "פורקנה",
+      "after": "וימליך מלכותה ויצמח"
+     },
+     {
+      "reading": "שמיה",
+      "witness": "שמה",
+      "after": "קריב ואמרו יהא"
+     },
+     {
+      "reading": "דקדשא",
+      "witness": "דקודשא",
+      "after": "ויתעלה ויתהלל שמה"
+     },
+     {
+      "reading": "לעלא",
+      "witness": "לעילא",
+      "after": "דקדשא בריך הוא"
+     },
+     {
+      "reading": "וגאולה",
+      "witness": "",
+      "after": "ונחמה ושיזבא ורפואה"
+     },
+     {
+      "reading": "עמו",
+      "witness": "",
+      "after": "והצלה לנו ולכל"
+     }
+    ]
+   },
+   {
+    "a": "sefaria-torat-emet-357-edot",
+    "b": "wikisource-kaddish-nusachim",
+    "wordsA": 87,
+    "wordsB": 85,
+    "identicalConsonants": false,
+    "changes": [
+     {
+      "reading": "פרקנה",
+      "witness": "פורקנה",
+      "after": "וימליך מלכותה ויצמח"
+     },
+     {
+      "reading": "שמיה",
+      "witness": "שמה",
+      "after": "קריב ואמרו יהא"
+     },
+     {
+      "reading": "דקדשא",
+      "witness": "דקודשא",
+      "after": "ויתעלה ויתהלל שמה"
+     },
+     {
+      "reading": "לעלא",
+      "witness": "לעילא",
+      "after": "דקדשא בריך הוא"
+     },
+     {
+      "reading": "וגאלה",
+      "witness": "",
+      "after": "ונחמה ושיזבא ורפואה"
+     },
+     {
+      "reading": "וריוח",
+      "witness": "ורוח",
+      "after": "וגאלה וסליחה וכפרה"
+     },
+     {
+      "reading": "עמו",
+      "witness": "",
+      "after": "והצלה לנו ולכל"
+     }
+    ]
+   }
+  ],
+  "kaddish-yatom-sefard": [
+   {
+    "a": "sefaria-metsudah-siddur-sefard-1981",
+    "b": "wikisource-kaddish-nusachim",
+    "wordsA": 76,
+    "wordsB": 76,
+    "identicalConsonants": false,
+    "changes": [
+     {
+      "reading": "קץ",
+      "witness": "",
+      "after": "ויצמח פורקנה ויקרב"
+     },
+     {
+      "reading": "לעלא",
+      "witness": "לעילא",
+      "after": "דקודשא בריך הוא"
+     },
+     {
+      "reading": "",
+      "witness": "טובים",
+      "after": "מן שמיא וחיים"
+     }
+    ]
+   }
+  ],
+  "kol-yisrael": [
+   {
+    "a": "sefaria-torat-emet-357-sanhedrin",
+    "b": "sefaria-romm-vilna-1913-sanhedrin",
+    "wordsA": 19,
+    "wordsB": 19,
+    "identicalConsonants": false,
+    "changes": [
+     {
+      "reading": "כלם",
+      "witness": "כולם",
+      "after": "הבא שנאמר ועמך"
+     },
+     {
+      "reading": "מעשה",
+      "witness": "מעשי",
+      "after": "ארץ נצר מטעי"
+     }
+    ]
+   }
+  ]
+ }
+}
