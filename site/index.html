@@ -4,44 +4,244 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>סדר אזכרה</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700&family=Assistant:wght@400;600&display=swap">
+  <meta name="description" content="סדר לימוד ותפילה מנוקד לעילוי נשמת: תהילים לפי אותיות השם, משניות, קדיש וא־ל מלא רחמים. לשיתוף בקישור, ב־QR ובהדפסה.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f4f5f7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0e1217" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="preload" href="fonts/FrankRuehlCLM-Medium.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/Assistant-Variable.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css">
+  <script>
+    // Theme before first paint, so a reader who chose dark never sees a light flash.
+    try { const t = JSON.parse(localStorage.getItem('tehillim-view') || '{}').theme; if (t) document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="vendor/qrcode.js" defer></script>
+  <script type="module" src="app.js"></script>
 </head>
 <body>
-  <header class="bar">
-    <h1>סדר אזכרה</h1>
-    <form id="create" class="create">
-      <label for="name">שם הנפטר/ת</label>
-      <input id="name" name="n" autocomplete="off" placeholder="למשל: משה" required>
-      <fieldset class="opts">
-        <legend class="sr">פרטים</legend>
-        <label><input type="radio" name="g" id="g-m" value="m" checked> נפטר</label>
-        <label><input type="radio" name="g" id="g-f" value="f"> נפטרת</label>
-        <label><input type="checkbox" id="minyan" checked> יש מניין</label>
-      </fieldset>
-      <button type="submit">צור סדר</button>
-    </form>
-    <p id="ignored" class="warn" hidden></p>
+  <a class="skip" href="#reading">דילוג לטקסט</a>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="./" id="brand"><span class="brand-mark" aria-hidden="true"></span>סדר אזכרה</a>
+      <div class="topbar-tools">
+        <button type="button" class="tool" id="open-share" hidden><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M15 5l-6 4m6 10l-6-4M18 4a2 2 0 1 1 0 .01M6 12a2 2 0 1 1 0 .01M18 20a2 2 0 1 1 0 .01"/></svg><span>שיתוף</span></button>
+        <button type="button" class="tool" id="open-display"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 19l5-14h2l5 14M6.5 13h7M18 9v10m-2.5-2.5L18 19l2.5-2.5"/></svg><span>תצוגה</span></button>
+      </div>
+    </div>
   </header>
 
-  <div class="view" role="toolbar" aria-label="הגדרות תצוגה">
-    <button type="button" id="smaller" aria-label="הקטן גופן">א−</button>
-    <button type="button" id="larger" aria-label="הגדל גופן">א+</button>
-    <select id="marks" aria-label="ניקוד וטעמים">
-      <option value="withNikkud">מנוקד</option>
-      <option value="withCantillation">ניקוד וטעמים</option>
-      <option value="unpointed">ללא ניקוד</option>
-    </select>
-    <button type="button" id="theme" aria-label="מצב כהה/בהיר">◐</button>
-  </div>
+  <main id="main">
+    <!-- 1. Create: name, custom, create. Everything else waits under "עוד אפשרויות". -->
+    <section id="start" class="start" aria-labelledby="start-title">
+      <div class="start-head">
+        <p class="eyebrow">לימוד ותפילה</p>
+        <h1 id="start-title">סדר לעילוי נשמת</h1>
+        <p class="lede">כותבים את השם, בוחרים נוסח, ומקבלים סדר מנוקד לקריאה משותפת: תהילים לפי אותיות השם, משניות, קדיש וא־ל מלא רחמים. אפשר לשתף בקישור או ב־QR, להדפיס דף או חוברת.</p>
+      </div>
+      <form id="create" class="card create" novalidate>
+        <div class="step">
+          <span class="step-num" aria-hidden="true">1</span>
+          <div class="field">
+            <label for="name">שם הנפטר או הנפטרת</label>
+            <input id="name" name="n" autocomplete="off" enterkeyhint="go" placeholder="למשל: משה" required>
+            <p class="hint" id="name-hint">בעברית. מהאותיות שלו נבנה תהילים קי״ט.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-num" aria-hidden="true">2</span>
+          <fieldset class="field">
+            <legend>נוסח</legend>
+            <div id="templates" class="choices"></div>
+          </fieldset>
+        </div>
+        <details class="more" id="more">
+          <summary>עוד אפשרויות</summary>
+          <div class="more-body">
+            <fieldset class="field inline">
+              <legend>לזכר</legend>
+              <label class="pill-option"><input type="radio" name="g" id="g-m" value="m" checked><span>נפטר</span></label>
+              <label class="pill-option"><input type="radio" name="g" id="g-f" value="f"><span>נפטרת</span></label>
+            </fieldset>
+            <div class="field">
+              <label for="parent">שם האב או האם <span class="optional">(לא חובה)</span></label>
+              <input id="parent" autocomplete="off" placeholder="למשל: אברהם">
+              <p class="hint">יופיע בא־ל מלא רחמים: ״משה בן אברהם״.</p>
+            </div>
+            <label class="check"><input type="checkbox" id="minyan" checked><span>יש מניין <span class="hint-inline">(קדיש נאמר במניין בלבד)</span></span></label>
+          </div>
+        </details>
+        <div class="step submit-row">
+          <span class="step-num" aria-hidden="true">3</span>
+          <button type="submit" class="primary">צור סדר</button>
+        </div>
+        <p id="form-error" class="form-error" role="alert" hidden></p>
+      </form>
+    </section>
 
-  <p class="notice">הטקסטים יובאו ממהדורות מזוהות ונבדקו מבנית, אך <strong>טרם הוגהו</strong>. אין להסתמך עליהם כנוסח מוגה.</p>
+    <!-- 2. The order itself. -->
+    <article id="order" class="order" hidden aria-labelledby="order-name">
+      <header class="order-head">
+        <p class="leilui">לעילוי נשמת</p>
+        <h1 id="order-name"></h1>
+        <p id="order-meta" class="meta"></p>
+        <div class="actions">
+          <button type="button" class="action" id="act-share"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M15 5l-6 4m6 10l-6-4M18 4a2 2 0 1 1 0 .01M6 12a2 2 0 1 1 0 .01M18 20a2 2 0 1 1 0 .01"/></svg>שיתוף ו־QR</button>
+          <button type="button" class="action" id="act-print"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M7 9V3h10v6M7 17H4v-7h16v7h-3M7 14h10v7H7z"/></svg>הדפסה</button>
+          <button type="button" class="action" id="act-edit"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 6h10M4 12h16M4 18h10M18 4v4m-2-2h4"/></svg>עריכת הסדר</button>
+        </div>
+      </header>
 
-  <main id="reading" aria-live="polite"></main>
+      <p class="notice"><strong>טרם הוגה.</strong> הטקסטים נלקחו ממהדורות מזוהות והושוו מכנית, אך עדיין לא עברו הגהה אנושית. מצאתם טעות? <a id="report-top" target="_blank" rel="noopener">דווחו לנו</a>.</p>
+      <p id="warnings" class="warn" role="status" hidden></p>
 
-  <footer id="attribution"></footer>
+      <div class="layout">
+        <nav class="toc" aria-label="תוכן הסדר">
+          <details id="toc-details">
+            <summary>תוכן הסדר</summary>
+            <ol id="toc"></ol>
+          </details>
+        </nav>
+        <div id="reading" class="reading" aria-live="polite"></div>
+      </div>
 
-  <script type="module" src="app.js"></script>
+      <!-- Printed at the end of an A4 sheet: how to get back to the order online. -->
+      <section class="print-end" aria-hidden="true">
+        <div class="print-qr" id="print-qr"></div>
+        <div>
+          <p>לסדר המלא, לשיתוף ולהדפסה: סרקו את הקוד.</p>
+          <p class="print-url" id="print-url"></p>
+          <p class="print-fine">הנוסח טרם הוגה. <span class="print-attr"></span></p>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div id="attribution" class="attribution"></div>
+      <p class="footer-row">
+        <a id="report-footer" target="_blank" rel="noopener">דיווח על טעות או הערה</a>
+        <span aria-hidden="true">·</span>
+        <a href="fonts/README.txt" target="_blank" rel="noopener">גופנים ורישיונות</a>
+        <span aria-hidden="true">·</span>
+        <span id="build" class="build">גרסה: dev</span>
+      </p>
+    </div>
+  </footer>
+
+  <!-- Display: private to this device. -->
+  <dialog id="dlg-display" class="sheet" aria-labelledby="dlg-display-title">
+    <form method="dialog" class="sheet-body">
+      <header class="sheet-head"><h2 id="dlg-display-title">תצוגה</h2><button class="close" value="close" aria-label="סגירה">×</button></header>
+      <p class="sheet-note">ההגדרות האלה נשמרות רק במכשיר שלך ואינן משנות את הסדר של אחרים.</p>
+      <fieldset class="field">
+        <legend>ניקוד</legend>
+        <div class="segmented" id="marks-options">
+          <label><input type="radio" name="marks" value="withNikkud"><span>מנוקד</span></label>
+          <label><input type="radio" name="marks" value="withCantillation"><span>ניקוד וטעמים</span></label>
+          <label><input type="radio" name="marks" value="unpointed"><span>ללא ניקוד</span></label>
+        </div>
+      </fieldset>
+      <fieldset class="field">
+        <legend>גופן</legend>
+        <div class="font-options" id="font-options"></div>
+      </fieldset>
+      <fieldset class="field">
+        <legend>גודל הטקסט</legend>
+        <div class="size-row">
+          <button type="button" class="round" id="smaller" aria-label="הקטנת הטקסט">א−</button>
+          <output id="size-out" aria-live="polite">100%</output>
+          <button type="button" class="round" id="larger" aria-label="הגדלת הטקסט">א+</button>
+        </div>
+      </fieldset>
+      <fieldset class="field">
+        <legend>מראה</legend>
+        <div class="segmented">
+          <label><input type="radio" name="theme" value="system"><span>כמו המכשיר</span></label>
+          <label><input type="radio" name="theme" value="light"><span>בהיר</span></label>
+          <label><input type="radio" name="theme" value="dark"><span>כהה</span></label>
+        </div>
+      </fieldset>
+      <p class="sample" id="display-sample" aria-hidden="true"></p>
+    </form>
+  </dialog>
+
+  <!-- Share: link, WhatsApp, system share, QR. -->
+  <dialog id="dlg-share" class="sheet" aria-labelledby="dlg-share-title">
+    <form method="dialog" class="sheet-body">
+      <header class="sheet-head"><h2 id="dlg-share-title">שיתוף הסדר</h2><button class="close" value="close" aria-label="סגירה">×</button></header>
+      <p class="sheet-note">מי שיפתח את הקישור יראה את אותו הסדר, ויוכל לבחור לעצמו ניקוד, גופן וגודל.</p>
+      <div class="link-row">
+        <input id="share-url" readonly dir="ltr" aria-label="הקישור לסדר">
+        <button type="button" id="copy-link" class="secondary">העתקה</button>
+      </div>
+      <p id="copy-status" class="status" role="status"></p>
+      <div class="share-buttons">
+        <a id="share-whatsapp" class="secondary wide" target="_blank" rel="noopener">שליחה בוואטסאפ</a>
+        <button type="button" id="share-native" class="secondary wide" hidden>שיתוף באפליקציה אחרת…</button>
+      </div>
+      <div class="qr-card">
+        <div id="qr" class="qr" role="img" aria-label="קוד QR לקישור"></div>
+        <button type="button" id="qr-download" class="secondary">הורדת ה־QR כתמונה</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Print: an A4 sheet, or a folded A5 booklet. -->
+  <dialog id="dlg-print" class="sheet" aria-labelledby="dlg-print-title">
+    <form method="dialog" class="sheet-body">
+      <header class="sheet-head"><h2 id="dlg-print-title">הדפסה</h2><button class="close" value="close" aria-label="סגירה">×</button></header>
+      <div class="print-choice">
+        <section class="print-option">
+          <h3>דפים רגילים (A4)</h3>
+          <p>הסדר ברצף על דפי A4. אפשר גם לשמור כ־PDF מחלון ההדפסה.</p>
+          <button type="button" id="print-sheet" class="primary">הדפסת דפים</button>
+        </section>
+        <section class="print-option">
+          <h3>חוברת (A5 מקופלת)</h3>
+          <p id="booklet-summary">כריכה עם השם, הסדר בעמודי A5, וקוד QR בגב החוברת.</p>
+          <ol class="steps-list">
+            <li>בחלון ההדפסה: <strong>דו־צדדי</strong>, <strong>היפוך בצד הקצר</strong>, נייר A4 לרוחב, קנה מידה 100%.</li>
+            <li>מניחים את הגיליונות זה על זה לפי הסדר, ומקפלים באמצע.</li>
+            <li>מהדקים בקיפול. החוברת נפתחת מימין לשמאל.</li>
+          </ol>
+          <p class="hint">אין מדפסת דו־צדדית? מדפיסים את העמודים האי־זוגיים, מחזירים את הערימה למגש, ומדפיסים את הזוגיים.</p>
+          <button type="button" id="print-booklet" class="primary">הדפסת חוברת</button>
+        </section>
+      </div>
+      <p id="print-status" class="status" role="status"></p>
+    </form>
+  </dialog>
+
+  <!-- Edit the order: details, and which sections in which order. Saved into the link. -->
+  <dialog id="dlg-edit" class="sheet wide-sheet" aria-labelledby="dlg-edit-title">
+    <form method="dialog" class="sheet-body" id="edit-form">
+      <header class="sheet-head"><h2 id="dlg-edit-title">עריכת הסדר</h2><button class="close" value="close" aria-label="סגירה">×</button></header>
+      <p class="sheet-note">השינויים נשמרים בקישור. מי שתשלחו לו את הקישור החדש יראה את הסדר הערוך.</p>
+      <div class="edit-details">
+        <div class="field"><label for="e-name">שם</label><input id="e-name" autocomplete="off"></div>
+        <div class="field"><label for="e-parent">שם האב או האם <span class="optional">(לא חובה)</span></label><input id="e-parent" autocomplete="off"></div>
+        <fieldset class="field inline">
+          <legend>לזכר</legend>
+          <label class="pill-option"><input type="radio" name="eg" id="eg-m" value="m"><span>נפטר</span></label>
+          <label class="pill-option"><input type="radio" name="eg" id="eg-f" value="f"><span>נפטרת</span></label>
+        </fieldset>
+        <label class="check"><input type="checkbox" id="e-minyan"><span>יש מניין</span></label>
+        <div class="field"><label for="e-template">נוסח</label><select id="e-template"></select><p class="hint">החלפת נוסח מחזירה את רשימת הקטעים לברירת המחדל שלו.</p></div>
+      </div>
+      <h3 class="list-title">קטעים</h3>
+      <p class="hint">מסמנים מה ייכלל, ומזיזים בחצים.</p>
+      <ol id="edit-sections" class="edit-sections"></ol>
+      <div class="sheet-actions">
+        <button type="button" id="edit-reset" class="secondary">חזרה לסדר של הנוסח</button>
+        <button type="button" id="edit-save" class="primary">שמירה</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Built only for booklet printing: A4 sheets, two A5 pages each. -->
+  <div id="booklet" class="booklet" hidden></div>
 </body>
 </html>

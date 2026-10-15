@@ -3,3 +3,4 @@ sources/**/raw/
 *.log
 .DS_Store
 .claude/worktrees/
+_site/
