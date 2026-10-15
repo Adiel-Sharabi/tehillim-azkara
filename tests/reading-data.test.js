@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { buildLibrary } from '../scripts/build-reading.mjs';
+import { buildLibrary, reviewedSources } from '../scripts/build-reading.mjs';
 import { READING_EDITIONS } from '../lib/editions.js';
 import { consonantsOf } from '../lib/hebrew.js';
 
@@ -9,7 +9,7 @@ const read = (p) => JSON.parse(readFileSync(new URL(`../${p}`, import.meta.url),
 const lib = read('data/reading/library.json');
 
 test('data/reading/library.json is current: rebuilding from sources gives the same file', () => {
-  assert.deepEqual(buildLibrary(read('sources/mishnah/mishnah.json'), read('sources/prayers/prayers.json')), lib);
+  assert.deepEqual(buildLibrary(...reviewedSources(read)), lib);
 });
 
 test('reading texts come only from the editions named in lib/editions.js', () => {
@@ -42,4 +42,21 @@ test('each El Male has exactly one name slot and no text in it', () => {
     const slots = lib.prayers[key].filter((s) => s.slot);
     assert.deepEqual(slots, [{ role: 'leader', slot: 'name' }], key);
   }
+});
+
+test('prayers carry no cantillation marks in any display form', () => {
+  const accents = [];
+  for (const [key, segs] of Object.entries(lib.prayers)) {
+    for (const s of segs) for (const ch of s.withCantillation ?? '') {
+      const cp = ch.codePointAt(0);
+      if (cp >= 0x0591 && cp <= 0x05af) accents.push(`${key} U+${cp.toString(16)}`);
+    }
+  }
+  assert.deepEqual(accents, []);
+});
+
+test('reviewed corrections reach the reading (Kaddish DeRabbanan: ומזוני רויחי)', () => {
+  const text = lib.prayers['kaddish-derabbanan'].map((s) => s.unpointed ?? '').join(' ');
+  assert.ok(text.includes('ומזוני רויחי'), 'correction not applied');
+  assert.ok(!text.includes('ומזונא רויחי'), 'uncorrected reading still present');
 });
