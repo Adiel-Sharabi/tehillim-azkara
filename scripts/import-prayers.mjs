@@ -14,17 +14,16 @@
 //   sources/prayers/prayers.lock.json  sha256 of each upstream payload (version lock; commit this)
 //   sources/prayers/diff-report.json   consonant-level comparison of the license-clear editions
 
-import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { rawStore, sha256 } from './raw-store.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT_DIR = path.join(ROOT, 'sources', 'prayers');
 const RAW_DIR = path.join(OUT_DIR, 'raw');
 const OFFLINE = process.argv.includes('--offline');
 const RELOCK = process.argv.includes('--relock');
-const USER_AGENT = 'tehillim-azkara-importer/0.1 (one-off build-time import; static site)';
 
 // ---------------------------------------------------------------------------------------------
 // Licensing policy. Only these Sefaria `license` strings are accepted, whatever the version title says
@@ -111,46 +110,10 @@ const WIKISOURCE = {
 // ---------------------------------------------------------------------------------------------
 // Small utilities
 // ---------------------------------------------------------------------------------------------
-const sha256 = (bufOrStr) => createHash('sha256').update(bufOrStr).digest('hex');
 const fail = (msg) => { throw new Error(msg); };
 const assert = (cond, msg) => { if (!cond) fail(msg); };
 
-const MANIFEST_PATH = path.join(RAW_DIR, 'manifest.json');
-let manifest = existsSync(MANIFEST_PATH) ? JSON.parse(readFileSync(MANIFEST_PATH, 'utf8')) : { files: {} };
-
-async function fetchWithRetry(url) {
-  let lastErr;
-  for (let attempt = 1; attempt <= 4; attempt++) {
-    try {
-      const res = await fetch(url, { headers: { 'user-agent': USER_AGENT, accept: 'application/json' } });
-      if (res.status === 429 || res.status >= 500) throw new Error(`HTTP ${res.status}`);
-      if (!res.ok) fail(`HTTP ${res.status} for ${url}`);
-      return Buffer.from(await res.arrayBuffer());
-    } catch (e) {
-      lastErr = e;
-      if (/^HTTP 4/.test(e.message) && !/429/.test(e.message)) throw e;
-      await new Promise((r) => setTimeout(r, 1000 * attempt));
-    }
-  }
-  fail(`giving up on ${url}: ${lastErr?.message}`);
-}
-
-/** Returns parsed JSON of a raw file; fetches (and records provenance) unless --offline. */
-async function getRaw(name, url) {
-  const file = path.join(RAW_DIR, name);
-  if (OFFLINE) {
-    assert(existsSync(file), `--offline: missing raw file ${name} (run without --offline first)`);
-    assert(manifest.files[name], `--offline: ${name} is not in raw/manifest.json`);
-    const buf = readFileSync(file);
-    assert(sha256(buf) === manifest.files[name].sha256, `raw/${name} does not match the sha256 in raw/manifest.json`);
-  } else {
-    mkdirSync(RAW_DIR, { recursive: true });
-    const buf = await fetchWithRetry(url);
-    writeFileSync(file, buf);
-    manifest.files[name] = { url, sha256: sha256(buf), bytes: buf.length, retrievedAt: new Date().toISOString() };
-  }
-  return JSON.parse(readFileSync(file, 'utf8'));
-}
+const { manifest, getRaw, saveManifest } = rawStore(RAW_DIR, { offline: OFFLINE });
 
 // ---------------------------------------------------------------------------------------------
 // Hebrew helpers
@@ -643,7 +606,7 @@ async function main() {
   // ---- write ----
   writeFileSync(path.join(OUT_DIR, 'prayers.json'), JSON.stringify({ editions }, null, 2) + '\n');
   writeFileSync(path.join(OUT_DIR, 'diff-report.json'), JSON.stringify({ method: 'word-level LCS on consonant skeletons (marks U+0591-U+05C7 stripped, maqaf -> space, punctuation dropped); instruction and name-slot segments excluded; the word אמן ignored (layout, not text)', comparisons: diffs }, null, 2) + '\n');
-  if (!OFFLINE) writeFileSync(MANIFEST_PATH, JSON.stringify(manifest, null, 2) + '\n');
+  saveManifest();
 
   // ---- summary ----
   for (const [id, ed] of Object.entries(editions)) {

@@ -17,10 +17,10 @@
 //
 // Which edition is READ for each text is decided in lib/editions.js, not here; this script imports all of them.
 
-import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { rawStore, sha256 } from './raw-store.mjs';
 import { consonantsOf } from '../lib/hebrew.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -29,7 +29,6 @@ const RAW_DIR = path.join(OUT_DIR, 'raw');
 const OFFLINE = process.argv.includes('--offline');
 const RELOCK = process.argv.includes('--relock');
 // No personal data: identifies the project and the purpose only.
-const USER_AGENT = 'tehillim-azkara-importer/0.1 (one-off build-time import; static site)';
 const WS_API = 'https://he.wikisource.org/w/api.php';
 const WS_SITE = 'https://he.wikisource.org';
 
@@ -53,7 +52,6 @@ const AMEN = cp(0x5d0, 0x5b8, 0x5de, 0x5b5, 0x5df);
 // A parenthesised or bracketed placeholder that stands for the deceased's name.
 const NAME_PLACEHOLDER_RE = /^(?:פלוני(?:ת)?(?: (?:בן|בת) פלוני(?:ת)?)?|פב"פ|פב״פ|שם(?: (?:בן|בת) שם (?:האב|האם))?)$/;
 
-const sha256 = (x) => createHash('sha256').update(x).digest('hex');
 const fail = (msg) => { throw new Error(msg); };
 const assert = (cond, msg) => { if (!cond) fail(msg); };
 
@@ -174,45 +172,7 @@ const EDITIONS = {
 // ---------------------------------------------------------------------------------------------
 // Raw cache with provenance
 // ---------------------------------------------------------------------------------------------
-const MANIFEST_PATH = path.join(RAW_DIR, 'manifest.json');
-const manifest = existsSync(MANIFEST_PATH) ? JSON.parse(readFileSync(MANIFEST_PATH, 'utf8')) : { files: {} };
-
-async function fetchWithRetry(url) {
-  let lastErr;
-  for (let attempt = 1; attempt <= 6; attempt++) {
-    try {
-      const res = await fetch(url, { headers: { 'user-agent': USER_AGENT, accept: 'application/json' } });
-      if (res.status === 429) {
-        // Wikimedia rate limit: wait as long as it asks (bounded), then retry.
-        const wait = Math.min(Number(res.headers.get('retry-after')) || 10 * attempt, 120);
-        await new Promise((r) => setTimeout(r, wait * 1000));
-        throw new Error('HTTP 429');
-      }
-      if (res.status >= 500) throw new Error(`HTTP ${res.status}`);
-      if (!res.ok) fail(`HTTP ${res.status} for ${url}`);
-      return Buffer.from(await res.arrayBuffer());
-    } catch (e) {
-      lastErr = e;
-      if (/^HTTP 4/.test(e.message) && !/429/.test(e.message)) throw e;
-      await new Promise((r) => setTimeout(r, 1000 * attempt));
-    }
-  }
-  fail(`giving up on ${url}: ${lastErr?.message} (${lastErr?.cause?.message ?? 'no cause'})`);
-}
-
-async function getRaw(name, url) {
-  const file = path.join(RAW_DIR, name);
-  if (OFFLINE) {
-    assert(existsSync(file) && manifest.files[name], `--offline: missing raw file ${name}`);
-    assert(sha256(readFileSync(file)) === manifest.files[name].sha256, `raw/${name} does not match raw/manifest.json`);
-  } else {
-    mkdirSync(RAW_DIR, { recursive: true });
-    const buf = await fetchWithRetry(url);
-    writeFileSync(file, buf);
-    manifest.files[name] = { url, sha256: sha256(buf), bytes: buf.length, retrievedAt: new Date().toISOString() };
-  }
-  return JSON.parse(readFileSync(file, 'utf8'));
-}
+const { manifest, getRaw, saveManifest } = rawStore(RAW_DIR, { offline: OFFLINE });
 
 const wsUrl = (params) => `${WS_API}?${new URLSearchParams({ format: 'json', formatversion: '2', ...params })}`;
 
@@ -658,7 +618,7 @@ export async function main() {
   writeFileSync(path.join(OUT_DIR, 'customs.json'), `${JSON.stringify(out, null, 1)}\n`);
   writeFileSync(path.join(OUT_DIR, 'customs.lock.json'), `${JSON.stringify({ note: 'sha256 of each upstream payload (Sefaria: JSON of the flattened text; Wikisource: wikitext of the pinned revision, or rendered HTML). A mismatch aborts the import unless --relock.', payloads: lock.payloads }, null, 1)}\n`);
   writeFileSync(path.join(OUT_DIR, 'diff-report.json'), `${JSON.stringify(report, null, 1)}\n`);
-  if (!OFFLINE) writeFileSync(MANIFEST_PATH, `${JSON.stringify(manifest, null, 1)}\n`);
+  saveManifest();
   console.log(`wrote ${Object.keys(out.editions).length} editions, ${keys.length} texts`);
 }
 
