@@ -35,6 +35,10 @@ Nothing is marked `PROOFREAD` without an actual human proofread.
 | text | source | status |
 |---|---|---|
 | Psalms 16, 17, 33, 72, 91, 104, 119, 130 (303 verses) | MAM, git blob `a5e2296`, CC BY-SA 4.0 | `STRUCTURE_VALIDATED`; machine-collated against UXLC 2.5: 11 differences awaiting a human decision ([COLLATION.md](sources/wlc/COLLATION.md)) |
+| Mishnah Mikvaot 7, Kelim 24 | reading base: Sefaria Torat Emet 357 (PD); compared with Be'eri, Be'eri-Kaufmann, Romm Vilna | imported, not proofread |
+| Kaddish Yatom, Kaddish DeRabbanan, El Male Rachamim | reading base: Metsudah (CC-BY); compared with Daat (PD), Wikisource | imported, not proofread |
+
+Edition choices and the other open decisions are recorded in the master doc, "החלטות ביצוע — 15.10.2026".
 
 ## Licensing
 
