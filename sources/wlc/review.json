@@ -1,0 +1,168 @@
+{
+ "corpus": "psalms",
+ "date": "2026-10-15",
+ "status": {
+  "mam": {
+   "status": "INDEPENDENTLY_COMPARED",
+   "scope": [
+    "16",
+    "17",
+    "33",
+    "72",
+    "91",
+    "104",
+    "119",
+    "130"
+   ],
+   "layers": "letters and vowels; cantillation marks were not compared",
+   "witnesses": [
+    "UXLC 2.5 (Leningrad Codex), all 303 verses",
+    "MAM-parsed/plus D1-Psalms.json (git blob acba1c374cfa6dac85c7fee1136ccb9de616a788), \"נוסח\" note",
+    "Breuer text as published by Mechon Mamre (comparison only), the 11 differing words"
+   ]
+  }
+ },
+ "verdicts": [
+  {
+   "ref": "17:12",
+   "kind": "consonants",
+   "mam": "דמינו כאריה יכסוף לטרף וככפיר ישב במסתרים׃",
+   "uxlc": "דמינוכאריהיכסוףלטרוףוככפירישבבמסתרים",
+   "verdict": "keep-mam",
+   "witnesses": [
+    "MAM-parsed/plus D1-Psalms.json (git blob acba1c374cfa6dac85c7fee1136ccb9de616a788), \"נוסח\" note: MAM's reading (defective) is that of the manuscripts it labels ש1, ק13, גסטר1 and ק-מ; only ל (Leningrad) has the plene לטרוף; cites Breuer",
+    "Breuer text as published by Mechon Mamre (comparison only): לִטְרֹף",
+    "Aleppo Codex lacks Psalms 15:1-25:1 (lost leaves); MAM rests on the other Tiberian witnesses there"
+   ],
+   "reason": "Every witness but Leningrad spells it defective."
+  },
+  {
+   "ref": "33:7",
+   "kind": "consonants",
+   "mam": "כנס כנד מי הים נתן באוצרות תהומות׃",
+   "uxlc": "כנסכנדמיהיםנתןבאצרותתהומות",
+   "verdict": "keep-mam",
+   "witnesses": [
+    "MAM follows the Aleppo Codex here and records no variant",
+    "Breuer text as published by Mechon Mamre (comparison only): בְּאוֹצָרוֹת"
+   ],
+   "reason": "Aleppo-based texts agree on the plene spelling; Leningrad alone is defective."
+  },
+  {
+   "ref": "104:9",
+   "kind": "consonants",
+   "mam": "גבול־שמת בל־יעברון בל־ישבון לכסות הארץ׃",
+   "uxlc": "גבולשמתבליעברוןבלישובוןלכסותהארץ",
+   "verdict": "keep-mam",
+   "witnesses": [
+    "MAM follows the Aleppo Codex here and records no variant",
+    "Breuer text as published by Mechon Mamre (comparison only): יְשֻׁבוּן"
+   ],
+   "reason": "Aleppo-based texts agree on the defective spelling."
+  },
+  {
+   "ref": "119:15",
+   "kind": "consonants",
+   "mam": "בפקודיך אשיחה ואביטה ארחתיך׃",
+   "uxlc": "בפקדיךאשיחהואביטהארחתיך",
+   "verdict": "keep-mam",
+   "witnesses": [
+    "MAM follows the Aleppo Codex here and records no variant",
+    "Breuer text as published by Mechon Mamre (comparison only): בְּפִקּוּדֶיךָ"
+   ],
+   "reason": "Aleppo-based texts agree on the plene spelling."
+  },
+  {
+   "ref": "119:87",
+   "kind": "consonants",
+   "mam": "כמעט כלוני בארץ ואני לא־עזבתי פקדיך׃",
+   "uxlc": "כמעטכלוניבארץואנילאעזבתיפקודיך",
+   "verdict": "keep-mam",
+   "witnesses": [
+    "MAM follows the Aleppo Codex here and records no variant",
+    "Breuer text as published by Mechon Mamre (comparison only): פִקֻּדֶיךָ"
+   ],
+   "reason": "Aleppo-based texts agree on the defective spelling."
+  },
+  {
+   "ref": "17:14",
+   "kind": "vowels",
+   "word": 11,
+   "mam": "יִשְׂבְּעוּ",
+   "uxlc": "יִשְׂבּעוּ",
+   "verdict": "keep-mam",
+   "witnesses": [
+    "MAM-parsed/plus D1-Psalms.json (git blob acba1c374cfa6dac85c7fee1136ccb9de616a788), \"נוסח\" note: MAM's reading is that of ש1, ק13, גסטר1 and the printed editions; it marks the Leningrad reading (no sheva under the bet) \"ל!\", a scribal slip; cites Dotan and Breuer",
+    "Breuer text as published by Mechon Mamre (comparison only): יִשְׂבְּעוּ",
+    "Aleppo Codex lacks Psalms 15:1-25:1 (lost leaves); MAM rests on the other Tiberian witnesses there"
+   ],
+   "reason": "Leningrad omits the sheva; every other witness has it."
+  },
+  {
+   "ref": "72:15",
+   "kind": "vowels",
+   "word": 11,
+   "mam": "יְבָרְכֶנְהוּ׃",
+   "uxlc": "יְבָרֲכֶנְהוּ׃",
+   "verdict": "keep-mam",
+   "witnesses": [
+    "MAM-parsed/plus D1-Psalms.json (git blob acba1c374cfa6dac85c7fee1136ccb9de616a788), \"נוסח\" note: \"א=יְבָרֲכֶנְהוּ (חטף)\", Aleppo writes hataf-patah where MAM prints sheva",
+    "Breuer text as published by Mechon Mamre (comparison only): יְבָרְכֶנְהוּ"
+   ],
+   "reason": "Not a different reading. After a ga'ya the Aleppo and Leningrad scribes mark a vocal sheva with hataf-patah; MAM and Breuer print the sheva the reader expects, and record the hataf in a note. Pronunciation is the same."
+  },
+  {
+   "ref": "104:1",
+   "kind": "vowels",
+   "word": 1,
+   "mam": "בָּרְכִי",
+   "uxlc": "בָּרֲכִי",
+   "verdict": "keep-mam",
+   "witnesses": [
+    "MAM-parsed/plus D1-Psalms.json (git blob acba1c374cfa6dac85c7fee1136ccb9de616a788), \"נוסח\" note: \"א=בָּרֲכִי (חטף)\"",
+    "Breuer text as published by Mechon Mamre (comparison only): בָּרְכִי"
+   ],
+   "reason": "As 72:15: the manuscripts' hataf marks a vocal sheva after ga'ya; same pronunciation."
+  },
+  {
+   "ref": "104:35",
+   "kind": "vowels",
+   "word": 8,
+   "mam": "בָּרְכִי",
+   "uxlc": "בָּרֲכִי",
+   "verdict": "keep-mam",
+   "witnesses": [
+    "MAM-parsed/plus D1-Psalms.json (git blob acba1c374cfa6dac85c7fee1136ccb9de616a788), \"נוסח\" note: \"א=בָּרֲכִי (חטף)\"",
+    "Breuer text as published by Mechon Mamre (comparison only): בָּרְכִי"
+   ],
+   "reason": "As 72:15."
+  },
+  {
+   "ref": "119:69",
+   "kind": "vowels",
+   "word": 8,
+   "mam": "אֶצֹּר",
+   "uxlc": "אֱצֹּר",
+   "verdict": "keep-mam",
+   "witnesses": [
+    "MAM follows the Aleppo Codex here and records no variant",
+    "Breuer text as published by Mechon Mamre (comparison only): אֶצֹּר"
+   ],
+   "reason": "Aleppo-based texts agree on segol; Leningrad has hataf-segol."
+  },
+  {
+   "ref": "119:175",
+   "kind": "vowels",
+   "word": 5,
+   "mam": "יַעְזְרֻנִי׃",
+   "uxlc": "יַעֲזְרֻנִי׃",
+   "verdict": "keep-mam",
+   "witnesses": [
+    "MAM follows the Aleppo Codex here and records no variant",
+    "Breuer text as published by Mechon Mamre (comparison only): יַעְזְרֻנִי"
+   ],
+   "reason": "Aleppo-based texts agree on a silent sheva under the ayin; Leningrad has hataf-patah."
+  }
+ ],
+ "corrections": []
+}

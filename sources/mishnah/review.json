@@ -1,0 +1,66 @@
+{
+ "corpus": "mishnah",
+ "date": "2026-10-15",
+ "status": {
+  "sefaria-torat-emet-357": {
+   "status": "INDEPENDENTLY_COMPARED",
+   "scope": [
+    "Mikvaot.7",
+    "Kelim.24"
+   ],
+   "witnesses": [
+    "sefaria-romm-vilna-1913 (letters)",
+    "Mechon Mamre Mishnah (letters, comparison only)",
+    "wikisource-beeri (vowels)",
+    "sefaria-beeri-kaufmann (vowels; same editor as wikisource-beeri)"
+   ]
+  }
+ },
+ "corrections": [
+  {
+   "edition": "sefaria-torat-emet-357",
+   "text": "Mikvaot.7",
+   "ref": "2",
+   "from": "שְׁלשׁ",
+   "to": "שְׁלֹשׁ",
+   "count": 1,
+   "kind": "display-normalization",
+   "witnesses": [
+    "Torat Emet itself in Kelim 24 (שְׁלֹשָׁה with holam, 6 times)",
+    "Be'eri (Wikisource)",
+    "Be'eri-Kaufmann"
+   ],
+   "reason": "Torat Emet prints the holam of the lamed merged with the dot of the following shin, an old typesetting convention. In Unicode the lamed is left with no vowel at all. The holam is written out, as the same edition does in Kelim 24."
+  },
+  {
+   "edition": "sefaria-torat-emet-357",
+   "text": "Mikvaot.7",
+   "ref": "3",
+   "from": "שְׁלשׁ",
+   "to": "שְׁלֹשׁ",
+   "count": 1,
+   "kind": "display-normalization",
+   "witnesses": [
+    "Torat Emet itself in Kelim 24 (שְׁלֹשָׁה with holam, 6 times)",
+    "Be'eri (Wikisource)",
+    "Be'eri-Kaufmann"
+   ],
+   "reason": "Torat Emet prints the holam of the lamed merged with the dot of the following shin, an old typesetting convention. In Unicode the lamed is left with no vowel at all. The holam is written out, as the same edition does in Kelim 24."
+  },
+  {
+   "edition": "sefaria-torat-emet-357",
+   "text": "Mikvaot.7",
+   "ref": "5",
+   "from": "שְׁלשׁ",
+   "to": "שְׁלֹשׁ",
+   "count": 2,
+   "kind": "display-normalization",
+   "witnesses": [
+    "Torat Emet itself in Kelim 24 (שְׁלֹשָׁה with holam, 6 times)",
+    "Be'eri (Wikisource)",
+    "Be'eri-Kaufmann"
+   ],
+   "reason": "Torat Emet prints the holam of the lamed merged with the dot of the following shin, an old typesetting convention. In Unicode the lamed is left with no vowel at all. The holam is written out, as the same edition does in Kelim 24."
+  }
+ ]
+}
