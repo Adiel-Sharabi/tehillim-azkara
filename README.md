@@ -13,13 +13,14 @@ The product decisions, research and source register are in
 npm run serve            # http://127.0.0.1:8080/site/
 npm test                 # node --test (no dependencies)
 npm run import:mam       # re-download the locked MAM Psalms source and rebuild data/psalms
+npm run build:reading    # rebuild data/reading from the editions named in lib/editions.js
 ```
 
 ## Layout
 
 | path | what |
 |---|---|
-| `site/` | the static page (HTML/CSS/JS modules) |
+| `site/` | the static page (HTML/CSS/JS modules); deploy `site/` + `lib/` + `data/` together |
 | `lib/` | pure modules shared by site, scripts and tests (`hebrew.js` marks, `psalm119.js` letters) |
 | `data/` | generated, committed text data the site reads |
 | `scripts/` | importers (one per source) and the dev server |
