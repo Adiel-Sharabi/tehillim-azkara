@@ -7,6 +7,7 @@
     "import:mam": "node scripts/import-mam.mjs --download",
     "import:mishnah": "node scripts/import-mishnah.mjs --download",
     "test": "node --test",
-    "serve": "node scripts/serve.mjs"
+    "serve": "node scripts/serve.mjs",
+    "build:reading": "node scripts/build-reading.mjs"
   }
 }

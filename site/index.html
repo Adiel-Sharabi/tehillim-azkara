@@ -3,17 +3,23 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>סדר תהילים לאזכרה</title>
+  <title>סדר אזכרה</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700&family=Assistant:wght@400;600&display=swap">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header class="bar">
-    <h1>סדר תהילים לאזכרה</h1>
+    <h1>סדר אזכרה</h1>
     <form id="create" class="create">
       <label for="name">שם הנפטר/ת</label>
       <input id="name" name="n" autocomplete="off" placeholder="למשל: משה" required>
+      <fieldset class="opts">
+        <legend class="sr">פרטים</legend>
+        <label><input type="radio" name="g" id="g-m" value="m" checked> נפטר</label>
+        <label><input type="radio" name="g" id="g-f" value="f"> נפטרת</label>
+        <label><input type="checkbox" id="minyan" checked> יש מניין</label>
+      </fieldset>
       <button type="submit">צור סדר</button>
     </form>
     <p id="ignored" class="warn" hidden></p>
@@ -30,7 +36,7 @@
     <button type="button" id="theme" aria-label="מצב כהה/בהיר">◐</button>
   </div>
 
-  <p class="notice">טקסט המקרא יובא ממהדורה מזוהה ונבדק מבנית, אך <strong>טרם הוגה</strong>. אין להסתמך עליו כנוסח מוגה.</p>
+  <p class="notice">הטקסטים יובאו ממהדורות מזוהות ונבדקו מבנית, אך <strong>טרם הוגהו</strong>. אין להסתמך עליהם כנוסח מוגה.</p>
 
   <main id="reading" aria-live="polite"></main>
 
