@@ -205,6 +205,14 @@ function labelParent(fieldId, templateId) {
   const label = document.querySelector(`label[for="${fieldId}"]`);
   label.firstChild.textContent = mother ? 'שם האם ' : 'שם האב ';
   $(fieldId).placeholder = mother ? 'למשל: רחל' : 'למשל: אברהם';
+  const hint = $(`${fieldId}-hint`);
+  if (!hint) return;
+  // Where the custom reads the parent's name: its withParent blocks.
+  const t = TEMPLATES[templateId];
+  const where = [...new Set([...(t?.blocks ?? []), ...(t?.optional ?? [])].filter((b) => b.withParent)
+    .map((b) => (b.type === 'psalm119' ? 'תהילים קי״ט' : b.title.replace(/ (.*)$/, ''))))];
+  hint.hidden = !where.length;
+  hint.textContent = `יופיע ב${where.join(' וב')}: ״${mother ? 'יוסף בן רחל' : 'משה בן אברהם'}״.`;
 }
 
 function summaryOf(templateId) {
