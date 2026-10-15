@@ -36,9 +36,15 @@ Nothing is marked `PROOFREAD` without an actual human proofread.
 
 | text | source | status |
 |---|---|---|
-| Psalms 16, 17, 33, 72, 91, 104, 119, 130 (303 verses) | MAM, git blob `a5e2296`, CC BY-SA 4.0 | `STRUCTURE_VALIDATED`; machine-collated against UXLC 2.5: 11 differences awaiting a human decision ([COLLATION.md](sources/wlc/COLLATION.md)) |
-| Mishnah Mikvaot 7, Kelim 24 | reading base: Sefaria Torat Emet 357 (PD); compared with Be'eri, Be'eri-Kaufmann, Romm Vilna | imported, not proofread |
-| Kaddish Yatom, Kaddish DeRabbanan, El Male Rachamim | reading base: Metsudah (CC-BY); compared with Daat (PD), Wikisource | imported, not proofread |
+| Psalms 16, 17, 33, 72, 90, 91, 104, 119, 130 (320 verses) | MAM, git blob `a5e2296`, CC BY-SA 4.0 | `INDEPENDENTLY_COMPARED` against UXLC 2.5: 12 differences, all kept as MAM ([REVIEW.md](sources/wlc/REVIEW.md)) |
+| Mishnah Mikvaot 7, Kelim 24 | reading base: Sefaria Torat Emet 357 (PD); compared with Be'eri, Be'eri-Kaufmann, Romm Vilna | `INDEPENDENTLY_COMPARED`, one display correction ([REVIEW.md](sources/mishnah/REVIEW.md)) |
+| Ashkenaz Kaddish Yatom, Kaddish DeRabbanan, El Male Rachamim | reading base: Metsudah (CC-BY); compared with Daat (PD), Wikisource | `INDEPENDENTLY_COMPARED`, three corrections ([REVIEW.md](sources/prayers/REVIEW.md)) |
+| Sefard Kaddish | Metsudah Siddur Sefard (CC-BY); compared with Wikisource | imported and compared ([SOURCE.md](sources/customs/SOURCE.md)) |
+| Edot HaMizrach / Moroccan Kaddish | Shaliehsaboo (CC0); compared with Torat Emet 357, Wikisource | imported and compared |
+| Yemenite (Baladi) Kaddish and Hashkava | Wikisource Baladi siddur (CC BY-SA); compared with Hamichlol (comparison only) | imported and compared |
+| Sephardic Hashkava (short, long; man, woman), כל ישראל | Torat Emet 357 (PD); compared with Wikisource, Shaliehsaboo | imported and compared; missing points completed from witnesses, logged |
+
+Every template in `lib/templates/` is a candidate custom, not yet confirmed with a community.
 
 Edition choices and the other open decisions are recorded in the master doc, "החלטות ביצוע — 15.10.2026".
 
