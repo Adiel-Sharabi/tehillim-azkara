@@ -57,8 +57,8 @@ test('Edot HaMizrach: Psalm 119 and the Hashkava use the mother\'s name when giv
   assert.equal(buildOrder('edot_hamizrach_base', { name: 'יוסף' }).sections.find((s) => s.text === 'hashkava').name, 'יוסף');
 });
 
-test('every template names the parent its custom uses; only withParent blocks read it', () => {
-  for (const [id, t] of Object.entries(TEMPLATES)) assert.ok(['mother', 'father'].includes(t.parent), id);
+test('templates do not prescribe a parent (the family chooses); only withParent blocks read it', () => {
+  for (const [id, t] of Object.entries(TEMPLATES)) assert.equal(t.parent, undefined, id);
   const o = buildOrder('ashkenaz_base', { name: 'משה', parent: 'אברהם' });
   assert.equal(o.sections.find((s) => s.text === 'el-male-rachamim').name, 'משה בן אברהם');
   // Psalm 119 by the name has no withParent in Ashkenaz: the letters stay those of the name alone.
@@ -83,4 +83,22 @@ test('Morocco opens with ויהי נועם: one verse of Psalm 90, carried in th
   const a = buildOrder('ashkenaz_base', { name: 'דוד', order: ['p90.17.17', 'p91'] });
   assert.deepEqual(a.sections.map((s) => [s.chapter, s.from ?? null]), [[90, 17], [91, null]]);
   assert.deepEqual(buildOrder('ashkenaz_base', { name: 'דוד', order: ['p90.18.17', 'p151.1.1'] }).unknownKeys, ['p90.18.17', 'p151.1.1']);
+});
+
+test('every template has a one-line summary for its nusach card, distinct from the others', () => {
+  const seen = new Set();
+  for (const [id, t] of Object.entries(TEMPLATES)) {
+    assert.ok(typeof t.summary === 'string' && t.summary.trim().length > 10, id);
+    assert.ok(!/[\r\n]/.test(t.summary), id);
+    assert.ok(!seen.has(t.summary), `${id}: same summary as another template`);
+    seen.add(t.summary);
+  }
+});
+
+test('summaries name the memorial prayer each template actually uses', () => {
+  for (const [id, t] of Object.entries(TEMPLATES)) {
+    const texts = t.blocks.filter((b) => b.type === 'prayer').map((b) => b.text);
+    if (texts.some((x) => x.startsWith('hashkava'))) assert.ok(t.summary.includes('השכבה'), id);
+    if (texts.includes('el-male-rachamim') && id !== 'sefard_base') assert.ok(t.summary.includes('מלא רחמים'), id);
+  }
 });

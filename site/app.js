@@ -173,7 +173,6 @@ function fillStartForm(inputs) {
   $('parent').value = inputs.parent;
   $(inputs.gender === 'female' ? 'g-f' : 'g-m').checked = true;
   for (const r of document.querySelectorAll('input[name="template"]')) r.checked = r.value === inputs.template;
-  if (inputs.parent || inputs.gender === 'female') $('more').open = true;
   labelParent('parent', inputs.template);
 }
 
@@ -184,24 +183,21 @@ function renderTemplateChoices() {
   $('templates').replaceChildren(...entries.map(([id, t], i) => el('label', { className: 'choice' },
     el('input', { type: 'radio', name: 'template', value: id, checked: i === 0 }),
     el('strong', {}, t.title),
-    el('span', {}, t.description ?? summaryOf(id)))));
+    el('span', {}, t.summary))));
   $('e-template').replaceChildren(...entries.map(([id, t]) => el('option', { value: id }, t.title)));
 }
 
-// The parent-name field follows the chosen custom: the father's name or the mother's (template.parent).
+// The parent-name field is neutral: father or mother is the family's choice. Its hint says where the
+// chosen custom reads the parent's name (its withParent blocks).
 function labelParent(fieldId, templateId) {
-  const mother = TEMPLATES[templateId]?.parent === 'mother';
-  const label = document.querySelector(`label[for="${fieldId}"]`);
-  label.firstChild.textContent = mother ? 'שם האם ' : 'שם האב ';
-  $(fieldId).placeholder = mother ? 'למשל: רחל' : 'למשל: אברהם';
   const hint = $(`${fieldId}-hint`);
   if (!hint) return;
   // Where the custom reads the parent's name: its withParent blocks.
   const t = TEMPLATES[templateId];
   const where = [...new Set([...(t?.blocks ?? []), ...(t?.optional ?? [])].filter((b) => b.withParent)
-    .map((b) => (b.type === 'psalm119' ? 'תהילים קי״ט' : b.title.replace(/ (.*)$/, ''))))];
+    .map((b) => (b.type === 'psalm119' ? 'תהילים קי״ט' : b.title.replace(/ \(.*\)$/, ''))))];
   hint.hidden = !where.length;
-  hint.textContent = `יופיע ב${where.join(' וב')}: ״${mother ? 'יוסף בן רחל' : 'משה בן אברהם'}״.`;
+  hint.textContent = `יופיע ב${where.join(' וב')}: ״משה בן אברהם״ או ״שרה בת רחל״.`;
 }
 
 function summaryOf(templateId) {

@@ -33,7 +33,7 @@
   </header>
 
   <main id="main">
-    <!-- 1. Create: name, custom, create. Everything else waits under "עוד אפשרויות". -->
+    <!-- 1. Create: name, custom, then the optional details in plain sight, then create. -->
     <section id="start" class="start" aria-labelledby="start-title">
       <div class="start-head">
         <p class="eyebrow">לימוד ותפילה</p>
@@ -53,12 +53,11 @@
           <span class="step-num" aria-hidden="true">2</span>
           <fieldset class="field">
             <legend>נוסח</legend>
+            <p class="hint nusach-hint">הנוסחים נבדלים בעיקר בנוסח הקדיש ובתפילה לעילוי הנשמה: א־ל מלא רחמים אצל אשכנזים, השכבה אצל ספרדים ותימנים. בחרו לפי מנהג המשפחה.</p>
             <div id="templates" class="choices"></div>
           </fieldset>
         </div>
-        <details class="more" id="more">
-          <summary>עוד אפשרויות</summary>
-          <div class="more-body">
+        <div class="details">
             <fieldset class="field inline">
               <legend>לזכר</legend>
               <label class="pill-option"><input type="radio" name="g" id="g-m" value="m" checked><span>נפטר</span></label>
@@ -66,11 +65,10 @@
             </fieldset>
             <div class="field">
               <label for="parent">שם האב או האם <span class="optional">(לא חובה)</span></label>
-              <input id="parent" autocomplete="off" placeholder="למשל: אברהם">
+              <input id="parent" autocomplete="off" placeholder="למשל: אברהם או רחל">
               <p class="hint" id="parent-hint">יופיע בא־ל מלא רחמים: ״משה בן אברהם״.</p>
             </div>
-          </div>
-        </details>
+        </div>
         <div class="step submit-row">
           <span class="step-num" aria-hidden="true">3</span>
           <button type="submit" class="primary">צור סדר</button>

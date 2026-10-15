@@ -115,16 +115,15 @@ input:not([type]):focus, select:focus { border-color: var(--accent); }
 .hint { margin: 0; color: var(--muted); font-size: .92rem; }
 .hint-inline { color: var(--muted); font-size: .92rem; }
 .optional { color: var(--muted); font-weight: 400; }
-.choices { display: grid; grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr)); gap: 8px; }
+.choices { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr)); gap: 8px; }
 .choice { position: relative; display: grid; gap: 2px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; cursor: pointer; background: var(--bg); }
 .choice input { position: absolute; opacity: 0; }
 .choice strong { font-size: 1.05rem; }
 .choice span { color: var(--muted); font-size: .9rem; }
 .choice:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); box-shadow: inset 0 0 0 1px var(--accent); }
 .choice:has(input:focus-visible) { outline: 3px solid var(--focus); outline-offset: 2px; }
-.more { border-top: 1px solid var(--line); padding-top: 14px; margin-inline-start: 44px; }
-.more summary { cursor: pointer; color: var(--accent); font-weight: 600; min-height: 32px; }
-.more-body { display: grid; gap: 16px; padding-top: 14px; }
+.details { display: grid; gap: 16px; border-top: 1px solid var(--line); padding-top: 14px; margin-inline-start: 44px; }
+.nusach-hint { margin: 0 0 8px; }
 .pill-option { position: relative; display: inline-flex; }
 .pill-option input { position: absolute; opacity: 0; }
 .pill-option span { padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px; cursor: pointer; min-height: 40px; display: inline-flex; align-items: center; }
