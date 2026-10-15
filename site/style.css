@@ -1,0 +1,53 @@
+:root {
+  --scale: 1;
+  --bg: #fbfaf7;
+  --fg: #1d1b18;
+  --muted: #6b655c;
+  --accent: #3b5b7a;
+  --line: #e2ddd3;
+  --warn-bg: #fff4d6;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #15171a; --fg: #ece8e1; --muted: #a39d93; --accent: #8fb3d6; --line: #2c3036; --warn-bg: #3a3220;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #15171a; --fg: #ece8e1; --muted: #a39d93; --accent: #8fb3d6; --line: #2c3036; --warn-bg: #3a3220;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0 auto;
+  max-width: 46rem;
+  padding: 0 16px 48px;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'Assistant', system-ui, sans-serif;
+  line-height: 1.5;
+}
+h1 { font-size: 1.4rem; margin: 20px 0 12px; }
+.create { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.create label { width: 100%; color: var(--muted); }
+.create input { flex: 1 1 12rem; font: inherit; font-size: 1.15rem; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; background: transparent; color: inherit; }
+button, select { font: inherit; padding: 10px 14px; border-radius: 8px; border: 1px solid var(--line); background: transparent; color: inherit; cursor: pointer; min-height: 44px; }
+.create button { background: var(--accent); color: var(--bg); border-color: var(--accent); font-weight: 600; }
+.view { display: flex; gap: 8px; margin: 16px 0; position: sticky; top: 0; background: var(--bg); padding: 8px 0; border-bottom: 1px solid var(--line); }
+.notice, .warn { background: var(--warn-bg); padding: 8px 12px; border-radius: 8px; font-size: 0.95rem; }
+.block h2 { font-size: 1.2rem; margin: 28px 0 8px; color: var(--accent); }
+.letter-group h3 { font-family: 'Frank Ruhl Libre', serif; font-size: calc(1.3rem * var(--scale)); margin: 16px 0 4px; }
+.scripture {
+  font-family: 'Frank Ruhl Libre', 'Times New Roman', serif;
+  font-size: calc(1.45rem * var(--scale));
+  line-height: 1.9;
+  margin: 0;
+}
+footer { margin-top: 40px; color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--line); padding-top: 12px; }
+footer a { color: inherit; }
+@media print {
+  .bar, .view, .notice { display: none; }
+  body { max-width: none; }
+}

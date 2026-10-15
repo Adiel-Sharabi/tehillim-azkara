@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>סדר תהילים לאזכרה</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700&family=Assistant:wght@400;600&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="bar">
+    <h1>סדר תהילים לאזכרה</h1>
+    <form id="create" class="create">
+      <label for="name">שם הנפטר/ת</label>
+      <input id="name" name="n" autocomplete="off" placeholder="למשל: משה" required>
+      <button type="submit">צור סדר</button>
+    </form>
+    <p id="ignored" class="warn" hidden></p>
+  </header>
+
+  <div class="view" role="toolbar" aria-label="הגדרות תצוגה">
+    <button type="button" id="smaller" aria-label="הקטן גופן">א−</button>
+    <button type="button" id="larger" aria-label="הגדל גופן">א+</button>
+    <select id="marks" aria-label="ניקוד וטעמים">
+      <option value="withNikkud">מנוקד</option>
+      <option value="withCantillation">ניקוד וטעמים</option>
+      <option value="unpointed">ללא ניקוד</option>
+    </select>
+    <button type="button" id="theme" aria-label="מצב כהה/בהיר">◐</button>
+  </div>
+
+  <p class="notice">טקסט המקרא יובא ממהדורה מזוהה ונבדק מבנית, אך <strong>טרם הוגה</strong>. אין להסתמך עליו כנוסח מוגה.</p>
+
+  <main id="reading" aria-live="polite"></main>
+
+  <footer id="attribution"></footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
