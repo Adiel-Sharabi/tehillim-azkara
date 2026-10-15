@@ -10,17 +10,18 @@ The product decisions, research and source register are in
 ## Run
 
 ```sh
-npm run serve            # http://127.0.0.1:8080/site/
+npm run serve            # http://127.0.0.1:8080/ (same layout as the published site)
 npm test                 # node --test (no dependencies)
 npm run import:mam       # re-download the locked MAM Psalms source and rebuild data/psalms
 npm run build:reading    # rebuild data/reading from the editions named in lib/editions.js
+npm run build:site       # assemble _site/ as GitHub Pages publishes it
 ```
 
 ## Layout
 
 | path | what |
 |---|---|
-| `site/` | the static page (HTML/CSS/JS modules); deploy `site/` + `lib/` + `data/` together |
+| `site/` | the static page (HTML/CSS/JS modules, self-hosted fonts, vendored QR encoder); `scripts/assemble-site.mjs` publishes it at the root with `lib/` and `data/` beside it. Every push to `main` deploys to https://adiel-sharabi.github.io/tehillim-azkara/ (`.github/workflows/pages.yml`) |
 | `lib/` | pure modules shared by site, scripts and tests (`hebrew.js` marks, `psalm119.js` letters) |
 | `data/` | generated, committed text data the site reads |
 | `scripts/` | importers (one per source) and the dev server |
