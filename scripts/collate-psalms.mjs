@@ -103,13 +103,15 @@ function main() {
     `- Divine name with holam (MAM) vs without (UXLC): **${report.conventions.divineNameHolam}** occurrences.`,
     `- Rafe present only in UXLC: **${report.conventions.rafe}** occurrences.`,
     '',
+    'Every difference below is decided, with its witnesses, in [review.json](review.json); see [REVIEW.md](REVIEW.md).',
+    '',
     '## Consonant differences',
     '',
     ...(report.consonantDiffs.length
       ? ['| ref | MAM | UXLC |', '|---|---|---|', ...report.consonantDiffs.map((d) => `| ${d.ref} | ${d.mam} | ${d.uxlc} |`)]
       : ['None.']),
     '',
-    '## Vowel differences — each needs a human decision',
+    '## Vowel differences',
     '',
     ...(report.vowelDiffs.length
       ? ['| ref | word | MAM | UXLC |', '|---|---:|---|---|', ...report.vowelDiffs.map((d) => `| ${d.ref} | ${d.word ?? d.kind} | ${d.mam} | ${d.uxlc} |`)]

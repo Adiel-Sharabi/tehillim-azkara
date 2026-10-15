@@ -1,0 +1,83 @@
+{
+ "corpus": "prayers",
+ "date": "2026-10-15",
+ "status": {
+  "sefaria-metsudah-siddur-1981": {
+   "status": "INDEPENDENTLY_COMPARED",
+   "scope": [
+    "kaddish-yatom",
+    "kaddish-derabbanan"
+   ],
+   "witnesses": [
+    "sefaria-daat-siddur-ashkenaz",
+    "Birnbaum 1949 (Wikisource)",
+    "Wikisource סידור/נוסח אשכנז/קדיש",
+    "Wikisource קדיש דרבנן"
+   ]
+  },
+  "sefaria-metsudah-machzor-yk-ashkenaz-linear": {
+   "status": "INDEPENDENTLY_COMPARED",
+   "scope": [
+    "el-male-rachamim",
+    "el-male-rachamim-female"
+   ],
+   "witnesses": [
+    "wikisource-he-el-male-rachamim",
+    "Birnbaum 1949 הזכרת נשמות (Wikisource)",
+    "Wikisource סידור/נוסח אשכנז/הזכרת נשמות",
+    "Wikisource תפילות ומזמורים לבית קברות",
+    "Chevra Kadisha Rishon LeZion (hkr.org.il, comparison only)"
+   ]
+  }
+ },
+ "corrections": [
+  {
+   "edition": "sefaria-metsudah-siddur-1981",
+   "text": "kaddish-yatom",
+   "role": "leader",
+   "from": "וְאִמְרוּ",
+   "to": "וְאִמְרוּ אָמֵן",
+   "count": 4,
+   "kind": "structure",
+   "witnesses": [
+    "sefaria-daat-siddur-ashkenaz (reader: וְאִמְרוּ אָמֵן, then congregation: אמן)",
+    "Birnbaum, Ha-Siddur ha-Shalem 1949 (Wikisource, comparison only)",
+    "Wikisource סידור/נוסח אשכנז/קדיש",
+    "Wikisource קדיש דרבנן (\"ועונים: אמן\")"
+   ],
+   "reason": "Metsudah prints \"וְאִמְרוּ\" in plain type and \"אָמֵן\" in bold, and bold marks the congregation. The importer therefore gave the word to the congregation only, so the person saying Kaddish would read \"וְאִמְרוּ\" and stop. In every witness the reciter says \"וְאִמְרוּ אָמֵן\" and the congregation answers \"אָמֵן\". The reciter keeps the word; the congregation response stays as it is."
+  },
+  {
+   "edition": "sefaria-metsudah-siddur-1981",
+   "text": "kaddish-derabbanan",
+   "role": "leader",
+   "from": "וְאִמְרוּ",
+   "to": "וְאִמְרוּ אָמֵן",
+   "count": 5,
+   "kind": "structure",
+   "witnesses": [
+    "sefaria-daat-siddur-ashkenaz (reader: וְאִמְרוּ אָמֵן, then congregation: אמן)",
+    "Birnbaum, Ha-Siddur ha-Shalem 1949 (Wikisource, comparison only)",
+    "Wikisource סידור/נוסח אשכנז/קדיש",
+    "Wikisource קדיש דרבנן (\"ועונים: אמן\")"
+   ],
+   "reason": "Metsudah prints \"וְאִמְרוּ\" in plain type and \"אָמֵן\" in bold, and bold marks the congregation. The importer therefore gave the word to the congregation only, so the person saying Kaddish would read \"וְאִמְרוּ\" and stop. In every witness the reciter says \"וְאִמְרוּ אָמֵן\" and the congregation answers \"אָמֵן\". The reciter keeps the word; the congregation response stays as it is."
+  },
+  {
+   "edition": "sefaria-metsudah-siddur-1981",
+   "text": "kaddish-derabbanan",
+   "role": "leader",
+   "from": "וּמְזוֹנָא",
+   "to": "וּמְזוֹנֵי",
+   "count": 1,
+   "kind": "error",
+   "witnesses": [
+    "sefaria-daat-siddur-ashkenaz (וּמְזוֹנֵי רְוִיחֵי)",
+    "Birnbaum 1949 (וּמְזוֹנֵי רְוִיחֵי; notes a variant וּמְזוֹנָא רְוִיחָא)",
+    "Wikisource סידור/נוסח אשכנז/קדיש (וּמְזוֹנֵי רְוִיחֵי)",
+    "Wikisource קדיש דרבנן (וּמְזוֹנֵי רְוִיחֵי)"
+   ],
+   "reason": "Metsudah has \"וּמְזוֹנָא רְוִיחֵי\": a singular noun with a plural adjective. Every witness has the plural pair \"וּמְזוֹנֵי רְוִיחֵי\"; the singular pair \"וּמְזוֹנָא רְוִיחָא\" exists as a variant, but the mixed form is not attested."
+  }
+ ]
+}

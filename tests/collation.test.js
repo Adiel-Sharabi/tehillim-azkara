@@ -2,10 +2,10 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { collate, readEditions } from '../scripts/collate-psalms.mjs';
 
-// The known MAM-vs-UXLC differences, as listed in sources/wlc/COLLATION.md. Each is a
-// spelling/vowel variant between the Aleppo-based and Leningrad-based traditions awaiting a
-// human decision. If an upstream re-import changes this list, this test fails on purpose:
-// the new difference must be looked at, not absorbed.
+// The known MAM-vs-UXLC differences, as listed in sources/wlc/COLLATION.md. Each is a spelling/vowel
+// variant between the Aleppo-based and Leningrad-based traditions, decided in sources/wlc/review.json.
+// If an upstream re-import changes this list, this test fails on purpose: the new difference must be
+// looked at, not absorbed.
 const KNOWN_CONSONANT = ['17:12', '33:7', '104:9', '119:15', '119:87'];
 const KNOWN_VOWEL = ['17:14', '72:15', '104:1', '104:35', '119:69', '119:175'];
 
