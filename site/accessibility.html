@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>הצהרת נגישות · סדר אזכרה</title>
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f4f5f7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0e1217" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <script>
+    // Same theme as the reading page, before first paint.
+    try { const t = JSON.parse(localStorage.getItem('tehillim-view') || '{}').theme; if (t) document.documentElement.dataset.theme = t; } catch {}
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="./"><span class="brand-mark" aria-hidden="true"></span>סדר אזכרה</a>
+      <a class="tool" href="./">חזרה</a>
+    </div>
+  </header>
+
+  <main class="about">
+    <h1>הצהרת נגישות</h1>
+
+    <section>
+      <p>האתר נבנה כך שכל אחד יוכל להשתמש בו, גם אנשים עם מוגבלות. הוא מכוון לעמוד בדרישות תקן ישראלי 5568 ובהנחיות WCAG 2.1 ברמה AA.</p>
+      <p>באתר אין תוסף נגישות צף: הנגישות בנויה באתר עצמו, וההגדרות של הדפדפן ושל מערכת ההפעלה (הגדלה, ניגודיות גבוהה, קורא מסך) פועלות בו כרגיל.</p>
+    </section>
+
+    <section>
+      <h2>מה באתר</h2>
+      <ul>
+        <li>ניווט מלא במקלדת, עם סימון ברור של המיקום, וקישור ״דילוג לטקסט״ בראש העמוד.</li>
+        <li>מבנה כותרות, תוויות לכל שדה והודעות מצב, לשימוש עם קורא מסך.</li>
+        <li>ניגודיות צבעים לפי התקן במראה בהיר ובמראה כהה, ותמיכה במצב ניגודיות גבוהה של Windows.</li>
+        <li>בחלון ״תצוגה״: גודל הטקסט, גופן, מנוקד או ללא ניקוד, ומראה בהיר או כהה. אפשר גם להגדיל את הדפדפן עד 200% בלי לאבד תוכן.</li>
+        <li>התאמה לטלפון, לטאבלט ולמחשב, ולהגדרת ״הפחתת תנועה״ של המערכת.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>מגבלות ידועות</h2>
+      <ul>
+        <li>קוד ה־QR הוא תמונה. הקישור שבו מופיע גם כטקסט בחלון השיתוף, ואפשר להעתיק אותו.</li>
+        <li>קוראי מסך מקריאים טקסט עם טעמי המקרא בצורה משובשת. למי שמשתמש בקורא מסך מומלץ לבחור ״מנוקד״ או ״ללא ניקוד״ בחלון ״תצוגה״.</li>
+        <li>הדפסת חוברת דורשת לבחור הדפסה דו־צדדית בחלון ההדפסה של המכשיר.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>פנייה בנושא נגישות</h2>
+      <p>נתקלתם בקושי? נשמח לשמוע ולתקן. כתבו לנו דרך ״שליחת משוב״ שבתחתית <a href="./">עמוד הסדר</a>, וציינו שהפנייה בנושא נגישות. אם תשאירו טלפון או אימייל, נחזור אליכם.</p>
+    </section>
+
+    <p class="fine">האתר נבדק בבדיקה אוטומטית (axe) בכל המסכים, במראה בהיר וכהה ובגדלי מסך שונים, ובבדיקה של ניווט במקלדת. ההצהרה עודכנה ב־18 באוקטובר 2026.</p>
+  </main>
+</body>
+</html>

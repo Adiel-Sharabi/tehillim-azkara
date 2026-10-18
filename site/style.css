@@ -215,7 +215,7 @@ input:not([type]):focus, select:focus { border-color: var(--accent); }
 .site-footer { border-top: 1px solid var(--line); color: var(--muted); font-size: .82rem; padding-block: 14px calc(14px + env(safe-area-inset-bottom, 0px)); }
 .footer-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 4px 16px; margin-block: 0; }
 .footer-row a, .footer-row .linklike { color: inherit; }
-.build { font-variant-numeric: tabular-nums; opacity: .8; }
+.build { font-variant-numeric: tabular-nums; }
 
 /* Feedback dialog. */
 textarea { width: 100%; min-height: 7.5rem; padding: 10px 14px; font: inherit; font-size: 1.05rem; line-height: 1.5; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); color: var(--ink); resize: vertical; }
@@ -291,7 +291,7 @@ dialog::backdrop { background: rgb(10 14 20 / 45%); }
 .list-title { margin: 6px 0 0; font-size: 1.1rem; }
 .edit-sections { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
 .edit-sections li { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 6px; align-items: center; padding: 4px 6px 4px 4px; border: 1px solid var(--line); border-radius: 10px; }
-.edit-sections li.off { opacity: .6; border-style: dashed; }
+.edit-sections li.off { border-style: dashed; color: var(--muted); }
 .edit-sections label { display: flex; gap: 10px; align-items: center; min-height: 44px; padding-inline: 8px; cursor: pointer; }
 .edit-sections input { width: 1.2rem; height: 1.2rem; accent-color: var(--accent); flex: none; }
 .move { width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); cursor: pointer; }
@@ -304,6 +304,11 @@ dialog::backdrop { background: rgb(10 14 20 / 45%); }
 @media (prefers-reduced-motion: no-preference) {
   html { scroll-behavior: smooth; }
   .action, .tool, .primary, .secondary, .choice { transition: background-color .15s, border-color .15s, color .15s, filter .15s; }
+}
+
+/* Windows high-contrast mode replaces backgrounds, so a selected option is marked by a thick border. */
+@media (forced-colors: active) {
+  .choice:has(input:checked), .pill-option input:checked + span, .segmented input:checked + span, .font-options input:checked + span { border: 3px solid Highlight; }
 }
 
 /* ======================================================================================

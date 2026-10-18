@@ -37,7 +37,7 @@
     <section id="start" class="start" aria-labelledby="start-title">
       <div class="start-head">
         <p class="eyebrow">לימוד ותפילה</p>
-        <h1 id="start-title">סדר לעילוי נשמת</h1>
+        <h1 id="start-title" tabindex="-1">סדר לעילוי נשמת</h1>
         <p class="lede">כותבים את השם, בוחרים נוסח, ומקבלים סדר מנוקד לקריאה משותפת: תהילים לפי אותיות השם, משניות, קדיש וא־ל מלא רחמים. אפשר לשתף בקישור או ב־QR, להדפיס דף או חוברת.</p>
       </div>
       <form id="create" class="card create" novalidate>
@@ -81,7 +81,7 @@
     <article id="order" class="order" hidden aria-labelledby="order-name">
       <header class="order-head">
         <p class="leilui">לעילוי נשמת</p>
-        <h1 id="order-name"></h1>
+        <h1 id="order-name" tabindex="-1"></h1>
         <p id="order-meta" class="meta"></p>
         <div class="actions">
           <button type="button" class="action" id="act-share"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M15 5l-6 4m6 10l-6-4M18 4a2 2 0 1 1 0 .01M6 12a2 2 0 1 1 0 .01M18 20a2 2 0 1 1 0 .01"/></svg>שיתוף ו־QR</button>
@@ -99,7 +99,7 @@
             <ol id="toc"></ol>
           </details>
         </nav>
-        <div id="reading" class="reading" aria-live="polite"></div>
+        <div id="reading" class="reading"></div>
       </div>
 
       <!-- Printed at the end of an A4 sheet: how to get back to the order online. -->
@@ -118,6 +118,7 @@
     <p class="footer-inner footer-row">
       <button type="button" class="linklike" id="feedback-general" hidden>שליחת משוב</button>
       <a href="about.html">אודות ומקורות</a>
+      <a href="accessibility.html">הצהרת נגישות</a>
       <span id="build" class="build">גרסה: dev</span>
     </p>
   </footer>

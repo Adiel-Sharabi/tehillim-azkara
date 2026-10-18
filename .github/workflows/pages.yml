@@ -26,6 +26,10 @@ jobs:
         with:
           node-version: 22
       - run: npm test
+      # Accessibility gate (IS 5568 / WCAG 2.1 AA). The audit's tools are not site dependencies.
+      - run: npm i --no-save playwright@1.64.1 axe-core@4.10.2
+      - run: npx playwright install --with-deps chromium
+      - run: node scripts/a11y-audit.mjs
       - run: node scripts/assemble-site.mjs _site
       - uses: actions/upload-pages-artifact@v3
         with:

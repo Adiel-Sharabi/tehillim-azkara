@@ -12,6 +12,7 @@ The product decisions, research and source register are in
 ```sh
 npm run serve            # http://127.0.0.1:8080/ (same layout as the published site)
 npm test                 # node --test (no dependencies)
+node scripts/a11y-audit.mjs  # accessibility gate (axe + keyboard + reflow); needs: npm i --no-save playwright axe-core
 npm run import:mam       # re-download the locked MAM Psalms source and rebuild data/psalms
 npm run build:reading    # rebuild data/reading from the editions named in lib/editions.js
 npm run build:site       # assemble _site/ as GitHub Pages publishes it
@@ -25,6 +26,7 @@ npm run build:site       # assemble _site/ as GitHub Pages publishes it
 | `lib/` | pure modules shared by site, scripts and tests (`hebrew.js` marks, `psalm119.js` letters) |
 | `data/` | generated, committed text data the site reads |
 | `scripts/` | importers (one per source) and the dev server |
+| `site/accessibility.html` | הצהרת נגישות (IS 5568 / WCAG 2.1 AA), linked from every page; `scripts/a11y-audit.mjs` gates the deploy on it |
 | `site/about.html` | "אודות ומקורות": every text source with its license (the attribution the licenses require), fonts, build label |
 | `firestore.rules`, `firebase.json`, `site/feedback-config.js` | in-app feedback: reports go to a create-only Firestore collection (`lib/feedback.js` defines the fields). Feedback buttons stay hidden while `feedback-config.js` exports `null`; deploy the rules with `firebase deploy --only firestore:rules` |
 | `sources/<source>/` | provenance notes per source; `raw/` downloads are gitignored and re-fetchable |

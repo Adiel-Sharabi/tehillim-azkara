@@ -310,6 +310,12 @@ function go(inputs) {
   history.pushState(null, '', url);
   render();
   window.scrollTo({ top: 0 });
+  focusView();
+}
+
+// The view changes without a page load, so focus (and a screen reader) moves to the new view's heading.
+function focusView() {
+  $(state.inputs.name ? 'order-name' : 'start-title').focus({ preventScroll: true });
 }
 
 function wire() {
@@ -331,7 +337,7 @@ function wire() {
       order: null,
     });
   });
-  window.addEventListener('popstate', render);
+  window.addEventListener('popstate', () => { render(); focusView(); });
 
   // display
   const openDisplay = () => { applyPrefs(); updateSample(); $('dlg-display').showModal(); };
