@@ -75,6 +75,16 @@
         </div>
         <p id="form-error" class="form-error" role="alert" hidden></p>
       </form>
+
+      <!-- Recent orders: this device only (lib/history.js). -->
+      <section id="recent" class="card recent" aria-labelledby="recent-title" hidden>
+        <h2 id="recent-title" tabindex="-1">נפתחו לאחרונה במכשיר הזה</h2>
+        <ul id="recent-list" class="recent-list"></ul>
+        <div class="recent-foot">
+          <p class="hint">הרשימה נשמרת רק במכשיר הזה.</p>
+          <button type="button" class="linklike" id="recent-clear">מחיקת כל ההיסטוריה</button>
+        </div>
+      </section>
     </section>
 
     <!-- 2. The order itself. -->

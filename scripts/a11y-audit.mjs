@@ -86,6 +86,11 @@ async function main() {
         const over = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
         if (over > 1) findings.push(`${at('order')}: scrolls sideways by ${over}px at 320px width`);
       }
+      // Back on the start page, the recent-orders list is now showing.
+      await page.goto(BASE, { waitUntil: 'networkidle' });
+      await page.waitForSelector('#recent:not([hidden])');
+      await axe(page, at('start with history'));
+      if (scheme === 'light' && vp === 'phone') await keyboard(page, at('start with history'), 30);
       for (const p of PAGES) {
         await page.goto(BASE + p, { waitUntil: 'networkidle' });
         await axe(page, at(p));

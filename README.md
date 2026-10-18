@@ -23,7 +23,7 @@ npm run build:site       # assemble _site/ as GitHub Pages publishes it
 | path | what |
 |---|---|
 | `site/` | the static page (HTML/CSS/JS modules, self-hosted fonts, vendored QR encoder); `scripts/assemble-site.mjs` publishes it at the root with `lib/` and `data/` beside it. Every push to `main` deploys to https://lenishmat.co.il/ (`.github/workflows/pages.yml`; the custom domain is set in the repo's Pages settings, and the old github.io address 301-redirects to it with path and query intact) |
-| `lib/` | pure modules shared by site, scripts and tests (`hebrew.js` marks, `psalm119.js` letters) |
+| `lib/` | pure modules shared by site, scripts and tests (`hebrew.js` marks, `psalm119.js` letters, `history.js` the device-only list of recent orders) |
 | `data/` | generated, committed text data the site reads |
 | `scripts/` | importers (one per source) and the dev server |
 | `site/accessibility.html` | הצהרת נגישות (IS 5568 / WCAG 2.1 AA), linked from every page; `scripts/a11y-audit.mjs` gates the deploy on it |

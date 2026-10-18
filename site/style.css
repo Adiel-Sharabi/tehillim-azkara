@@ -298,6 +298,18 @@ dialog::backdrop { background: rgb(10 14 20 / 45%); }
 .move:disabled { opacity: .35; cursor: default; }
 .sheet-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; position: sticky; bottom: 0; background: var(--surface); padding-top: 8px; }
 
+/* Recent orders on the start page. */
+.recent { padding: clamp(16px, 4vw, 24px); display: grid; gap: 12px; }
+.recent h2 { margin: 0; font-size: 1.1rem; color: var(--ink); }
+.recent-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.recent-list li { display: flex; align-items: center; gap: 4px; border: 1px solid var(--line); border-radius: 10px; }
+.recent-list a { flex: 1; min-width: 0; display: grid; gap: 2px; padding: 10px 14px; min-height: 44px; color: var(--ink); text-decoration: none; }
+.recent-list a:hover strong { text-decoration: underline; text-underline-offset: 3px; }
+.recent-list a span { color: var(--muted); font-size: .9rem; }
+.recent-list .remove { flex: none; width: 44px; height: 44px; margin-inline-end: 2px; border: 0; border-radius: 8px; background: none; color: var(--muted); font-size: 1.4rem; line-height: 1; cursor: pointer; }
+.recent-list .remove:hover { color: var(--ink); background: var(--accent-soft); }
+.recent-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+
 /* Print-only pieces stay out of the screen view. */
 .print-end, .booklet { display: none; }
 

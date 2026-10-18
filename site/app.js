@@ -7,6 +7,7 @@ import {
   inputsFromParams, paramsFromInputs,
 } from './lib/template.js';
 import { hebrewNumeral, MAQAF } from './lib/hebrew.js';
+import { parseHistory, recordVisit, removeEntry } from './lib/history.js';
 import { el, buildLabel } from './util.js';
 import { openShare, qrSvg } from './share.js';
 import { printSheet, printBooklet, setPageRule } from './print.js';
@@ -14,6 +15,7 @@ import { feedbackEnabled, openFeedback, wireFeedback } from './feedback.js';
 
 const $ = (id) => document.getElementById(id);
 const PREFS_KEY = 'tehillim-view';
+const HISTORY_KEY = 'tehillim-history';
 const FONTS = [
   { id: 'frank', name: `פרנק${MAQAF}ריהל`, note: 'כמו בסידור' },
   { id: 'keter', name: 'כתר', note: 'בסגנון כתר ירושלים' },
@@ -24,7 +26,7 @@ const FONT_FAMILY = { frank: 'Frank Ruehl CLM', keter: 'Keter YG', nachlieli: 'N
 const KIND_GROUP = { psalm: 'psalms', psalm119: 'psalm119', mishnah: 'mishnah', prayer: 'prayer' };
 
 const prefs = { marks: 'withNikkud', scale: 1, font: 'frank', theme: 'system', ...loadPrefs() };
-const state = { inputs: null, order: null, psalms: null, library: null, build: 'dev' };
+const state = { inputs: null, order: null, psalms: null, library: null, build: 'dev', historyId: null };
 
 // ---- preferences (this device only) ----
 function loadPrefs() {
@@ -33,6 +35,14 @@ function loadPrefs() {
 function savePrefs() {
   try { localStorage.setItem(PREFS_KEY, JSON.stringify(prefs)); } catch { /* private mode: not kept */ }
 }
+// Recent orders (this device only).
+function loadHistory() {
+  try { return parseHistory(localStorage.getItem(HISTORY_KEY)); } catch { return []; }
+}
+function saveHistory(entries) {
+  try { localStorage.setItem(HISTORY_KEY, JSON.stringify(entries)); } catch { /* private mode: not kept */ }
+}
+
 function applyPrefs() {
   const root = document.documentElement;
   root.style.setProperty('--scale', prefs.scale);
@@ -131,19 +141,27 @@ function currentInputs() {
   return inputsFromParams(new URLSearchParams(location.search));
 }
 
-function render() {
+// `edited`: the order came from editing the one on screen, so it replaces that entry in the history.
+function render({ edited = false } = {}) {
   const inputs = currentInputs();
   state.inputs = inputs;
   const showing = !!inputs.name;
   $('start').hidden = showing;
   $('order').hidden = !showing;
   $('open-share').hidden = !showing;
-  fillStartForm(inputs);
+  // Only an order link fills the start form: a bare start page must not wipe what the reader typed
+  // while the texts were still loading (the first render waits for them).
+  if (showing) fillStartForm(inputs);
   if (!showing) {
     document.title = 'סדר אזכרה';
     state.order = null;
+    renderRecent();
     return;
   }
+
+  const visit = recordVisit(loadHistory(), { query: paramsFromInputs(inputs).toString(), at: Date.now() }, { replaceId: edited ? state.historyId : null });
+  saveHistory(visit.entries);
+  state.historyId = visit.id;
 
   const order = buildOrder(inputs.template, inputs);
   state.order = order;
@@ -166,6 +184,20 @@ function render() {
   $('toc-details').open = matchMedia('(min-width: 1100px)').matches;
   fillPrintEnd();
   observeToc();
+}
+
+const DAY = new Intl.DateTimeFormat('he-IL', { day: 'numeric', month: 'long', year: 'numeric' });
+
+function renderRecent() {
+  const entries = loadHistory();
+  $('recent').hidden = !entries.length;
+  $('recent-list').replaceChildren(...entries.map((e) => {
+    const inputs = inputsFromParams(new URLSearchParams(e.query));
+    const name = fullName(inputs);
+    return el('li', { dataId: e.id },
+      el('a', { href: `?${e.query}` }, el('strong', {}, name), el('span', {}, `נוסח ${TEMPLATES[inputs.template].title} · ${DAY.format(e.at)}`)),
+      el('button', { type: 'button', className: 'remove', ariaLabel: `מחיקת ${name} מהרשימה` }, '×'));
+  }));
 }
 
 function fillStartForm(inputs) {
@@ -303,12 +335,12 @@ function openEdit() {
 }
 
 // ---- navigation ----
-function go(inputs) {
+function go(inputs, { edited = false } = {}) {
   const url = new URL(location.href);
   url.search = paramsFromInputs(inputs).toString();
   url.hash = '';
   history.pushState(null, '', url);
-  render();
+  render({ edited });
   window.scrollTo({ top: 0 });
   focusView();
 }
@@ -394,7 +426,23 @@ function wire() {
     if (!base.name) { $('e-name').focus(); return; }
     const order = [...$('edit-sections').children].filter((li) => li.querySelector('input').checked).map((li) => li.dataset.key);
     $('dlg-edit').close();
-    go({ ...base, order });
+    go({ ...base, order }, { edited: true });
+  });
+
+  // recent orders: remove one (focus moves to its neighbour), or all of them
+  $('recent-list').addEventListener('click', (ev) => {
+    const li = ev.target.closest('.remove')?.closest('li');
+    if (!li) return;
+    const next = li.nextElementSibling?.dataset.id ?? li.previousElementSibling?.dataset.id;
+    saveHistory(removeEntry(loadHistory(), li.dataset.id));
+    renderRecent();
+    (next ? $('recent-list').querySelector(`li[data-id="${next}"] a`) : $('start-title')).focus();
+  });
+  $('recent-clear').addEventListener('click', () => {
+    if (!confirm('למחוק את כל רשימת הסדרים שנפתחו במכשיר הזה?')) return;
+    saveHistory([]);
+    renderRecent();
+    $('start-title').focus();
   });
 
   // feedback
