@@ -43,21 +43,12 @@
       <form id="create" class="card create" novalidate>
         <div class="step">
           <span class="step-num" aria-hidden="true">1</span>
-          <div class="field">
-            <label for="name">שם הנפטר או הנפטרת</label>
-            <input id="name" name="n" autocomplete="off" enterkeyhint="go" placeholder="למשל: משה" required>
-            <p class="hint" id="name-hint">בעברית. מהאותיות שלו נבנה תהילים קי״ט.</p>
-          </div>
-        </div>
-        <div class="step">
-          <span class="step-num" aria-hidden="true">2</span>
-          <fieldset class="field">
-            <legend>נוסח</legend>
-            <p class="hint nusach-hint">הנוסחים נבדלים בעיקר בנוסח הקדיש ובתפילה לעילוי הנשמה: א־ל מלא רחמים אצל אשכנזים, השכבה אצל ספרדים ותימנים. בחרו לפי מנהג המשפחה.</p>
-            <div id="templates" class="choices"></div>
-          </fieldset>
-        </div>
-        <div class="details">
+          <div class="step-body">
+            <div class="field">
+              <label for="name">שם הנפטר או הנפטרת</label>
+              <input id="name" name="n" autocomplete="off" enterkeyhint="go" placeholder="למשל: משה" required>
+              <p class="hint" id="name-hint">בעברית. מהאותיות שלו נבנה תהילים קי״ט.</p>
+            </div>
             <fieldset class="field inline">
               <legend>לזכר</legend>
               <label class="pill-option"><input type="radio" name="g" id="g-m" value="m" checked><span>נפטר</span></label>
@@ -68,6 +59,15 @@
               <input id="parent" autocomplete="off" placeholder="למשל: אברהם או רחל">
               <p class="hint" id="parent-hint">יופיע בא־ל מלא רחמים: ״משה בן אברהם״.</p>
             </div>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-num" aria-hidden="true">2</span>
+          <fieldset class="field">
+            <legend>נוסח</legend>
+            <p class="hint nusach-hint">הנוסחים נבדלים בעיקר בנוסח הקדיש ובתפילה לעילוי הנשמה: א־ל מלא רחמים אצל אשכנזים, השכבה אצל ספרדים ותימנים. בחרו לפי מנהג המשפחה.</p>
+            <div id="templates" class="choices"></div>
+          </fieldset>
         </div>
         <div class="step submit-row">
           <span class="step-num" aria-hidden="true">3</span>
